@@ -17,7 +17,7 @@ Install
 
 Add in Gemfile.
 
-    gem "switch_user", "~> 0.1.0"
+    gem "switch_user"
 
 Usage
 -----
