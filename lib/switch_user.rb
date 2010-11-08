@@ -7,14 +7,14 @@ module SwitchUser
     end
   end
 
-  mattr_accessor :mode
-  self.mode = 'devise'
+  mattr_accessor :provider
+  self.provider = :devise
 
   mattr_accessor :available_users
   self.available_users = { :user => lambda { User.all } }
 
   mattr_accessor :display_field
-  self.display_field = 'email'
+  self.display_field = :email
 
   def self.setup
     yield self
