@@ -39,6 +39,7 @@ By default, you can switch between Guest and all users in users table.
 
 But if you want to use different scope users in devise or you want to customize the users that can be switched, you should do like this
 
+    # config/initializers/switch_user.rb
     SwitchUser.setup do |config|
       # provider may be :devise or :authologic, but now we only support devise
       config.provider = :devise
