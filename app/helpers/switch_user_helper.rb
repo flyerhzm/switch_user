@@ -1,9 +1,9 @@
 module SwitchUserHelper
   def switch_user_select
     if Rails.env == "development"
-      if @current_user
+      if current_user
         options = "<option value="">Guest</option>"
-        options += options_from_collection_for_select(User.all, :id, :email, @current_user.id)
+        options += options_from_collection_for_select(User.all, :id, :email, current_user.id)
       else
         options = "<option selected='selected' value="">Guest</option>"
         options += options_from_collection_for_select(User.all, :id, :email)
