@@ -26,6 +26,20 @@ Add following code into your layout page.
 
     = switch_user_select
 
+Configuration
+-------------
+
+By default, you can switch between Guest and all users in users table.
+
+But if you want to use different scope users in devise or you want to customize the users that can be switched, you should do like this
+
+    SwitchUser.setup do |config|
+      # model may be :devise or :authologic, but now we only support devise
+      config.mode = :devise
+      # avaliable_users is a hash, key is the scope of devise user, value is the proc that return the users that can be switched.
+      config.available_users = { :user => lambda { User.all }, :admin => lambda { Admin.all } }
+    end
+
 
 Copyright © 2010 Richard Huang (flyerhzm@gmail.com), released under the MIT license
 
