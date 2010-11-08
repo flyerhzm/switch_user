@@ -24,6 +24,12 @@ Usage
 
 Add following code into your layout page.
 
+erb
+
+    <%= switch_user_select %>
+
+haml
+
     = switch_user_select
 
 Configuration
