@@ -1,7 +1,7 @@
 switch_user
 ===========
 
-Inspired from hobo, switch_user provides a convenient way to switch current user that speed up your development.
+Inspired from hobo, switch_user provides a convenient way to switch current user that speed up your development, without logout, login and input login or passowrd.
 
 switch_user promises that it only be activated in the development environment.
 
