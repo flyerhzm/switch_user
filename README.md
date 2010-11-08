@@ -44,6 +44,8 @@ But if you want to use different scope users in devise or you want to customize 
       config.provider = :devise
       # avaliable_users is a hash, key is the scope of devise user, value is the proc that return the users that can be switched.
       config.available_users = { :user => lambda { User.all }, :admin => lambda { Admin.all } }
+      # what field should be displayed on select box
+      config.display_field = :email
     end
 
 
