@@ -1,6 +1,6 @@
 module SwitchUserHelper
   def switch_user_select
-    if Rails.env == "development"
+    if available?
       if current_user
         options = "<option value=''>Guest</option>"
       else
@@ -19,5 +19,14 @@ module SwitchUserHelper
       select_tag "switch_user_id", options.html_safe, 
                  :onchange => "location.href = '/switch_user?scope_id=' + encodeURIComponent(this.options[this.selectedIndex].value)"
     end
+  end
+
+  def available?
+    user = nil
+    SwitchUser.available_users.keys.each do |scope|
+      user = send("current_#{scope}")
+      break if user
+    end
+    SwitchUser.view_guard.call(user, request)
   end
 end

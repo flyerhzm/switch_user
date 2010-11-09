@@ -4,12 +4,26 @@ class SwitchUserController < ApplicationController
 
   def set_current_user
     send("#{SwitchUser.provider}_handle", params)
-    redirect_to(request.env["HTTP_REFERER"] ? :back : root_path)
+    redirect_to(SwitchUser.redirect_path.call(request, params))
   end
 
   private
     def developer_modes_only
-      render :text => "Permission Denied", :status => 403 unless Rails.env == "development"
+      render :text => "Permission Denied", :status => 403 unless available?
+    end
+
+    def available?
+      user = nil
+      if params[:scope_id].present?
+        scope, id = params[:scope_id].split('_')
+        SwitchUser.available_users.keys.each do |s|
+          if scope == s.to_s
+            user = scope.classify.constantize.find(id)
+            break
+          end
+        end
+      end
+      SwitchUser.controller_guard.call(user, request)
     end
 
     def devise_handle(params)
