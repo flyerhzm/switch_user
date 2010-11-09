@@ -3,10 +3,6 @@ switch_user
 
 Inspired from [hobo][0], switch_user provides a convenient way to switch current user that speeds up your development, you don't waste your time to logout, login and input login or passowrd any more.
 
-switch_user promises that it only be activated in the development environment.
-
-It supports only devise now, but it will support authlogic in the future.
-
 Example
 -------
 
