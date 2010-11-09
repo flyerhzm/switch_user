@@ -29,4 +29,18 @@ class SwitchUserController < ApplicationController
         end
       end
     end
+
+    def authlogic_handle(params)
+      if params[:scope_id].blank?
+        current_user_session.destroy
+      else
+        scope, id = params[:scope_id].split('_')
+        SwitchUser.available_users.keys.each do |s|
+          if scope == s.to_s
+            user = scope.classify.constantize.find(id)
+            UserSession.create(user)
+          end
+        end
+      end
+    end
 end
