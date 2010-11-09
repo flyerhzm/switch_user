@@ -37,18 +37,34 @@ Configuration
 
 By default, you can switch between Guest and all users in users table.
 
-But if you want to use different scope users in devise or you want to customize the users that can be switched, you should do like this
+But if you want to use different scope users in devise or you want to customize the users that can be switched, The following is the default configuration.
 
     # config/initializers/switch_user.rb
     SwitchUser.setup do |config|
       # provider may be :devise or :authologic
       config.provider = :devise
 
-      # avaliable_users is a hash, key is the model name of user (:user, :admin, or any name you use), value is the proc that return the users that can be switched.
-      config.available_users = { :user => lambda { User.all }, :admin => lambda { Admin.all } }
+      # avaliable_users is a hash, 
+      # key is the model name of user (:user, :admin, or any name you use), 
+      # value is a block that return the users that can be switched.
+      config.available_users = { :user => lambda { User.all } }
 
       # what field should be displayed on select box
       config.display_field = :email
+
+      # controller_guard is a block, 
+      # if it returns true, the request will continue, 
+      # else the request will be refused and returns "Permission Denied"
+      config.controller_guard = lambda { |current_user, request| Rails_env == "development" }
+
+      # view_guard is a block, 
+      # if it returns true, the switch user select box will be shown, 
+      # else the select box will not be shown
+      config.view_guard == lambda { |current_user, request| Rails.env == "development" }
+
+      # redirect_path is a block, it returns which page will be redirected 
+      # after switching a user.
+      config.redirect_path = lambda { |request, params| '/' }
     end
 
 
