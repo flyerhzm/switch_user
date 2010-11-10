@@ -6,7 +6,13 @@ module SwitchUser
       end
     end
   else
-    # TODO: for rails 2
+    %w(controllers helpers).each do |dir|
+      path = File.join(File.dirname(__FILE__), '..', 'app', dir)
+      $LOAD_PATH << path
+      ActiveSupport::Dependencies.load_paths << path
+      ActiveSupport::Dependencies.load_once_paths.delete(path)
+      ActionView::Base.send :include, SwitchUserHelper
+    end
   end
 
   mattr_accessor :provider
@@ -24,7 +30,7 @@ module SwitchUser
   self.view_guard = lambda { Rails.env == "development" }
 
   mattr_accessor :redirect_path
-  self.redirect_path = lambda { |request| request.env["HTTP_REFERER"] ? :back : root_path }
+  self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }
 
   def self.setup
     yield self
