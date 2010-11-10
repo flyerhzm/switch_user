@@ -1,10 +1,12 @@
-require "rails"
-
 module SwitchUser
-  class Engine < Rails::Engine
-    config.to_prepare do
-      ApplicationController.helper(SwitchUserHelper)
+  if defined? Rails::Engine
+    class Engine < Rails::Engine
+      config.to_prepare do
+        ApplicationController.helper(SwitchUserHelper)
+      end
     end
+  else
+    # TODO: for rails 2
   end
 
   mattr_accessor :provider

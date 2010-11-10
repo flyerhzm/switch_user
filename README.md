@@ -3,6 +3,8 @@ switch_user
 
 Inspired from [hobo][0], switch_user provides a convenient way to switch current user that speeds up your development.
 
+it is rails 3 gem only now, but I will add rails 2 support soon.
+
 Use Case
 --------
 

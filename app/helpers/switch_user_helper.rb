@@ -16,7 +16,10 @@ module SwitchUserHelper
           end
         end
       end
-      select_tag "switch_user_id", options.html_safe, 
+      if Rails.version =~ /^3/
+        options = options.html_safe
+      end
+      select_tag "switch_user_id", options,
                  :onchange => "location.href = '/switch_user?scope_id=' + encodeURIComponent(this.options[this.selectedIndex].value)"
     end
   end
