@@ -3,8 +3,6 @@ switch_user
 
 Inspired from [hobo][0], switch_user provides a convenient way to switch current user that speeds up your development.
 
-it is rails 3 gem only now, but I will add rails 2 support soon.
-
 Use Case
 --------
 
@@ -46,6 +44,11 @@ If there are too many users (in production), the switch_user_select is not a goo
     
     = link_to user.login, "/switch_user?scope_id=user_#{user.id}"
     = link_to admin.login, "/switch_user?scope_id=admin_#{admin.id}"
+
+If you use it in a Rails 2 project, you have to add a route manually.
+
+    # config/routes.rb
+    map.switch_user '/switch_user', :controller => 'switch_user', :action => 'set_current_user'
 
 Configuration
 -------------
