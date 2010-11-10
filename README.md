@@ -10,7 +10,7 @@ switch_user is very useful in such use cases
 
 1. switch current users in development so that you don't waste your time to logout, login and input email (login) or password any more.
 
-2. reproduce the user specified error in production. Sometimes the error is only raised for specified user, which is difficult to reproduce for developers, switch_user can help you reproduce it by login as that usesr.
+2. reproduce the user specified error in production. Sometimes the error is only raised for specified user, which is difficult to reproduce for developers, switch_user can help you reproduce it by login as that user.
 
 Example
 -------
