@@ -24,18 +24,23 @@ erb
 
     <%= switch_user_select %>
 
-haml
+or haml
 
     = switch_user_select
+    
+If there are too many users (in production), the switch_user_select is not a good choice, you should call the switch user request by yourself.
+
+    <%= link_to user.login, "/switch_user?scope_id=user_#{user.id}" %>
+    <%= link_to admin.login, "/switch_user?scope_id=admin_#{admin.id}" %>
+    
+    = link_to user.login, "/switch_user?scope_id=user_#{user.id}"
+    = link_to admin.login, "/switch_user?scope_id=admin_#{admin.id}"
 
 Configuration
 -------------
 
-By default, you can switch between Guest and all users in users table.
+By default, you can switch between Guest and all users in users table, you don't need to do anything. The following is the default configuration.
 
-But if you want to use different scope users in devise or you want to customize the users that can be switched, The following is the default configuration.
-
-    # config/initializers/switch_user.rb
     SwitchUser.setup do |config|
       # provider may be :devise or :authologic
       config.provider = :devise
@@ -51,11 +56,13 @@ But if you want to use different scope users in devise or you want to customize 
       # controller_guard is a block, 
       # if it returns true, the request will continue, 
       # else the request will be refused and returns "Permission Denied"
+      # if you switch from "admin" to user, the current_user param is "admin"
       config.controller_guard = lambda { |current_user, request| Rails_env == "development" }
 
       # view_guard is a block, 
       # if it returns true, the switch user select box will be shown, 
       # else the select box will not be shown
+      # if you switch from admin to "user", the current_user param is "user"
       config.view_guard == lambda { |current_user, request| Rails.env == "development" }
 
       # redirect_path is a block, it returns which page will be redirected 
@@ -63,6 +70,28 @@ But if you want to use different scope users in devise or you want to customize 
       config.redirect_path = lambda { |request, params| '/' }
     end
 
+If the default configuration can't meet your requirement, you can define your customized configuration in <code>config/initializaers/switch_user.rb</code>
+
+If you want to switch both available users and available admins
+
+    config.available_users = { :user => lambda { User.available }, :admin => lambda { Admin.available } }
+    
+If you want to display the login field in switch user select box
+
+    config.display_field = :login
+    
+If you only allow switching from admin to user in production environment
+
+    config.controller_guard = lambda { |current_user, request| Rails.env == "production" and current_user.admin? }
+    
+If you only want to display switch user select box for admins in production environment
+
+    config.view_guard = lambda { |current_user, request| Rails.env == "production" and current_user and current_user.admin? }
+    
+If you want to redirect user to "/dashboard" page
+
+    config.redirect_path = lambda { |request, params| "/dashboard" }
+    
 
 Copyright © 2010 Richard Huang (flyerhzm@gmail.com), released under the MIT license
 
