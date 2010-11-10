@@ -50,34 +50,34 @@ Configuration
 
 By default, you can switch between Guest and all users in users table, you don't need to do anything. The following is the default configuration.
 
-SwitchUser.setup do |config|
-  # provider may be :devise or :authologic
-  config.provider = :devise
+    SwitchUser.setup do |config|
+      # provider may be :devise or :authologic
+      config.provider = :devise
 
-  # avaliable_users is a hash, 
-  # key is the model name of user (:user, :admin, or any name you use), 
-  # value is a block that return the users that can be switched.
-  config.available_users = { :user => lambda { User.all } }
+      # avaliable_users is a hash, 
+      # key is the model name of user (:user, :admin, or any name you use), 
+      # value is a block that return the users that can be switched.
+      config.available_users = { :user => lambda { User.all } }
 
-  # what field should be displayed on select box
-  config.display_field = :email
+      # what field should be displayed on select box
+      config.display_field = :email
 
-  # controller_guard is a block, 
-  # if it returns true, the request will continue, 
-  # else the request will be refused and returns "Permission Denied"
-  # if you switch from "admin" to user, the current_user param is "admin"
-  config.controller_guard = lambda { |current_user, request| Rails_env == "development" }
+      # controller_guard is a block, 
+      # if it returns true, the request will continue, 
+      # else the request will be refused and returns "Permission Denied"
+      # if you switch from "admin" to user, the current_user param is "admin"
+      config.controller_guard = lambda { |current_user, request| Rails_env == "development" }
 
-  # view_guard is a block, 
-  # if it returns true, the switch user select box will be shown, 
-  # else the select box will not be shown
-  # if you switch from admin to "user", the current_user param is "user"
-  config.view_guard == lambda { |current_user, request| Rails.env == "development" }
+      # view_guard is a block, 
+      # if it returns true, the switch user select box will be shown, 
+      # else the select box will not be shown
+      # if you switch from admin to "user", the current_user param is "user"
+      config.view_guard == lambda { |current_user, request| Rails.env == "development" }
 
-  # redirect_path is a block, it returns which page will be redirected 
-  # after switching a user.
-  config.redirect_path = lambda { |request, params| '/' }
-end
+      # redirect_path is a block, it returns which page will be redirected 
+      # after switching a user.
+      config.redirect_path = lambda { |request, params| '/' }
+    end
 
 If the default configuration can't meet your requirement, you can define your customized configuration in <code>config/initializaers/switch_user.rb</code>
 
