@@ -16,7 +16,7 @@ module SwitchUserHelper
           end
         end
       end
-      if Rails.version =~ /^3/
+      if options.respond_to?(:html_safe)
         options = options.html_safe
       end
       select_tag "switch_user_id", options,
