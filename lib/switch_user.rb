@@ -25,9 +25,9 @@ module SwitchUser
   self.display_field = :email
 
   mattr_accessor :controller_guard
-  self.controller_guard = lambda { Rails.env == "development" }
+  self.controller_guard = lambda { |current_user, request| Rails.env == "development" }
   mattr_accessor :view_guard
-  self.view_guard = lambda { Rails.env == "development" }
+  self.view_guard = lambda { |current_user, request| Rails.env == "development" }
 
   mattr_accessor :redirect_path
   self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }
