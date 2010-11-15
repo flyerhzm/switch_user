@@ -23,7 +23,7 @@ class SwitchUserController < ApplicationController
         scope, id = $1, $2
         SwitchUser.available_users.keys.each do |s|
           if scope == s.to_s
-            finder = SwitchUser.available_users_identifier(s) || "id"
+            finder = SwitchUser.available_users_identifiers[s] || "id"
             user = scope.classify.constantize.send("find_by_#{finder}!", id)
             break
           end

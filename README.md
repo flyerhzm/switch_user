@@ -56,14 +56,24 @@ Configuration
 By default, you can switch between Guest and all users in users table, you don't need to do anything. The following is the default configuration.
 
     SwitchUser.setup do |config|
-      # provider may be :devise or :authologic
+      # provider may be :devise or :authlogic
       config.provider = :devise
 
-      # avaliable_users is a hash, 
+      # available_users is a hash, 
       # key is the model name of user (:user, :admin, or any name you use), 
       # value is a block that return the users that can be switched.
       config.available_users = { :user => lambda { User.all } }
 
+      # available_users_identifiers is a hash
+      # keys in this hash should match a key in the available_users
+      # hash
+      # value is the name of the identifying column to find by,
+      # defaults to id
+      # this hash is to allow you to specify a different column to
+      # expose for instance a username on a User model instead of id
+      config.available_users_identifiers = { :user => "id" }
+
+      config.available_users_identifiers
       # what field should be displayed on select box
       config.display_field = :email
 
