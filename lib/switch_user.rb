@@ -33,7 +33,7 @@ module SwitchUser
   self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }
 
   mattr_accessor :available_users_identifiers
-  self.available_users_identifier = { :user => :id }
+  self.available_users_identifiers = { :user => :id }
   
   def self.setup
     yield self
