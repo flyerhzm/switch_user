@@ -21,11 +21,10 @@ class SwitchUserController < ApplicationController
       current_user = send("#{SwitchUser.provider}_current_user")
       if params[:scope_identifier].present?
         params[:scope_identifier] =~ /^([^_]+)_(.*)$/
-        scope, id = $1, $2
+        scope, identifier = $1, $2
         SwitchUser.available_users.keys.each do |s|
           if scope == s.to_s
-            finder = SwitchUser.available_users_identifiers[s] || "id"
-            user = scope.classify.constantize.send("find_by_#{finder}!", id)
+            user = find_user(scope, s, identifier)
             break
           end
         end
@@ -40,12 +39,11 @@ class SwitchUserController < ApplicationController
         end
       else
         params[:scope_identifier] =~ /^([^_]+)_(.*)$/
-        scope, id = $1, $2
+        scope, identifier = $1, $2
 
         SwitchUser.available_users.keys.each do |s|
           if scope == s.to_s
-            finder = SwitchUser.available_users_identifiers[s] || "id"
-            user = scope.classify.constantize.send("find_by_#{finder}!", id)
+            user = find_user(scope, s, identifier)
             warden.set_user(user, :scope => scope)
           else
             warden.logout(s)
@@ -59,15 +57,23 @@ class SwitchUserController < ApplicationController
         current_user_session.destroy
       else
         params[:scope_identifier] =~ /^([^_]+)_(.*)$/
-        scope, id = $1, $2
+        scope, identifier = $1, $2
 
         SwitchUser.available_users.keys.each do |s|
           if scope == s.to_s
-            finder = SwitchUser.available_users_identifiers[s] || "id"
-            user = scope.classify.constantize.send("find_by_#{finder}!", id)
+            user = find_user(scope, s, identifier)
             UserSession.create(user)
           end
         end
+      end
+    end
+    
+    def find_user(scope, identifier_scope, identifier)
+      identifier_column = SwitchUser.available_users_identifiers[identifier_scope] || :id
+      if identifier_column == :id
+        scope.classify.constantize.find(identifier)
+      else
+        scope.classify.constantize.send("find_by_#{identifier_column}!", identifier)
       end
     end
 
