@@ -18,6 +18,7 @@ class SwitchUserController < ApplicationController
 
     def available?
       user = nil
+      cur_user = send("#{SwitchUser.provider}_current_user")
       if params[:scope_id].present?
         params[:scope_id] =~ /^([^_]+)_(.*)$/
         scope, id = $1, $2
@@ -29,7 +30,7 @@ class SwitchUserController < ApplicationController
           end
         end
       end
-      SwitchUser.controller_guard.call(user, request)
+      SwitchUser.controller_guard.call(cur_user, request)
     end
 
     def devise_handle(params)
@@ -62,5 +63,13 @@ class SwitchUserController < ApplicationController
           end
         end
       end
+    end
+
+    def devise_current_user
+      current_user
+    end
+
+    def authlogic_current_user
+      UserSession.find.record
     end
 end
