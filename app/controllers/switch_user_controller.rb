@@ -17,18 +17,7 @@ class SwitchUserController < ApplicationController
     end
 
     def available?
-      user = nil
       current_user = send("#{SwitchUser.provider}_current_user")
-      if params[:scope_identifier].present?
-        params[:scope_identifier] =~ /^([^_]+)_(.*)$/
-        scope, identifier = $1, $2
-        SwitchUser.available_users.keys.each do |s|
-          if scope == s.to_s
-            user = find_user(scope, s, identifier)
-            break
-          end
-        end
-      end
       SwitchUser.controller_guard.call(current_user, request)
     end
 
