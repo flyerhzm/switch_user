@@ -7,20 +7,22 @@ module SwitchUserHelper
         options = "<option selected='selected' value=''>Guest</option>"
       end
       SwitchUser.available_users.each do |scope, user_proc|
+        current = send("current_#{scope}")
+        identifier = SwitchUser.available_users_identifiers[scope]
+        name = SwitchUser.available_users_names[scope]
         user_proc.call.each do |user|
-          current = send("current_#{scope}")
-          if current and current.id == user.id
-            options += "<option selected='selected' value='#{scope}_#{user.id}'>#{user.send(SwitchUser.display_field)}</option>"
+          if current and current.send(identifier) == user.send(identifier)
+            options += "<option selected='selected' value='#{scope}_#{user.send(identifier)}'>#{user.send(name)}</option>"
           else
-            options += "<option value='#{scope}_#{user.id}'>#{user.send(SwitchUser.display_field)}</option>"
+            options += "<option value='#{scope}_#{user.send(identifier)}'>#{user.send(name)}</option>"
           end
         end
       end
       if options.respond_to?(:html_safe)
         options = options.html_safe
       end
-      select_tag "switch_user_id", options,
-                 :onchange => "location.href = '/switch_user?scope_id=' + encodeURIComponent(this.options[this.selectedIndex].value)"
+      select_tag "switch_user_identifier", options,
+                 :onchange => "location.href = '/switch_user?scope_identifier=' + encodeURIComponent(this.options[this.selectedIndex].value)"
     end
   end
 

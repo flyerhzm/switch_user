@@ -39,11 +39,11 @@ or haml
     
 If there are too many users (in production), the switch_user_select is not a good choice, you should call the switch user request by yourself.
 
-    <%= link_to user.login, "/switch_user?scope_id=user_#{user.id}" %>
-    <%= link_to admin.login, "/switch_user?scope_id=admin_#{admin.id}" %>
+    <%= link_to user.login, "/switch_user?scope_identifier=user_#{user.id}" %>
+    <%= link_to admin.login, "/switch_user?scope_identifier=admin_#{admin.id}" %>
     
-    = link_to user.login, "/switch_user?scope_id=user_#{user.id}"
-    = link_to admin.login, "/switch_user?scope_id=admin_#{admin.id}"
+    = link_to user.login, "/switch_user?scope_identifier=user_#{user.id}"
+    = link_to admin.login, "/switch_user?scope_identifier=admin_#{admin.id}"
 
 If you use it in a Rails 2 project, you have to add a route manually.
 
@@ -64,18 +64,18 @@ By default, you can switch between Guest and all users in users table, you don't
       # value is a block that return the users that can be switched.
       config.available_users = { :user => lambda { User.all } }
 
-      # available_users_identifiers is a hash
-      # keys in this hash should match a key in the available_users
-      # hash
+      # available_users_identifiers is a hash,
+      # keys in this hash should match a key in the available_users hash
       # value is the name of the identifying column to find by,
       # defaults to id
       # this hash is to allow you to specify a different column to
       # expose for instance a username on a User model instead of id
-      config.available_users_identifiers = { :user => "id" }
+      config.available_users_identifiers = { :user => :id }
 
-      config.available_users_identifiers
-      # what field should be displayed on select box
-      config.display_field = :email
+			# available_users_names is a hash,
+			# keys in this hash should match a key in the available_users hash
+			# value is the column name which will be displayed in select box
+      config.available_users_names = { :user => :email }
 
       # controller_guard is a block, 
       # if it returns true, the request will continue, 
@@ -99,10 +99,14 @@ If the default configuration can't meet your requirement, you can define your cu
 If you want to switch both available users and available admins
 
     config.available_users = { :user => lambda { User.available }, :admin => lambda { Admin.available } }
+
+If you want to use name column as the user identifier
+
+		config.available_users_identifiers => { :user => :name }
     
 If you want to display the login field in switch user select box
 
-    config.display_field = :login
+    config.available_users_names = { :user => :login }
     
 If you only allow switching from admin to user in production environment
 

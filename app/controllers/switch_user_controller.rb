@@ -19,8 +19,8 @@ class SwitchUserController < ApplicationController
     def available?
       user = nil
       current_user = send("#{SwitchUser.provider}_current_user")
-      if params[:scope_id].present?
-        params[:scope_id] =~ /^([^_]+)_(.*)$/
+      if params[:scope_identifier].present?
+        params[:scope_identifier] =~ /^([^_]+)_(.*)$/
         scope, id = $1, $2
         SwitchUser.available_users.keys.each do |s|
           if scope == s.to_s
@@ -34,12 +34,12 @@ class SwitchUserController < ApplicationController
     end
 
     def devise_handle(params)
-      if params[:scope_id].blank?
+      if params[:scope_identifier].blank?
         SwitchUser.available_users.keys.each do |s|
           warden.logout(s)
         end
       else
-        params[:scope_id] =~ /^([^_]+)_(.*)$/
+        params[:scope_identifier] =~ /^([^_]+)_(.*)$/
         scope, id = $1, $2
 
         SwitchUser.available_users.keys.each do |s|
@@ -55,10 +55,10 @@ class SwitchUserController < ApplicationController
     end
 
     def authlogic_handle(params)
-      if params[:scope_id].blank?
+      if params[:scope_identifier].blank?
         current_user_session.destroy
       else
-        params[:scope_id] =~ /^([^_]+)_(.*)$/
+        params[:scope_identifier] =~ /^([^_]+)_(.*)$/
         scope, id = $1, $2
 
         SwitchUser.available_users.keys.each do |s|
@@ -76,6 +76,6 @@ class SwitchUserController < ApplicationController
     end
 
     def authlogic_current_user
-      UserSession.find.record
+      UserSession.find.try(:record)
     end
 end
