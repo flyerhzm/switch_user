@@ -1,0 +1,15 @@
+PATH
+  remote: .
+  specs:
+    switch_user (0.5.1)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (>= 1.0.0)
+  switch_user!
