@@ -56,7 +56,22 @@ class SwitchUserController < ApplicationController
         end
       end
     end
-    
+
+    def restful_authentication_handle(params)
+      if params[:scope_identifier].blank?
+        logout_killing_session!
+      else
+        params[:scope_identifier] =~ /^([^_]+)_(.*)$/
+        scope, identifier = $1, $2
+
+        SwitchUser.available_users.keys.each do |s|
+          if scope == s.to_s && user = find_user(scope, s, identifier)
+            self.current_user = user
+          end
+        end
+      end
+    end
+
     def find_user(scope, identifier_scope, identifier)
       identifier_column = SwitchUser.available_users_identifiers[identifier_scope] || :id
       if identifier_column == :id
@@ -72,5 +87,9 @@ class SwitchUserController < ApplicationController
 
     def authlogic_current_user
       UserSession.find.try(:record)
+    end
+
+    def restful_authentication_current_user
+      current_user
     end
 end
