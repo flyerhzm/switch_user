@@ -36,12 +36,12 @@ erb
 or haml
 
     = switch_user_select
-    
+
 If there are too many users (in production), the switch_user_select is not a good choice, you should call the switch user request by yourself.
 
     <%= link_to user.login, "/switch_user?scope_identifier=user_#{user.id}" %>
     <%= link_to admin.login, "/switch_user?scope_identifier=admin_#{admin.id}" %>
-    
+
     = link_to user.login, "/switch_user?scope_identifier=user_#{user.id}"
     = link_to admin.login, "/switch_user?scope_identifier=admin_#{admin.id}"
 
@@ -59,8 +59,8 @@ By default, you can switch between Guest and all users in users table, you don't
       # provider may be :devise or :authlogic
       config.provider = :devise
 
-      # available_users is a hash, 
-      # key is the model name of user (:user, :admin, or any name you use), 
+      # available_users is a hash,
+      # key is the model name of user (:user, :admin, or any name you use),
       # value is a block that return the users that can be switched.
       config.available_users = { :user => lambda { User.all } }
 
@@ -77,19 +77,19 @@ By default, you can switch between Guest and all users in users table, you don't
       # value is the column name which will be displayed in select box
       config.available_users_names = { :user => :email }
 
-      # controller_guard is a block, 
-      # if it returns true, the request will continue, 
+      # controller_guard is a block,
+      # if it returns true, the request will continue,
       # else the request will be refused and returns "Permission Denied"
       # if you switch from "admin" to user, the current_user param is "admin"
       config.controller_guard = lambda { |current_user, request| Rails.env.development? }
 
-      # view_guard is a block, 
-      # if it returns true, the switch user select box will be shown, 
+      # view_guard is a block,
+      # if it returns true, the switch user select box will be shown,
       # else the select box will not be shown
       # if you switch from admin to "user", the current_user param is "user"
-      config.view_guard == lambda { |current_user, request| Rails.env.development? }
+      config.view_guard = lambda { |current_user, request| Rails.env.development? }
 
-      # redirect_path is a block, it returns which page will be redirected 
+      # redirect_path is a block, it returns which page will be redirected
       # after switching a user.
       config.redirect_path = lambda { |request, params| '/' }
     end
@@ -103,23 +103,23 @@ If you want to switch both available users and available admins
 If you want to use name column as the user identifier
 
     config.available_users_identifiers => { :user => :name }
-    
+
 If you want to display the login field in switch user select box
 
     config.available_users_names = { :user => :login }
-    
+
 If you only allow switching from admin to user in production environment
 
     config.controller_guard = lambda { |current_user, request| Rails.env == "production" and current_user.admin? }
-    
+
 If you only want to display switch user select box for admins in production environment
 
     config.view_guard = lambda { |current_user, request| Rails.env == "production" and current_user and current_user.admin? }
-    
+
 If you want to redirect user to "/dashboard" page
 
     config.redirect_path = lambda { |request, params| "/dashboard" }
-    
+
 
 Copyright © 2010 Richard Huang (flyerhzm@gmail.com), released under the MIT license
 
