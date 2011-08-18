@@ -94,7 +94,7 @@ By default, you can switch between Guest and all users in users table, you don't
       config.redirect_path = lambda { |request, params| '/' }
     end
 
-If the default configuration can't meet your requirement, you can define your customized configuration in <code>config/initializaers/switch_user.rb</code>
+If the default configuration can't meet your requirement, you can define your customized configuration in <code>config/initializers/switch_user.rb</code>
 
 If you want to switch both available users and available admins
 
