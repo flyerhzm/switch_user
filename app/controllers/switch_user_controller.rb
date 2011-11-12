@@ -10,6 +10,11 @@ class SwitchUserController < ApplicationController
     send("#{SwitchUser.provider}_handle", params)
     redirect_to(SwitchUser.redirect_path.call(request, params))
   end
+  
+  def set_original_user
+    send("#{SwitchUser.provider}_reset", params)
+    redirect_to(SwitchUser.redirect_path.call(request, params))
+  end
 
   private
     def developer_modes_only
@@ -32,12 +37,44 @@ class SwitchUserController < ApplicationController
 
         SwitchUser.available_users.keys.each do |s|
           if scope == s.to_s
+            original_user_id, original_user_scope = nil, nil
+            if current_user
+              original_user_id    = user_session[:original_user_id]
+              original_user_scope = user_session[:original_user_scope]
+              original_user_id    = current_user.id if    original_user_id.blank?
+              original_user_scope = scope           if original_user_scope.blank?
+            end
             user = find_user(scope, s, identifier)
             warden.set_user(user, :scope => scope)
+            if current_user
+              user_session[:original_user_id]    = original_user_id
+              user_session[:original_user_scope] = original_user_scope
+            end
           else
             warden.logout(s)
           end
         end
+      end
+    end
+    
+    def devise_reset(params)
+      if params[:scope_identifier].blank?
+        SwitchUser.available_users.keys.each do |s|
+          warden.logout(s)
+        end
+      else
+        params[:scope_identifier] =~ /^([^_]+)_(.*)$/
+        scope, identifier = $1, $2
+        original_user_id, original_user_scope = nil, nil
+        if current_user
+          original_user_id    = user_session[:original_user_id]
+          original_user_scope = user_session[:original_user_scope]
+        end
+        user_session[:original_user_id]    = nil
+        user_session[:original_user_scope] = nil
+        user = find_user(original_user_scope, original_user_scope, original_user_id)
+        warden.set_user(user, :scope => original_user_scope)
+
       end
     end
 
