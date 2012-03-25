@@ -1,7 +1,7 @@
 switch_user
 ===========
 
-Inspired from [hobo][0], switch_user provides a convenient way to switch current user that speeds up your development.
+Inspired from [hobo][0], switch_user provides a convenient way to switch current user that speeds up your development and reproduce user specified error on production.
 
 Use Case
 --------
@@ -10,7 +10,7 @@ switch_user is very useful in such use cases
 
 1. switch current users in development so that you don't waste your time to logout, login and input email (login) or password any more.
 
-2. reproduce the user specified error in production. Sometimes the error is only raised for specified user, which is difficult to reproduce for developers, switch_user can help you reproduce it by login as that user.
+2. reproduce the user specified error on production. Sometimes the error is only raised for specified user, which is difficult to reproduce for developers, switch_user can help you reproduce it by login as that user.
 
 Example
 -------
@@ -37,7 +37,7 @@ or haml
 
     = switch_user_select
 
-If there are too many users (in production), the switch_user_select is not a good choice, you should call the switch user request by yourself.
+If there are too many users (on production), the switch_user_select is not a good choice, you should call the switch user request by yourself.
 
     <%= link_to user.login, "/switch_user?scope_identifier=user_#{user.id}" %>
     <%= link_to admin.login, "/switch_user?scope_identifier=admin_#{admin.id}" %>
