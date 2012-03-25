@@ -2,7 +2,7 @@ module SwitchUser
   if defined? Rails::Engine
     class Engine < Rails::Engine
       config.to_prepare do
-        ApplicationController.helper(SwitchUserHelper)
+        ActionView::Base.send :include, SwitchUserHelper
       end
     end
   else
