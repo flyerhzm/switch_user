@@ -32,6 +32,6 @@ module SwitchUserHelper
       user = send("current_#{scope}")
       break if user
     end
-    SwitchUser.view_guard.call(user, request)
+    SwitchUser.view_guard.call(self)
   end
 end
