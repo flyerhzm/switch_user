@@ -21,6 +21,28 @@ class SwitchUserController < ApplicationController
       SwitchUser.controller_guard.call(current_user, request)
     end
 
+    def clearance_handle(params)
+      if params[:scope_identifier].blank?
+        current_user.reset_remember_token! if current_user
+        cookies.delete(:remember_token)
+        current_user = nil
+      else
+        params[:scope_identifier] =~ /^([^_]+)_(.*)$/
+        scope, identifier = $1, $2
+
+        SwitchUser.available_users.keys.each do |s|
+          if scope == s.to_s
+            user = find_user(scope, s, identifier)
+            cookies[:remember_token] = {
+              :value   => user.remember_token,
+              :expires => 1.year.from_now.utc
+            }
+            self.current_user = user
+          end
+        end
+      end
+    end
+
     def devise_handle(params)
       if params[:scope_identifier].blank?
         SwitchUser.available_users.keys.each do |s|
@@ -79,6 +101,10 @@ class SwitchUserController < ApplicationController
       else
         scope.classify.constantize.send("find_by_#{identifier_column}!", identifier)
       end
+    end
+
+    def clearance_current_user
+      current_user
     end
 
     def devise_current_user
