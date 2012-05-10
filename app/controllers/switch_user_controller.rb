@@ -10,7 +10,7 @@ class SwitchUserController < ApplicationController
     send("#{SwitchUser.provider}_handle", params)
     redirect_to(SwitchUser.redirect_path.call(request, params))
   end
-  
+
   def set_original_user
     send("#{SwitchUser.provider}_reset", params)
     redirect_to(SwitchUser.redirect_path.call(request, params))
@@ -56,7 +56,7 @@ class SwitchUserController < ApplicationController
         end
       end
     end
-    
+
     def devise_reset(params)
       if params[:scope_identifier].blank?
         SwitchUser.available_users.keys.each do |s|
