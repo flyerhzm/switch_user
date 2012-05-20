@@ -28,9 +28,9 @@ module SwitchUser
   self.available_users_names = { :user => :email }
 
   mattr_accessor :controller_guard
-  self.controller_guard = lambda { |current_user, request| Rails.env.development? }
+  self.controller_guard = lambda { |controller| Rails.env.development? }
   mattr_accessor :view_guard
-  self.view_guard = lambda { |current_user, request| Rails.env.development? }
+  self.view_guard = lambda { |controller| Rails.env.development? }
 
   mattr_accessor :redirect_path
   self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }

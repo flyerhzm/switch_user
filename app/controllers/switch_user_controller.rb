@@ -17,8 +17,7 @@ class SwitchUserController < ApplicationController
     end
 
     def available?
-      current_user = send("#{SwitchUser.provider}_current_user")
-      SwitchUser.controller_guard.call(current_user, request)
+      SwitchUser.controller_guard.call(self)
     end
 
     def devise_handle(params)
