@@ -56,7 +56,7 @@ Configuration
 By default, you can switch between Guest and all users in users table, you don't need to do anything. The following is the default configuration.
 
     SwitchUser.setup do |config|
-      # provider may be :devise, :authlogic or :restful_authentication
+      # provider may be :devise, :authlogic, :restful_authentication or :sorcery
       config.provider = :devise
 
       # available_users is a hash,
