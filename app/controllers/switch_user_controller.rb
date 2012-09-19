@@ -74,7 +74,7 @@ class SwitchUserController < ApplicationController
 
     def sorcery_handle(params)
       if params[:scope_identifier].blank?
-        logout_killing_session!
+        self.logout
       else
         params[:scope_identifier] =~ /^([^_]+)_(.*)$/
         scope, identifier = $1, $2
