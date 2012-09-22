@@ -52,6 +52,10 @@ class SwitchUserController < ApplicationController
   end
 
   def provider
-    Provider::Sorcery.new(self)
+    provider_class.new(self)
+  end
+
+  def provider_class
+    "Provider::#{SwitchUser.provider.to_s.classify}".constantize
   end
 end
