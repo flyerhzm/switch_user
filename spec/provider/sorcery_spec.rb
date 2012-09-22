@@ -31,7 +31,7 @@ describe Provider::Sorcery do
 
     provider.logout
 
-    controller.current_user.should == nil
+    provider.current_user.should == nil
   end
 
   it "knows the current_user" do
