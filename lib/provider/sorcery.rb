@@ -4,15 +4,15 @@ module Provider
       @controller = controller
     end
 
-    def login(user)
+    def login(user, scope = nil)
       @controller.auto_login(user)
     end
 
-    def logout
+    def logout(scope = nil)
       @controller.logout
     end
 
-    def current_user
+    def current_user(scope = nil)
       @controller.current_user
     end
   end
