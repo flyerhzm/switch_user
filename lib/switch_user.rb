@@ -1,3 +1,8 @@
+require 'provider/sorcery'
+require 'provider/devise'
+require 'provider/authlogic'
+require 'provider/restful_authentication'
+
 module SwitchUser
   if defined? Rails::Engine
     class Engine < Rails::Engine
