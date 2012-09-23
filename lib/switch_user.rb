@@ -1,7 +1,4 @@
-require 'provider/sorcery'
-require 'provider/devise'
-require 'provider/authlogic'
-require 'provider/restful_authentication'
+require 'provider'
 
 module SwitchUser
   if defined? Rails::Engine
@@ -39,7 +36,7 @@ module SwitchUser
 
   mattr_accessor :redirect_path
   self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }
-  
+
   def self.setup
     yield self
   end
