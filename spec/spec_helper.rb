@@ -1,3 +1,5 @@
+require 'support/provider'
+
 class ApplicationController
 
 end
