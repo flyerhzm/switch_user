@@ -1,4 +1,4 @@
-require 'provider'
+require 'switch_user/provider'
 
 module SwitchUser
   if defined? Rails::Engine
