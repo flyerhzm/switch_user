@@ -56,6 +56,6 @@ class SwitchUserController < ApplicationController
   end
 
   def provider_class
-    "Provider::#{SwitchUser.provider.to_s.classify}".constantize
+    "SwitchUser::Provider::#{SwitchUser.provider.to_s.classify}".constantize
   end
 end
