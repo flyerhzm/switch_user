@@ -2,6 +2,10 @@ require 'spec_helper'
 require 'switch_user'
 
 describe SwitchUser do
+  it "has a default provider" do
+    SwitchUser.provider.should == :devise
+  end
+
   describe "assigning the provider" do
     it "sets the provider" do
       # ensure we aren't breaking existing functionality
