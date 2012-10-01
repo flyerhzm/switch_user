@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'provider/restful_authentication'
+require 'switch_user/provider/restful_authentication'
 
 class RestfulAuthenticationController
   attr_accessor :current_user
@@ -9,9 +9,9 @@ class RestfulAuthenticationController
   end
 end
 
-describe Provider::RestfulAuthentication do
+describe SwitchUser::Provider::RestfulAuthentication do
   let(:controller) { RestfulAuthenticationController.new }
-  let(:provider) { Provider::RestfulAuthentication.new(controller) }
+  let(:provider) { SwitchUser::Provider::RestfulAuthentication.new(controller) }
 
   it_behaves_like "a provider"
 end

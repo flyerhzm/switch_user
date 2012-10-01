@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'provider/sorcery'
+require 'switch_user/provider/sorcery'
 
 class SorceryController
   def logout
@@ -15,9 +15,9 @@ class SorceryController
   end
 end
 
-describe Provider::Sorcery do
+describe SwitchUser::Provider::Sorcery do
   let(:controller) { SorceryController.new }
-  let(:provider) { Provider::Sorcery.new(controller) }
+  let(:provider) { SwitchUser::Provider::Sorcery.new(controller) }
 
   it_behaves_like "a provider"
 end

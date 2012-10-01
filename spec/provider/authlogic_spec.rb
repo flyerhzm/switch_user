@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'provider/authlogic'
+require 'switch_user/provider/authlogic'
 
 class UserSession
   class << self
@@ -29,9 +29,9 @@ class AuthlogicController
   end
 end
 
-describe Provider::Authlogic do
+describe SwitchUser::Provider::Authlogic do
   let(:controller) { AuthlogicController.new }
-  let(:provider) { Provider::Authlogic.new(controller) }
+  let(:provider) { SwitchUser::Provider::Authlogic.new(controller) }
 
   it_behaves_like "a provider"
 end

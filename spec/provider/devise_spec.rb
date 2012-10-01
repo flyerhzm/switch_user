@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'provider/devise'
+require 'switch_user/provider/devise'
 
 class FakeWarden
   attr_reader :user
@@ -27,9 +27,9 @@ class DeviseController
   end
 end
 
-describe Provider::Devise do
+describe SwitchUser::Provider::Devise do
   let(:controller) { DeviseController.new }
-  let(:provider) { Provider::Devise.new(controller) }
+  let(:provider) { SwitchUser::Provider::Devise.new(controller) }
 
   it_behaves_like "a provider"
 end
