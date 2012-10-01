@@ -26,4 +26,8 @@ module SwitchUser
   def self.setup
     yield self
   end
+
+  def self.provider_class
+    "SwitchUser::Provider::#{provider.to_s.classify}".constantize
+  end
 end

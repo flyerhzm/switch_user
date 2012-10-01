@@ -52,10 +52,6 @@ class SwitchUserController < ApplicationController
   end
 
   def provider
-    provider_class.new(self)
-  end
-
-  def provider_class
-    "SwitchUser::Provider::#{SwitchUser.provider.to_s.classify}".constantize
+    SwitchUser.provider_class.new(self)
   end
 end
