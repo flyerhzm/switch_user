@@ -3,6 +3,10 @@ require 'switch_user/provider'
 require 'active_support/core_ext'
 
 module SwitchUser
+  autoload :UserLoader, "switch_user/user_loader"
+
+  class InvalidScope < Exception; end
+
   mattr_accessor :provider
   mattr_accessor :available_users
   mattr_accessor :available_users_identifiers
@@ -17,6 +21,10 @@ module SwitchUser
 
   def self.provider_class
     "SwitchUser::Provider::#{provider.to_s.classify}".constantize
+  end
+
+  def self.available_scopes
+    available_users.keys
   end
 
   private
