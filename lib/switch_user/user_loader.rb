@@ -3,11 +3,6 @@ module SwitchUser
     attr_reader :scope
     attr_accessor :id
 
-    def self.from_params(scope_identifier)
-      # convert to scope and id
-      # new(scope, id).load
-    end
-
     def initialize(scope, id)
       self.scope = scope
       self.id = id
