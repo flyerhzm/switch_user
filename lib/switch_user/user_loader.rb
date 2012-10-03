@@ -23,7 +23,7 @@ module SwitchUser
       if SwitchUser.available_scopes.include?(scope.to_sym)
         @scope = scope
       else
-        raise SwitchUser::InvalidScope
+        raise InvalidScope
       end
     end
 
