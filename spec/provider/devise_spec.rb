@@ -2,18 +2,19 @@ require 'spec_helper'
 require 'switch_user/provider/devise'
 
 class FakeWarden
-  attr_reader :user
+  attr_reader :user_hash
 
   def initialize
-    @user = nil
+    @user_hash = {}
   end
 
   def set_user(user, args)
-    @user = user
+    scope = args.fetch(:scope, :user)
+    @user_hash[scope] = user
   end
 
   def logout(scope)
-    @user = nil
+    @user_hash.delete(scope)
   end
 end
 
@@ -23,7 +24,11 @@ class DeviseController
   end
 
   def current_user
-    @warden.user
+    @warden.user_hash[:user]
+  end
+
+  def current_admin
+    @warden.user_hash[:admin]
   end
 end
 
@@ -32,4 +37,11 @@ describe SwitchUser::Provider::Devise do
   let(:provider) { SwitchUser::Provider::Devise.new(controller) }
 
   it_behaves_like "a provider"
+
+  it "can use alternate scopes" do
+    user = stub(:user)
+    provider.login(user, :admin)
+
+    provider.current_user(:admin).should == user
+  end
 end
