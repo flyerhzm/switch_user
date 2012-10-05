@@ -14,4 +14,8 @@ shared_examples_for "a provider" do
 
     provider.current_user.should == nil
   end
+
+  it "responds to login_exclusive" do
+    provider.should respond_to(:login_exclusive)
+  end
 end

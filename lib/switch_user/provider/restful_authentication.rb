@@ -1,6 +1,8 @@
+require 'switch_user/provider/base'
+
 module SwitchUser
   module Provider
-    class RestfulAuthentication
+    class RestfulAuthentication < Base
       def initialize(controller)
         @controller = controller
       end

@@ -1,6 +1,8 @@
+require 'switch_user/provider/base'
+
 module SwitchUser
   module Provider
-    class Sorcery
+    class Sorcery < Base
       def initialize(controller)
         @controller = controller
       end

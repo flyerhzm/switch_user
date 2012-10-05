@@ -1,6 +1,8 @@
+require 'switch_user/provider/base'
+
 module SwitchUser
   module Provider
-    class Devise
+    class Devise < Base
       def initialize(controller)
         @controller = controller
         @warden = @controller.warden

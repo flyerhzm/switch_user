@@ -44,4 +44,19 @@ describe SwitchUser::Provider::Devise do
 
     provider.current_user(:admin).should == user
   end
+
+  describe "#login_exclusive" do
+    let(:user) { stub(:user) }
+    before do
+      SwitchUser.stub(:available_users => {:user => nil, :admin => nil})
+      provider.login(user, :admin)
+      provider.login_exclusive(user, :scope => :user)
+    end
+    it "logs the user in" do
+      provider.current_user.should == user
+    end
+    it "logs out other scopes" do
+      provider.current_user(:admin).should be_nil
+    end
+  end
 end

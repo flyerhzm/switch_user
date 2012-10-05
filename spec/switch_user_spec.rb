@@ -6,6 +6,12 @@ describe SwitchUser do
     SwitchUser.provider.should == :devise
   end
 
+  describe "#available_scopes" do
+    it "returns a list of available scopes" do
+      SwitchUser.available_scopes.should == [:user]
+    end
+  end
+
   describe "assigning the provider" do
     it "sets the provider" do
       # ensure we aren't breaking existing functionality
