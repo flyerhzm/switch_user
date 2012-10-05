@@ -31,14 +31,8 @@ class SwitchUserController < ApplicationController
       params[:scope_identifier] =~ /^([^_]+)_(.*)$/
       scope, identifier = $1, $2
 
-      SwitchUser.available_users.keys.each do |s|
-        if scope == s.to_s
-          user = SwitchUser::UserLoader.new(scope, identifier)
-          provider.login(user, scope)
-        else
-          provider.logout(s)
-        end
-      end
+      user = SwitchUser::UserLoader.new(scope, identifier).load
+      provider.login_exclusive(user, :scope => scope)
     end
   end
 
