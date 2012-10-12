@@ -1,23 +1,28 @@
 module SwitchUserHelper
   def switch_user_select
     if available?
-      if current_user
-        options = "<option value=''>Guest</option>"
-      else
-        options = "<option selected='selected' value=''>Guest</option>"
-      end
+      current_user = provider.current_user
+      options = ""
+
+      options += content_tag(:option, "Guest", :value => "", :selected => !current_user)
       SwitchUser.available_users.each do |scope, user_proc|
-        current = send("current_#{scope}")
         identifier = SwitchUser.available_users_identifiers[scope]
         name = SwitchUser.available_users_names[scope]
+
         user_proc.call.each do |user|
-          if current and current.send(identifier) == user.send(identifier)
-            options += "<option selected='selected' value='#{scope}_#{user.send(identifier)}'>#{user.send(name)}</option>"
+          if current_user == user
+            options += content_tag(:option,
+                                   current_user.send(name),
+                                   :value => "#{scope}_#{current_user.send(identifier)}",
+                                   :selected => true)
           else
-            options += "<option value='#{scope}_#{user.send(identifier)}'>#{user.send(name)}</option>"
+            options += content_tag(:option,
+                                   user.send(name),
+                                   :value => "#{scope}_#{user.send(identifier)}")
           end
         end
       end
+
       if options.respond_to?(:html_safe)
         options = options.html_safe
       end
@@ -33,5 +38,9 @@ module SwitchUserHelper
       break if user
     end
     SwitchUser.view_guard.call(user, request)
+  end
+
+  def provider
+    SwitchUser.provider_class.new(controller)
   end
 end
