@@ -1,11 +1,11 @@
 module SwitchUserHelper
   def switch_user_select
     if available?
-      current_user = provider.current_user
       options = ""
 
       options += content_tag(:option, "Guest", :value => "", :selected => !current_user)
       SwitchUser.available_users.each do |scope, user_proc|
+        current_user = provider.current_user(scope)
         identifier = SwitchUser.available_users_identifiers[scope]
         name = SwitchUser.available_users_names[scope]
 
@@ -32,11 +32,7 @@ module SwitchUserHelper
   end
 
   def available?
-    user = nil
-    SwitchUser.available_users.keys.each do |scope|
-      user = send("current_#{scope}")
-      break if user
-    end
+    user = provider.current_users_without_scope.first
     SwitchUser.view_guard.call(user, request)
   end
 
