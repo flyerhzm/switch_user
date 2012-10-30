@@ -60,7 +60,19 @@ describe SwitchUser::Provider::Devise do
     it "logs out other scopes" do
       provider.current_user(:admin).should be_nil
     end
+  end
 
+  describe "#logout_all" do
+    it "logs out users under all scopes" do
+      SwitchUser.stub(:available_users => {:user => nil, :admin => nil})
+      provider.login(user, :admin)
+      provider.login(user, :user)
+
+      provider.logout_all
+
+      provider.current_user(:admin).should be_nil
+      provider.current_user(:user).should be_nil
+    end
   end
 
   describe "#all_current_users" do

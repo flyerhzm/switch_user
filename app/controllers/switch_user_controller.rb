@@ -24,9 +24,7 @@ class SwitchUserController < ApplicationController
 
   def handle_request(params)
     if params[:scope_identifier].blank?
-      SwitchUser.available_users.keys.each do |s|
-        provider.logout(s)
-      end
+      provider.logout_all
     else
       params[:scope_identifier] =~ /^([^_]+)_(.*)$/
       scope, identifier = $1, $2

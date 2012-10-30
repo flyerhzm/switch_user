@@ -12,12 +12,13 @@ module SwitchUser
       def login_exclusive(user, args)
         requested_scope = args.fetch(:scope, :user).to_sym
 
+        logout_all
+        login(user, requested_scope)
+      end
+
+      def logout_all
         SwitchUser.available_scopes.each do |scope|
-          if requested_scope == scope
-            login(user, requested_scope)
-          else
-            logout(scope)
-          end
+          logout(scope)
         end
       end
     end
