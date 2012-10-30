@@ -6,20 +6,15 @@ module SwitchUserHelper
     options += content_tag(:option, "Guest", :value => "", :selected => !current_user)
     SwitchUser.available_users.each do |scope, user_proc|
       current_user = provider.current_user(scope)
-      identifier = SwitchUser.available_users_identifiers[scope]
+      id_name = SwitchUser.available_users_identifiers[scope]
       name = SwitchUser.available_users_names[scope]
 
       user_proc.call.each do |user|
-        if current_user == user
-          options += content_tag(:option,
-                                 current_user.send(name),
-                                 :value => "#{scope}_#{current_user.send(identifier)}",
-                                 :selected => true)
-        else
-          options += content_tag(:option,
-                                 user.send(name),
-                                 :value => "#{scope}_#{user.send(identifier)}")
-        end
+        user_match = (user == current_user)
+        options += content_tag(:option,
+                               tag_label(user, name),
+                               :value => tag_value(user, id_name, scope),
+                               :selected => user_match)
       end
     end
 
@@ -28,6 +23,18 @@ module SwitchUserHelper
     end
     select_tag "switch_user_identifier", options,
       :onchange => "location.href = '/switch_user?scope_identifier=' + encodeURIComponent(this.options[this.selectedIndex].value)"
+  end
+
+  private
+
+  def tag_value(user, id_name, scope)
+    identifier = user.send(id_name)
+
+    "#{scope}_#{identifier}"
+  end
+
+  def tag_label(user, name)
+    user.send(name)
   end
 
   def available?
