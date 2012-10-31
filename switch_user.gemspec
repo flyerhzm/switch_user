@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.name        = "switch_user"
   s.version     = SwitchUser::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Richard Huang"]
+  s.authors     = ["Richard Huang", "Luke Cowell"]
   s.email       = ["flyerhzm@gmail.com"]
   s.homepage    = "http://rubygems.org/gems/switch_user"
   s.summary     = "Easily switch current user to speed up development"
