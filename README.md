@@ -12,7 +12,9 @@ switch_user is very useful in such use cases
 
 ## Example
 
-Visit here: [http://switch-user-example.heroku.com/][1], switch the current user in the select box.
+Visit here: <http://switch-user-example.heroku.com>, switch the current user in the select box.
+
+And source code here: <https://github.com/flyerhzm/switch_user_example>
 
 ## Install
 
@@ -126,5 +128,3 @@ If you want to redirect user to "/dashboard" page
 Copyright © 2010 - 2012 Richard Huang (flyerhzm@gmail.com), released under the MIT license
 
 [0]: https://github.com/tablatom/hobo
-[1]: http://switch-user-example.heroku.com/
-
