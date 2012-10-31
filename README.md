@@ -45,6 +45,13 @@ If you use it in a Rails 2 project, you have to add a route manually.
     # config/routes.rb
     map.switch_user '/switch_user', :controller => 'switch_user', :action => 'set_current_user'
 
+If you have a wildcard route in your Rails 3 project, add a route before the wildcard route.
+
+    # config/routes.rb
+    match 'switch_user' => 'switch_user#set_current_user'
+    # wildcard route that will match anything
+    match ':id' => 'pages#show'
+
 ## Configuration
 
 By default, you can switch between Guest and all users in users table, you don't need to do anything. The following is the default configuration.
