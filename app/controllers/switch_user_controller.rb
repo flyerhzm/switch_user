@@ -26,7 +26,7 @@ class SwitchUserController < ApplicationController
     if params[:scope_identifier].blank?
       provider.logout_all
     else
-      params[:scope_identifier] =~ /^([^_]+)_(.*)$/
+      params[:scope_identifier] =~ /^(.*)_([^_]+)$/
       scope, identifier = $1, $2
 
       user = SwitchUser::UserLoader.new(scope, identifier).load
