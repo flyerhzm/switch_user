@@ -11,8 +11,8 @@ module SwitchUser
   mattr_accessor :available_users
   mattr_accessor :available_users_identifiers
   mattr_accessor :available_users_names
-  mattr_accessor :controller_guard
-  mattr_accessor :view_guard
+  mattr_writer :controller_guard
+  mattr_writer :view_guard
   mattr_accessor :redirect_path
 
   def self.setup
@@ -27,6 +27,14 @@ module SwitchUser
     available_users.keys
   end
 
+  def self.controller_guard(*args)
+    call_guard(@@controller_guard, args)
+  end
+
+  def self.view_guard(*args)
+    call_guard(@@view_guard, args)
+  end
+
   private
 
   def self.reset_config
@@ -37,6 +45,11 @@ module SwitchUser
     self.controller_guard = lambda { |current_user, request| Rails.env.development? }
     self.view_guard = lambda { |current_user, request| Rails.env.development? }
     self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }
+  end
+
+  def self.call_guard(guard, args)
+    arity = guard.arity
+    guard.call(*args[0...arity])
   end
 
   reset_config
