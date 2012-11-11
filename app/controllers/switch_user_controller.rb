@@ -19,7 +19,7 @@ class SwitchUserController < ApplicationController
   end
 
   def available?
-    SwitchUser.controller_guard.call(provider.current_user, request)
+    SwitchUser.controller_guard(provider.current_user, request)
   end
 
   def handle_request(params)
