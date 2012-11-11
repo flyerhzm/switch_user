@@ -13,17 +13,17 @@ describe SwitchUser::UserLoader do
     expect { SwitchUser::UserLoader.new("useeer", 1) }.to raise_error(SwitchUser::InvalidScope)
   end
 
-  it "loads a user" do
+  it "returns a user" do
     User.stub(:find_by_id).with(1).and_return(user)
 
     loader = SwitchUser::UserLoader.new("user", 1)
 
-    loader.load.should == user
+    loader.user.should == user
   end
 
   it "returns nil if no user is found" do
     loader = SwitchUser::UserLoader.new("user", 2)
-    loader.load.should == nil
+    loader.user.should == nil
   end
 
   it "loads a user with an alternate identifier column" do
@@ -31,6 +31,6 @@ describe SwitchUser::UserLoader do
     SwitchUser.available_users_identifiers = {:user => :email}
 
     loader = SwitchUser::UserLoader.new("user", 2)
-    loader.load.should == user
+    loader.user.should == user
   end
 end

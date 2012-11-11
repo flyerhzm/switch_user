@@ -8,7 +8,7 @@ module SwitchUser
       self.id = id
     end
 
-    def load
+    def user
       user_class.send(finder, id)
     end
 
