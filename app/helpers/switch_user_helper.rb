@@ -39,7 +39,7 @@ module SwitchUserHelper
 
   def available?
     user = provider.current_users_without_scope.first
-    SwitchUser.view_guard.call(user, request)
+    SwitchUser.view_guard(user, request)
   end
 
   def provider
