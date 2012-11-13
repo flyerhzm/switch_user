@@ -3,6 +3,18 @@ module SwitchUser
     attr_reader :scope
     attr_accessor :id
 
+    def self.prepare(*args)
+      options = args.extract_options!
+
+      if options[:scope_identifier]
+        options[:scope_identifier] =~ /^(.*)_([^_]+)$/
+        scope, id = $1, $2
+      else
+        scope, id = args
+      end
+      new(scope, id)
+    end
+
     def initialize(scope, id)
       self.scope = scope
       self.id = id
@@ -15,7 +27,7 @@ module SwitchUser
     private
 
     def scope=(scope)
-      if SwitchUser.available_scopes.include?(scope.to_sym)
+      if scope && SwitchUser.available_scopes.include?(scope.to_sym)
         @scope = scope
       else
         raise InvalidScope
