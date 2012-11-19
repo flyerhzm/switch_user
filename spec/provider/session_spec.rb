@@ -7,7 +7,7 @@ class SessionController
   end
 
   def current_user
-    User.find_by_id(session[:user_id]) if session[:user_id]
+    User.find_by_id(session[:uid]) if session[:uid]
   end
 end
 
@@ -15,6 +15,7 @@ describe SwitchUser::Provider::Session, :focus => true do
   before do
     user.stub(:id => 100)
     User.stub(:find_by_id).with(100).and_return(user)
+    SwitchUser.session_key = :uid
   end
   let(:controller) { SessionController.new }
   let(:provider) { SwitchUser::Provider::Session.new(controller) }

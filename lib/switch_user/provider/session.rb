@@ -8,15 +8,21 @@ module SwitchUser
       end
 
       def login(user, scope = nil)
-        @controller.session[:user_id] = user.id
+        @controller.session[session_key] = user.id
       end
 
       def logout(scope = nil)
-        @controller.session.delete(:user_id)
+        @controller.session.delete(session_key)
       end
 
       def current_user(scope = nil)
         @controller.current_user
+      end
+
+      private
+
+      def session_key
+        SwitchUser.session_key
       end
     end
   end

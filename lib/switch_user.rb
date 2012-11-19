@@ -14,6 +14,7 @@ module SwitchUser
   mattr_writer :controller_guard
   mattr_writer :view_guard
   mattr_accessor :redirect_path
+  mattr_accessor :session_key
 
   def self.setup
     yield self
@@ -45,6 +46,7 @@ module SwitchUser
     self.controller_guard = lambda { |current_user, request| Rails.env.development? }
     self.view_guard = lambda { |current_user, request| Rails.env.development? }
     self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }
+    self.session_key = :user_id
   end
 
   def self.call_guard(guard, args)
