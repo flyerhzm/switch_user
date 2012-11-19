@@ -5,5 +5,6 @@ module SwitchUser
     autoload :RestfulAuthentication, "switch_user/provider/restful_authentication"
     autoload :Sorcery, "switch_user/provider/sorcery"
     autoload :Dummy, "switch_user/provider/dummy"
+    autoload :Session, "switch_user/provider/session"
   end
 end
