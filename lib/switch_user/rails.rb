@@ -1,8 +1,10 @@
 if defined?(Rails)
   if defined? Rails::Engine
-    class Engine < Rails::Engine
-      config.to_prepare do
-        ActionView::Base.send :include, SwitchUserHelper
+    module SwitchUser
+      class Engine < Rails::Engine
+        config.to_prepare do
+          ActionView::Base.send :include, SwitchUserHelper
+        end
       end
     end
   else
