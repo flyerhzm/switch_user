@@ -1,10 +1,8 @@
-switch_user
-===========
+# switch_user
 
 Inspired from [hobo][0], switch_user provides a convenient way to switch current user that speeds up your development and reproduce user specified error on production.
 
-Use Case
---------
+## Use Case
 
 switch_user is very useful in such use cases
 
@@ -12,20 +10,19 @@ switch_user is very useful in such use cases
 
 2. reproduce the user specified error on production. Sometimes the error is only raised for specified user, which is difficult to reproduce for developers, switch_user can help you reproduce it by login as that user.
 
-Example
--------
+## Example
 
-Visit here: [http://switch-user-example.heroku.com/][1], switch the current user in the select box.
+Visit here: <http://switch-user-example.heroku.com>, switch the current user in the select box.
 
-Install
--------
+And source code here: <https://github.com/flyerhzm/switch_user_example>
+
+## Install
 
 Add in Gemfile.
 
     gem "switch_user"
 
-Usage
------
+## Usage
 
 Add following code into your layout page.
 
@@ -50,13 +47,19 @@ If you use it in a Rails 2 project, you have to add a route manually.
     # config/routes.rb
     map.switch_user '/switch_user', :controller => 'switch_user', :action => 'set_current_user'
 
-Configuration
--------------
+If you have a wildcard route in your Rails 3 project, add a route before the wildcard route.
+
+    # config/routes.rb
+    match 'switch_user' => 'switch_user#set_current_user'
+    # wildcard route that will match anything
+    match ':id' => 'pages#show'
+
+## Configuration
 
 By default, you can switch between Guest and all users in users table, you don't need to do anything. The following is the default configuration.
 
     SwitchUser.setup do |config|
-      # provider may be :devise, :authlogic or :restful_authentication
+      # provider may be :devise, :authlogic, :restful_authentication or :sorcery
       config.provider = :devise
 
       # available_users is a hash,
@@ -120,9 +123,8 @@ If you want to redirect user to "/dashboard" page
 
     config.redirect_path = lambda { |request, params| "/dashboard" }
 
+## Credit
 
-Copyright © 2010 Richard Huang (flyerhzm@gmail.com), released under the MIT license
+Copyright © 2010 - 2012 Richard Huang (flyerhzm@gmail.com), released under the MIT license
 
 [0]: https://github.com/tablatom/hobo
-[1]: http://switch-user-example.heroku.com/
-

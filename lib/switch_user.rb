@@ -1,41 +1,58 @@
+require 'switch_user/rails'
+require 'switch_user/provider'
+require 'active_support/core_ext'
+
 module SwitchUser
-  if defined? Rails::Engine
-    class Engine < Rails::Engine
-      config.to_prepare do
-        ActionView::Base.send :include, SwitchUserHelper
-      end
-    end
-  else
-    %w(controllers helpers).each do |dir|
-      path = File.join(File.dirname(__FILE__), '..', 'app', dir)
-      $LOAD_PATH << path
-      ActiveSupport::Dependencies.load_paths << path
-      ActiveSupport::Dependencies.load_once_paths.delete(path)
-      ActionView::Base.send :include, SwitchUserHelper
-    end
-  end
+  autoload :UserLoader, "switch_user/user_loader"
+
+  class InvalidScope < Exception; end
 
   mattr_accessor :provider
-  self.provider = :devise
-
   mattr_accessor :available_users
-  self.available_users = { :user => lambda { User.all } }
-
   mattr_accessor :available_users_identifiers
-  self.available_users_identifiers = { :user => :id }
-
   mattr_accessor :available_users_names
-  self.available_users_names = { :user => :email }
-
-  mattr_accessor :controller_guard
-  self.controller_guard = lambda { |current_user, request| Rails.env.development? }
-  mattr_accessor :view_guard
-  self.view_guard = lambda { |current_user, request| Rails.env.development? }
-
+  mattr_writer :controller_guard
+  mattr_writer :view_guard
   mattr_accessor :redirect_path
-  self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }
-  
+  mattr_accessor :session_key
+
   def self.setup
     yield self
   end
+
+  def self.provider_class
+    "SwitchUser::Provider::#{provider.to_s.classify}".constantize
+  end
+
+  def self.available_scopes
+    available_users.keys
+  end
+
+  def self.controller_guard(*args)
+    call_guard(@@controller_guard, args)
+  end
+
+  def self.view_guard(*args)
+    call_guard(@@view_guard, args)
+  end
+
+  private
+
+  def self.reset_config
+    self.provider = :devise
+    self.available_users = { :user => lambda { User.all } }
+    self.available_users_identifiers = { :user => :id }
+    self.available_users_names = { :user => :email }
+    self.controller_guard = lambda { |current_user, request| Rails.env.development? }
+    self.view_guard = lambda { |current_user, request| Rails.env.development? }
+    self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }
+    self.session_key = :user_id
+  end
+
+  def self.call_guard(guard, args)
+    arity = guard.arity
+    guard.call(*args[0...arity])
+  end
+
+  reset_config
 end
