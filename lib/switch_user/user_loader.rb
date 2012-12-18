@@ -21,7 +21,7 @@ module SwitchUser
     end
 
     def user
-      user_class.where(column_name => id)
+      user_class.where(column_name => id).first
     end
 
     private
