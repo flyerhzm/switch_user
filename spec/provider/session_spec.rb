@@ -11,7 +11,7 @@ class SessionController
   end
 end
 
-describe SwitchUser::Provider::Session, :focus => true do
+describe SwitchUser::Provider::Session do
   before do
     user.stub(:id => 100)
     User.stub(:find_by_id).with(100).and_return(user)
