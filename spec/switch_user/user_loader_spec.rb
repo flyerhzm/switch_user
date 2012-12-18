@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'switch_user/user_loader'
 
 class User
-  def self.find_by_id(id)
+  def self.where(*)
   end
 end
 
@@ -16,7 +16,7 @@ describe SwitchUser::UserLoader do
   describe ".user" do
     before do
       SwitchUser.available_users_identifiers = {:user => :id}
-      User.stub(:find_by_id).with("1").and_return(user)
+      User.stub(:where).with(:id => "1").and_return(user)
     end
     it "can be loaded from a scope and identifier" do
       loaded_user = SwitchUser::UserLoader.prepare("user","1").user
@@ -36,7 +36,7 @@ describe SwitchUser::UserLoader do
   end
 
   it "returns a user" do
-    User.stub(:find_by_id).with(1).and_return(user)
+    User.stub(:where).with(:id => 1).and_return(user)
 
     loader = SwitchUser::UserLoader.new("user", 1)
 
@@ -49,7 +49,7 @@ describe SwitchUser::UserLoader do
   end
 
   it "loads a user with an alternate identifier column" do
-    User.stub(:find_by_email).with(2).and_return(user)
+    User.stub(:where).with(:email => 2).and_return(user)
     SwitchUser.available_users_identifiers = {:user => :email}
 
     loader = SwitchUser::UserLoader.new("user", 2)

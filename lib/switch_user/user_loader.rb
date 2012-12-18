@@ -21,7 +21,7 @@ module SwitchUser
     end
 
     def user
-      user_class.send(finder, id)
+      user_class.where(column_name => id)
     end
 
     private
@@ -38,10 +38,8 @@ module SwitchUser
       scope.classify.constantize
     end
 
-    def finder
-      column_name = SwitchUser.available_users_identifiers[scope.to_sym]
-
-      "find_by_#{column_name}"
+    def column_name
+      SwitchUser.available_users_identifiers[scope.to_sym]
     end
   end
 end
