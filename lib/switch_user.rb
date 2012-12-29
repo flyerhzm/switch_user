@@ -11,8 +11,6 @@ module SwitchUser
   mattr_accessor :available_users
   mattr_accessor :available_users_identifiers
   mattr_accessor :available_users_names
-  mattr_writer :controller_guard
-  mattr_writer :view_guard
   mattr_accessor :redirect_path
   mattr_accessor :session_key
 
@@ -31,10 +29,12 @@ module SwitchUser
   def self.controller_guard(*args)
     call_guard(@@controller_guard, args)
   end
+  mattr_writer :controller_guard
 
   def self.view_guard(*args)
     call_guard(@@view_guard, args)
   end
+  mattr_writer :view_guard
 
   private
 
