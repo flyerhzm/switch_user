@@ -17,7 +17,7 @@ module SwitchUser
       end
 
       def current_user(scope = :user)
-        @controller.send("current_#{scope}")
+        @warden.user(scope)
       end
     end
   end
