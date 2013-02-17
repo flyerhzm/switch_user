@@ -13,6 +13,10 @@ class FakeWarden
     @user_hash[scope] = user
   end
 
+  def user(scope)
+    @user_hash[scope]
+  end
+
   def logout(scope)
     @user_hash.delete(scope)
   end
@@ -24,11 +28,7 @@ class DeviseController
   end
 
   def current_user
-    @warden.user_hash[:user]
-  end
-
-  def current_admin
-    @warden.user_hash[:admin]
+    @warder.user
   end
 end
 

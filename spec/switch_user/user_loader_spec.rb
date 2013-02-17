@@ -1,12 +1,6 @@
 require 'spec_helper'
 require 'switch_user/user_loader'
 
-class User
-  def self.where(*)
-    []
-  end
-end
-
 describe SwitchUser::UserLoader do
   let(:user) { stub(:user) }
   let(:user_result) { [user] }
