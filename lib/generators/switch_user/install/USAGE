@@ -1,0 +1,8 @@
+Description:
+    This generator will create all the necessary files to use and customize switch_user.
+
+Example:
+    rails generate switch_user:install
+
+    This will create:
+        config/initializer/switch_user.rb
