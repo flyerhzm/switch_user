@@ -13,6 +13,7 @@ module SwitchUser
   mattr_accessor :available_users_names
   mattr_accessor :redirect_path
   mattr_accessor :session_key
+  mattr_accessor :helper_with_guest
 
   def self.setup
     yield self
@@ -47,6 +48,7 @@ module SwitchUser
     self.view_guard = lambda { |current_user, request| Rails.env.development? }
     self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }
     self.session_key = :user_id
+    self.helper_with_guest = true
   end
 
   def self.call_guard(guard, args)

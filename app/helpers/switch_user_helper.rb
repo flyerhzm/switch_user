@@ -1,10 +1,11 @@
 module SwitchUserHelper
   def switch_user_select
     return unless available?
-    options = ""
+    options = ''
 
-    options += content_tag(:option, "Guest", :value => "", :selected => !current_user)
+    options += content_tag(:option, 'Guest', :value => '', :selected => !current_user) if SwitchUser.helper_with_guest
     SwitchUser.available_users.each do |scope, user_proc|
+
       current_user = provider.current_user(scope)
       id_name = SwitchUser.available_users_identifiers[scope]
       name = SwitchUser.available_users_names[scope]

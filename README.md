@@ -123,6 +123,10 @@ If you want to redirect user to "/dashboard" page
 
     config.redirect_path = lambda { |request, params| "/dashboard" }
 
+If you want to hide a 'Guest' item in the helper dropdown list
+
+    config.helper_with_guest = false
+
 ## Credit
 
 Copyright © 2010 - 2012 Richard Huang (flyerhzm@gmail.com), released under the MIT license
