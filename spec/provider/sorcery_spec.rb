@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'switch_user/provider/sorcery'
 
-class SorceryController
+class SorceryController < TestController
   def logout
     @user = nil
   end

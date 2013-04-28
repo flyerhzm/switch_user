@@ -13,10 +13,19 @@ module SwitchUser
 
       def logout(scope = nil)
         @user = nil
+        @original_user = nil
       end
 
       def current_user(scope = nil)
         @user
+      end
+
+      def original_user
+        @original_user
+      end
+
+      def lock_user!
+        @original_user = @user
       end
     end
   end

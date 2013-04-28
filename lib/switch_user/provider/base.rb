@@ -21,6 +21,18 @@ module SwitchUser
           logout(scope)
         end
       end
+
+      def original_user
+        @controller.session[:original_user]
+      end
+
+      def lock_user!
+        @controller.session[:original_user] = current_user
+      end
+
+      def clear_original_user
+        @controller.session.delete(:original_user)
+      end
     end
   end
 end

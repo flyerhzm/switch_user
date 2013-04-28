@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'switch_user/provider/restful_authentication'
 
-class RestfulAuthenticationController
+class RestfulAuthenticationController < TestController
   attr_accessor :current_user
 
   def logout_killing_session!

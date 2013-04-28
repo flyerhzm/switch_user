@@ -12,6 +12,12 @@ class ApplicationController < ActionController::Base
 
 end
 
+class TestController
+  def session
+    @session_hash ||= {}
+  end
+end
+
 class User
   def self.where(*)
     []

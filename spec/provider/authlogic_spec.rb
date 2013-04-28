@@ -23,7 +23,7 @@ class UserSession
   end
 end
 
-class AuthlogicController
+class AuthlogicController < TestController
   def current_user_session
     UserSession
   end

@@ -22,7 +22,7 @@ class FakeWarden
   end
 end
 
-class DeviseController
+class DeviseController < TestController
   def warden
     @warden ||= FakeWarden.new
   end

@@ -12,6 +12,7 @@ module SwitchUser
       end
 
       def logout(scope = nil)
+        clear_original_user
         @controller.logout_killing_session!
       end
 
