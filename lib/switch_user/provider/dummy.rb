@@ -24,8 +24,8 @@ module SwitchUser
         @original_user
       end
 
-      def lock_user!
-        @original_user = @user
+      def remember_current_user
+        @original_user = current_user
       end
     end
   end

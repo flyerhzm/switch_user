@@ -26,7 +26,7 @@ module SwitchUser
         @controller.session[:original_user]
       end
 
-      def lock_user!
+      def remember_current_user
         @controller.session[:original_user] = current_user
       end
 

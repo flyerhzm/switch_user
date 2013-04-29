@@ -28,7 +28,7 @@ shared_examples_for "a provider" do
 
   it "can lock the original user, allowing us to change current_user" do
     provider.login(user)
-    provider.lock_user!
+    provider.remember_current_user
     provider.login(other_user)
 
     provider.original_user.should == user
@@ -37,7 +37,7 @@ shared_examples_for "a provider" do
 
   it "clears the original user when we logout" do
     provider.login(user)
-    provider.lock_user!
+    provider.remember_current_user
 
     provider.logout
 
