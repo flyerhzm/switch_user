@@ -34,13 +34,4 @@ shared_examples_for "a provider" do
     provider.original_user.should == user
     provider.current_user.should == other_user
   end
-
-  it "clears the original user when we logout" do
-    provider.login(user)
-    provider.remember_current_user
-
-    provider.logout
-
-    provider.original_user.should == nil
-  end
 end

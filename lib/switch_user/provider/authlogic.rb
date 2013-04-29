@@ -12,7 +12,6 @@ module SwitchUser
       end
 
       def logout(scope = nil)
-        clear_original_user
         @controller.current_user_session.destroy
       end
 

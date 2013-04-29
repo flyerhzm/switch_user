@@ -13,7 +13,6 @@ module SwitchUser
 
       def logout(scope = nil)
         @user = nil
-        @original_user = nil
       end
 
       def current_user(scope = nil)

@@ -13,7 +13,6 @@ module SwitchUser
       end
 
       def logout(scope = :user)
-        clear_original_user
         @warden.logout(scope)
       end
 
