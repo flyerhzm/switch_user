@@ -16,9 +16,28 @@ describe SwitchUserController, :type => :controller do
   end
 
   it "denies access according to the guard block" do
-    SwitchUser.controller_guard = lambda {|_,_| false }
+    SwitchUser.controller_guard = lambda {|_,_,_| false }
     get :set_current_user
 
     response.should be_forbidden
+  end
+
+  describe "requests with a privileged original_user" do
+    before do
+      SwitchUser.controller_guard = lambda {|current_user, _, original_user|
+        current_user.try(:admin?) || original_user.try(:admin?)
+      }
+    end
+    it "allows access using the original_user param" do
+      admin    = stub(:admin, :admin? => true)
+      provider = stub(:provider, :original_user => admin, :current_user => nil)
+      controller.stub(:provider => provider)
+
+      provider.should_receive(:logout_all)
+
+      get :set_current_user
+
+      response.should be_redirect
+    end
   end
 end
