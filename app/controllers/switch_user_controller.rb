@@ -1,5 +1,5 @@
 class SwitchUserController < ApplicationController
-  # before_filter :developer_modes_only
+  before_filter :developer_modes_only
 
   def set_current_user
     handle_request(params)
@@ -8,7 +8,7 @@ class SwitchUserController < ApplicationController
   end
 
   def remember_user
-    provider.remember_current_user
+    provider.remember_current_user(params[:remember] == "true")
 
     redirect_to(SwitchUser.redirect_path.call(request, params))
   end

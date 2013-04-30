@@ -28,10 +28,20 @@ shared_examples_for "a provider" do
 
   it "can lock the original user, allowing us to change current_user" do
     provider.login(user)
-    provider.remember_current_user
+    provider.remember_current_user(true)
     provider.login(other_user)
 
     provider.original_user.should == user
     provider.current_user.should == other_user
+  end
+
+  it "can forget the original_user" do
+    provider.login(user)
+    provider.remember_current_user(true)
+
+    provider.original_user.should == user
+    provider.remember_current_user(false)
+
+    provider.original_user.should == nil
   end
 end

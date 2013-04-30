@@ -21,8 +21,12 @@ module SwitchUser
         @original_user
       end
 
-      def remember_current_user
-        @original_user = current_user
+      def remember_current_user(remember)
+        if remember
+          @original_user = current_user
+        else
+          @original_user = nil
+        end
       end
     end
   end

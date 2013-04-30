@@ -22,6 +22,9 @@ module SwitchUserHelper
     if options.respond_to?(:html_safe)
       options = options.html_safe
     end
+
+    # TODO this should be moved in to a view file
+    concat check_box_tag "remember_user", "remember_user", provider.original_user.present?, :onchange => "location.href = 'switch_user/remember_user?remember=' + encodeURIComponent(this.checked)"
     select_tag "switch_user_identifier", options,
       :onchange => "location.href = '/switch_user?scope_identifier=' + encodeURIComponent(this.options[this.selectedIndex].value)"
   end

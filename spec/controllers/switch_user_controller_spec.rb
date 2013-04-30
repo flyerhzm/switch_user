@@ -7,6 +7,11 @@ describe SwitchUserController, :type => :controller do
     SwitchUser.provider = :dummy
   end
 
+  let(:admin) { stub(:admin, :admin? => true) }
+  let(:provider) { stub(:provider,
+                        :original_user => admin,
+                        :current_user => nil)
+  }
   describe "#set_current_user" do
     it "redirects the user to the specified location" do
       SwitchUser.redirect_path = lambda {|_,_| "/path"}
@@ -30,8 +35,6 @@ describe SwitchUserController, :type => :controller do
         }
       end
       it "allows access using the original_user param" do
-        admin    = stub(:admin, :admin? => true)
-        provider = stub(:provider, :original_user => admin, :current_user => nil)
         controller.stub(:provider => provider)
 
         provider.should_receive(:logout_all)
@@ -44,5 +47,18 @@ describe SwitchUserController, :type => :controller do
   end
 
   describe "#remember_user" do
+    before do
+      controller.stub(:provider => provider)
+    end
+    it "can remember the current user" do
+      provider.should_receive(:remember_current_user).with(true)
+
+      get :remember_user, :remember => "true"
+    end
+    it "can forget the current user" do
+      provider.should_receive(:remember_current_user).with(false)
+
+      get :remember_user, :remember => "false"
+    end
   end
 end

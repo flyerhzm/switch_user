@@ -26,8 +26,12 @@ module SwitchUser
         @controller.session[:original_user]
       end
 
-      def remember_current_user
-        @controller.session[:original_user] = current_user
+      def remember_current_user(remember)
+        if remember
+          @controller.session[:original_user] = current_user
+        else
+          @controller.session.delete(:original_user)
+        end
       end
 
       def clear_original_user
