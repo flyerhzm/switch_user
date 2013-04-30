@@ -8,7 +8,10 @@ class SwitchUserController < ApplicationController
   end
 
   def remember_user
-    provider.remember_current_user(params[:remember] == "true")
+    # NOOP unless the user has explicity enabled this feature
+    if SwitchUser.switch_back
+      provider.remember_current_user(params[:remember] == "true")
+    end
 
     redirect_to(SwitchUser.redirect_path.call(request, params))
   end

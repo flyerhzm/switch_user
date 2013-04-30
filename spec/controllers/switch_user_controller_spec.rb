@@ -49,6 +49,7 @@ describe SwitchUserController, :type => :controller do
   describe "#remember_user" do
     before do
       controller.stub(:provider => provider)
+      SwitchUser.switch_back = true
     end
     it "can remember the current user" do
       provider.should_receive(:remember_current_user).with(true)
@@ -59,6 +60,12 @@ describe SwitchUserController, :type => :controller do
       provider.should_receive(:remember_current_user).with(false)
 
       get :remember_user, :remember => "false"
+    end
+    it "does nothing if switch_back is not enabled" do
+      SwitchUser.switch_back = false
+      provider.should_not_receive(:remember_current_user)
+
+      get :remember_user, :remember => "true"
     end
   end
 end
