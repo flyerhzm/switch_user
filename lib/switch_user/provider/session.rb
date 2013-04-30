@@ -1,5 +1,3 @@
-require 'switch_user/provider/base'
-
 module SwitchUser
   module Provider
     class Session < Base
