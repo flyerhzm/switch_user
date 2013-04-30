@@ -1,5 +1,6 @@
 module SwitchUserHelper
   def switch_user_select
+    # TODO this should be moved in to a view file
     return unless available?
     options = ''
 
@@ -22,8 +23,7 @@ module SwitchUserHelper
     if options.respond_to?(:html_safe)
       options = options.html_safe
     end
-
-    # TODO this should be moved in to a view file
+    # TODO this check_box should only be displayed if the switch_back feature is enabled.
     concat check_box_tag "remember_user", "remember_user", provider.original_user.present?, :onchange => "location.href = 'switch_user/remember_user?remember=' + encodeURIComponent(this.checked)"
     select_tag "switch_user_identifier", options,
       :onchange => "location.href = '/switch_user?scope_identifier=' + encodeURIComponent(this.options[this.selectedIndex].value)"
