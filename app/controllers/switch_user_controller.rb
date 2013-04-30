@@ -1,9 +1,4 @@
 class SwitchUserController < ApplicationController
-
-  unless Rails.version =~ /^3/
-    unloadable
-  end
-
   before_filter :developer_modes_only
 
   def set_current_user
