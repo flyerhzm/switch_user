@@ -1,11 +1,10 @@
-require 'switch_user/provider'
-require 'active_support/core_ext'
 if defined?(Rails)
   require 'switch_user/rails'
 end
 
 module SwitchUser
   autoload :UserLoader, "switch_user/user_loader"
+  autoload :Provider, "switch_user/provider"
 
   class InvalidScope < Exception; end
 
