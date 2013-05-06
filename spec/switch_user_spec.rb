@@ -14,10 +14,6 @@ describe SwitchUser do
       SwitchUser.provider = :sorcery
       SwitchUser.provider.should == :sorcery
     end
-    it "sets the provider class" do
-      SwitchUser.provider = :devise
-      SwitchUser.provider_class.should == SwitchUser::Provider::Devise
-    end
   end
 
   describe "guards" do

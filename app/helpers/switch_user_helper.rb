@@ -44,6 +44,6 @@ module SwitchUserHelper
   end
 
   def provider
-    SwitchUser.provider_class.new(controller)
+    SwitchUser::Provider.init(controller)
   end
 end

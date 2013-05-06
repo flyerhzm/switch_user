@@ -21,10 +21,6 @@ module SwitchUser
     yield self
   end
 
-  def self.provider_class
-    "SwitchUser::Provider::#{provider.to_s.classify}".constantize
-  end
-
   def self.available_scopes
     available_users.keys
   end

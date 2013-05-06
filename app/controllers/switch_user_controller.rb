@@ -38,6 +38,6 @@ class SwitchUserController < ApplicationController
   end
 
   def provider
-    SwitchUser.provider_class.new(self)
+    SwitchUser::Provider.init(self)
   end
 end

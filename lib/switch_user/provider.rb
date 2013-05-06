@@ -8,5 +8,12 @@ module SwitchUser
     autoload :Sorcery, "switch_user/provider/sorcery"
     autoload :Dummy, "switch_user/provider/dummy"
     autoload :Session, "switch_user/provider/session"
+
+    def self.init(controller)
+      klass_part = SwitchUser.provider.to_s.classify
+      klass    = "SwitchUser::Provider::#{klass_part}".constantize
+
+      klass.new(controller)
+    end
   end
 end
