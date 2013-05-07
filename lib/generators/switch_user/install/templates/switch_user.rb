@@ -39,4 +39,8 @@ SwitchUser.setup do |config|
   # helper_with_guest is a boolean value, if it set to false
   # the guest item in the helper won't be shown
   config.helper_with_guest = true
+
+  # false = login from one scope to another and you are logged in only in both scopes
+  # true = you are logged only into one scope at a time
+  config.login_exclusive = true
 end

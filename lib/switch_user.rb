@@ -16,6 +16,7 @@ module SwitchUser
   mattr_accessor :session_key
   mattr_accessor :helper_with_guest
   mattr_accessor :switch_back
+  mattr_accessor :login_exclusive
 
   def self.setup
     yield self
@@ -48,6 +49,7 @@ module SwitchUser
     self.session_key = :user_id
     self.helper_with_guest = true
     self.switch_back = false
+    self.login_exclusive = true
   end
 
   def self.call_guard(guard, args)

@@ -33,7 +33,11 @@ class SwitchUserController < ApplicationController
       provider.logout_all
     else
       loader = SwitchUser::UserLoader.prepare(params)
-      provider.login_exclusive(loader.user, :scope => loader.scope)
+      if SwitchUser.login_exclusive
+        provider.login_exclusive(loader.user, :scope => loader.scope)
+      else
+        provider.login_inclusive(loader.user, :scope => loader.scope)
+      end
     end
   end
 
