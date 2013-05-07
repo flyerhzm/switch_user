@@ -16,6 +16,13 @@ module SwitchUser
         login(user, requested_scope)
       end
 
+      def login_inclusive(user, args)
+        requested_scope = args.fetch(:scope, :user).to_sym
+
+        logout(requested_scope)
+        login(user, requested_scope)
+      end
+
       def logout_all
         SwitchUser.available_scopes.each do |scope|
           logout(scope)

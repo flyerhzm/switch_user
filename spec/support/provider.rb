@@ -20,6 +20,10 @@ shared_examples_for "a provider" do
     provider.should respond_to(:login_exclusive)
   end
 
+  it "responds to login_exclusive" do
+    provider.should respond_to(:login_inclusive)
+  end
+
   it "knows if there are any users logged in" do
     provider.login(user)
 
