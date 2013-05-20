@@ -1,5 +1,5 @@
 SwitchUser.setup do |config|
-  # provider may be :devise, :authlogic, :clearance, :restful_authentication or :sorcery
+  # provider may be :devise, :authlogic, :clearance, :restful_authentication, :sorcery, or :session
   config.provider = :devise
 
   # available_users is a hash,
@@ -43,4 +43,8 @@ SwitchUser.setup do |config|
   # false = login from one scope to another and you are logged in only in both scopes
   # true = you are logged only into one scope at a time
   config.login_exclusive = true
+
+  # switch_back allows you to switch back to a previously selected user. See
+  # README for more details.
+  config.switch_back = false
 end
