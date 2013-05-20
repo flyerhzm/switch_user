@@ -51,7 +51,7 @@ match ':id' => 'pages#show'
 ```
 ## Configuration
 
-By default, you can switch between Guest and all users in users table, you don't need to do anything. The following is the default configuration.
+By default, you can switch between Guest and all users in users table, you don't need to do anything. The following is some of the more commonly used configuration options.
 ```ruby
 SwitchUser.setup do |config|
   # provider may be :devise, :authlogic, :clearance, :restful_authentication or :sorcery
@@ -92,7 +92,7 @@ SwitchUser.setup do |config|
   config.redirect_path = lambda { |request, params| '/' }
 end
 ```
-If the default configuration can't meet your requirement, you can define your customized configuration in <code>config/initializers/switch_user.rb</code>
+If you need to override the default configuration, run <code>rails g switch_user:install</code> and a copy of the configuration file will be copied to <code>config/initializers/switch_user.rb</code> in your project.
 
 If you want to switch both available users and available admins
 ```ruby
@@ -122,6 +122,30 @@ If you want to hide a 'Guest' item in the helper dropdown list
 ```ruby
 config.helper_with_guest = false
 ```
+## Switch Back
+Sometimes you'll want to be able to switch to an unprivileged user and then back again. This can be especially useful in production when trying to reproduce a problem a user is having. The problem is that once you switch to that unprivileged user, you don't have a way to safely switch_back without knowing who the original user was. That's what this feature is for.
+
+You will need to make the following modifications to your configuration:
+```ruby
+config.switch_user = true
+config.controller_guard = lambda { |current_user, request, original_user|
+  current_user && current_user.admin? || original_user && original_user.super_admin?
+}
+# Do something similar for the view_guard as well.
+```
+This example would allow an admin user to user switch_user, but would only let you switch back to another user if the original user was a super admin.
+
+### How it works
+
+Click the checkbox next to switch_user_select menu to remember that user for this session. Once this
+has been checked, that user is passed in as the 3rd option to the view and controller guards. 
+This allows you to check against current_user as well as that original_user to see if the
+switch_user action should be allowed.
+
+### Warning
+
+This feature should be used with extreme caution because of the security implications. This is especially true in a production environment.
+
 ## Credit
 
 Copyright © 2010 - 2012 Richard Huang (flyerhzm@gmail.com), released under the MIT license
