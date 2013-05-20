@@ -51,7 +51,7 @@ match ':id' => 'pages#show'
 ```
 ## Configuration
 
-By default, you can switch between Guest and all users in users table, you don't need to do anything. The following is the default configuration.
+By default, you can switch between Guest and all users in users table, you don't need to do anything. The following is some of the more commonly used configuration options.
 ```ruby
 SwitchUser.setup do |config|
   # provider may be :devise, :authlogic, :clearance, :restful_authentication or :sorcery
@@ -92,7 +92,7 @@ SwitchUser.setup do |config|
   config.redirect_path = lambda { |request, params| '/' }
 end
 ```
-If the default configuration can't meet your requirement, you can define your customized configuration in <code>config/initializers/switch_user.rb</code>
+If you need to override the default configuration, run <code>rails g switch_user:install</code> and a copy of the configuration file will be copied to <code>config/initializers/switch_user.rb</code> in your project.
 
 If you want to switch both available users and available admins
 ```ruby
