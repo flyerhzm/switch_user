@@ -5,6 +5,8 @@ end
 module SwitchUser
   autoload :UserLoader, "switch_user/user_loader"
   autoload :Provider, "switch_user/provider"
+  autoload :BaseGuard, "switch_user/base_guard"
+  autoload :LambdaGuard, 'switch_user/lambda_guard'
 
   class InvalidScope < Exception; end
 
@@ -17,6 +19,9 @@ module SwitchUser
   mattr_accessor :helper_with_guest
   mattr_accessor :switch_back
   mattr_accessor :login_exclusive
+  mattr_accessor :controller_guard
+  mattr_accessor :view_guard
+  mattr_reader   :guard_class
 
   def self.setup
     yield self
@@ -26,15 +31,9 @@ module SwitchUser
     available_users.keys
   end
 
-  def self.controller_guard(*args)
-    call_guard(@@controller_guard, args)
+  def self.guard_class=(klass)
+    @@guard_class = klass.constantize
   end
-  mattr_writer :controller_guard
-
-  def self.view_guard(*args)
-    call_guard(@@view_guard, args)
-  end
-  mattr_writer :view_guard
 
   private
 
@@ -43,6 +42,7 @@ module SwitchUser
     self.available_users = { :user => lambda { User.all } }
     self.available_users_identifiers = { :user => :id }
     self.available_users_names = { :user => :email }
+    self.guard_class = "SwitchUser::LambdaGuard"
     self.controller_guard = lambda { |current_user, request| Rails.env.development? }
     self.view_guard = lambda { |current_user, request| Rails.env.development? }
     self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }
@@ -50,11 +50,6 @@ module SwitchUser
     self.helper_with_guest = true
     self.switch_back = false
     self.login_exclusive = true
-  end
-
-  def self.call_guard(guard, args)
-    arity = guard.arity
-    guard.call(*args[0...arity])
   end
 
   reset_config

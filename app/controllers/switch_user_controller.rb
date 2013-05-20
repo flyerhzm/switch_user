@@ -23,9 +23,7 @@ class SwitchUserController < ApplicationController
   end
 
   def available?
-    SwitchUser.controller_guard(provider.current_user,
-                                request,
-                                provider.original_user)
+    SwitchUser.guard_class.new(self, provider).controller_available?
   end
 
   def handle_request(params)
@@ -41,6 +39,8 @@ class SwitchUserController < ApplicationController
     end
   end
 
+  # TODO make helper methods, so this can be eliminated from the
+  # SwitchUserHelper
   def provider
     SwitchUser::Provider.init(self)
   end

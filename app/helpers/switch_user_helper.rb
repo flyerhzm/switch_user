@@ -39,8 +39,7 @@ module SwitchUserHelper
   end
 
   def available?
-    user = provider.current_users_without_scope.first
-    SwitchUser.view_guard(user, request)
+    SwitchUser.guard_class.new(controller, provider).view_available?
   end
 
   def provider

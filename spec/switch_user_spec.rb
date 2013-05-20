@@ -15,21 +15,4 @@ describe SwitchUser do
       SwitchUser.provider.should == :sorcery
     end
   end
-
-  describe "guards" do
-    it "can have a 1 argument lambda" do
-      a = 0
-      SwitchUser.controller_guard = lambda {|p1| a = p1 }
-      SwitchUser.controller_guard(1,2,3)
-
-      a.should == 1
-    end
-    it "can have a 3 argument lambda" do
-      a = 0
-      SwitchUser.view_guard = lambda {|p1,p2,p3| a = p3 }
-      SwitchUser.view_guard(1,2,3)
-
-      a.should == 3
-    end
-  end
 end
