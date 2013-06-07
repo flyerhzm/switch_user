@@ -127,7 +127,7 @@ Sometimes you'll want to be able to switch to an unprivileged user and then back
 
 You will need to make the following modifications to your configuration:
 ```ruby
-config.switch_user = true
+config.switch_back = true
 config.controller_guard = lambda { |current_user, request, original_user|
   current_user && current_user.admin? || original_user && original_user.super_admin?
 }
