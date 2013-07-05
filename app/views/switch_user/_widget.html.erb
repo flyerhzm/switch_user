@@ -1,4 +1,4 @@
 <% if SwitchUser.switch_back %>
-  <%= check_box_tag "remember_user", "remember_user", provider.original_user.present?, :onchange => "location.href = 'switch_user/remember_user?remember=' + encodeURIComponent(this.checked)" %>
+  <%= check_box_tag "remember_user", "remember_user", provider.original_user.present?, :onchange => "location.href = '/switch_user/remember_user?remember=' + encodeURIComponent(this.checked)" %>
 <% end %>
 <%= select_tag "switch_user_identifier", options_from_collection_for_select(options, :scope_id, :label, current_scope), :onchange => "location.href = '/switch_user?scope_identifier=' + encodeURIComponent(this.options[this.selectedIndex].value)" %>
