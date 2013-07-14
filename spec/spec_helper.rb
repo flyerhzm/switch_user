@@ -18,9 +18,10 @@ class TestController
   end
 end
 
-class User
-  def self.where(*)
-    []
-  end
+connection = ActiveRecord::Base.connection
+connection.create_table :users do |t|
+  t.column :email, :string
 end
 
+class User < ActiveRecord::Base
+end
