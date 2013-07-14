@@ -4,3 +4,4 @@ pkg/*
 .rvmrc
 Gemfile.lock
 log/*.log
+.DS_Store
