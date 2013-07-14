@@ -3,6 +3,7 @@ if defined?(Rails)
 end
 
 module SwitchUser
+  autoload :UserSet, "switch_user/user_set"
   autoload :UserLoader, "switch_user/user_loader"
   autoload :Provider, "switch_user/provider"
   autoload :BaseGuard, "switch_user/base_guard"
