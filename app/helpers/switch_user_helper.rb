@@ -35,7 +35,7 @@ module SwitchUserHelper
   end
 
   def tag_label(user, name)
-    name.respond_to?(:call) ? name.call(user) : user.send(name)
+    user.send(name)
   end
 
   def available?
