@@ -6,10 +6,18 @@ module SwitchUserHelper
     selected_user = nil
 
     options << SelectOption.new("Guest", "") if SwitchUser.helper_with_guest
+    SwitchUser.available_users.each do |scope, user_proc|
+      current_user = provider.current_user(scope)
+      id_name = SwitchUser.available_users_identifiers[scope]
+      name = SwitchUser.available_users_names[scope]
 
-    # returns an array of UserSet::Records, which is a wrapper around a user
-    # type object which remembers the config it was derived from.
-    options.concat(SwitchUser::UserSet.users)
+      user_proc.call.each do |user|
+        if user == current_user
+          selected_user = tag_value(user, id_name, scope)
+        end
+        options << SelectOption.new(tag_label(user, name), tag_value(user, id_name, scope))
+      end
+    end
 
     render :partial => "switch_user/widget",
            :locals => {
@@ -19,6 +27,16 @@ module SwitchUserHelper
   end
 
   private
+
+  def tag_value(user, id_name, scope)
+    identifier = user.send(id_name)
+
+    "#{scope}_#{identifier}"
+  end
+
+  def tag_label(user, name)
+    user.send(name)
+  end
 
   def available?
     SwitchUser.guard_class.new(controller, provider).view_available?
