@@ -13,9 +13,9 @@ module SwitchUserHelper
 
       user_proc.call.each do |user|
         if user == current_user
-          selected_user = tag_value(user, id_name, scope)
+          selected_user = user_tag_value(user, id_name, scope)
         end
-        options << SelectOption.new(tag_label(user, name), tag_value(user, id_name, scope))
+        options << SelectOption.new(user_tag_label(user, name), user_tag_value(user, id_name, scope))
       end
     end
 
@@ -28,13 +28,13 @@ module SwitchUserHelper
 
   private
 
-  def tag_value(user, id_name, scope)
+  def user_tag_value(user, id_name, scope)
     identifier = user.send(id_name)
 
     "#{scope}_#{identifier}"
   end
 
-  def tag_label(user, name)
+  def user_tag_label(user, name)
     name.respond_to?(:call) ? name.call(user) : user.send(name)
   end
 
