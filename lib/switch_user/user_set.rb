@@ -9,8 +9,8 @@ module SwitchUser
     end
 
     def self.users
-      init_from_config.flat_map {|set, users|
-        users.map {|user| Record.build(user, set) }
+      init_from_config.flat_map {|user_set|
+        user_set.users.map {|user| Record.build(user, user_set) }
       }
     end
 
