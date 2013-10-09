@@ -36,8 +36,6 @@ module SwitchUser
     @@guard_class = klass.constantize
   end
 
-  private
-
   def self.reset_config
     self.provider = :devise
     self.available_users = { :user => lambda { User.all } }

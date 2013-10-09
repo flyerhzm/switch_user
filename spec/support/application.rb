@@ -3,7 +3,11 @@ require "rails/all"
 
 class ApplicationController < ActionController::Base
   def require_user
-    session[:current_user] || redirect_to("/tests/open")
+    current_user || redirect_to("/tests/open")
+  end
+
+  def current_user
+    session[SwitchUser.session_key]
   end
 end
 
