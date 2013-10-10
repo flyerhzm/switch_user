@@ -5,6 +5,7 @@ describe "Using SwitchUser", :type => :request do
   before do
     SwitchUser.reset_config
     SwitchUser.provider = :session
+    SwitchUser.controller_guard = lambda { |current_user, request| Rails.env.test? }
     SwitchUser.redirect_path = lambda {|_,_| "/dummys/open"}
   end
   it "can load a page" do

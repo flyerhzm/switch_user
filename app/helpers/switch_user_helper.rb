@@ -1,5 +1,5 @@
 module SwitchUserHelper
-  class SelectOption < Struct.new(:label, :scope_id); end
+  SelectOption = Struct.new(:label, :scope_id)
   def switch_user_select
     return unless available?
     options = []

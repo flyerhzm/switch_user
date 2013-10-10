@@ -1,9 +1,8 @@
+ENV["RAILS_ENV"] = "test"
 require 'support/provider'
 require 'support/application'
 require 'rspec/rails'
 require 'switch_user'
-
-ENV["RAILS_ENV"] = "test"
 
 RSpec.configure do |config|
   config.filter_run :focus => true

@@ -1,5 +1,7 @@
 require "rails"
 require "rails/all"
+require 'switch_user/rails'
+
 
 class ApplicationController < ActionController::Base
   def require_user
@@ -15,11 +17,11 @@ class DummysController < ApplicationController
   before_filter :require_user, :only => :protected
 
   def open
-    render :text => "open"
+    render :text => view_context.switch_user_select
   end
 
   def protected
-    render :text => "protected"
+    render :text => view_context.switch_user_select
   end
 end
 
