@@ -3,6 +3,8 @@ require 'support/provider'
 require 'support/application'
 require 'rspec/rails'
 require 'switch_user'
+require 'pry'
+require 'awesome_print'
 
 RSpec.configure do |config|
   config.filter_run :focus => true
