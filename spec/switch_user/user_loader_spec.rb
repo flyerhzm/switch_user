@@ -40,7 +40,9 @@ describe SwitchUser::UserLoader do
   end
 
   it "returns nil if no user is found" do
-    loader = SwitchUser::UserLoader.new("user", 2)
+    loader = SwitchUser::UserLoader.new("user", 3)
+
+    User.find_by_id(3).should be_nil
     loader.user.should == nil
   end
 
