@@ -30,7 +30,7 @@ module SwitchUser
       if scope && SwitchUser.available_scopes.include?(scope.to_sym)
         @scope = scope
       else
-        raise InvalidScope
+        raise InvalidScope.new("#{scope} is invalid and is not listed in SwitchUser#available_users")
       end
     end
 

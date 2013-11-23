@@ -35,7 +35,7 @@ describe "Using SwitchUser", :type => :request do
 
       # have SwitchUser remember us
       get "/switch_user/remember_user", :remember => true
-      session["original_user"].should be_present
+      session["original_user_scope_identifier"].should be_present
 
       # check that we can switch to another user
       get "/switch_user?scope_identifier=user_#{other_user.id}"

@@ -30,19 +30,30 @@ module SwitchUser
       end
 
       def original_user
-        @controller.session[:original_user]
+        user_identifier = @controller.session[:original_user_scope_identifier]
+
+        if user_identifier
+          UserLoader.prepare(:scope_identifier => user_identifier).user
+        end
+      end
+
+      def original_user=(user)
+        user_type       = user.class.to_s.underscore
+        user_identifier = "#{user_type}_#{user.id}"
+
+        @controller.session[:original_user_scope_identifier] = user_identifier
       end
 
       def remember_current_user(remember)
         if remember
-          @controller.session[:original_user] = current_user
+          self.original_user = current_user
         else
-          @controller.session.delete(:original_user)
+          clear_original_user
         end
       end
 
       def clear_original_user
-        @controller.session.delete(:original_user)
+        @controller.session.delete(:original_user_scope_identifier)
       end
     end
   end

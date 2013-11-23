@@ -1,6 +1,6 @@
 shared_examples_for "a provider" do
-  let(:user) { stub(:user) }
-  let(:other_user) { stub(:other_user, :id => 101) }
+  let(:user) { User.create! }
+  let(:other_user) { User.create! }
 
   it "can log a user in" do
     provider.login(user)
