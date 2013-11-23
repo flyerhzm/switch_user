@@ -9,12 +9,27 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    session[SwitchUser.session_key]
+    User.find_by_id(session[SwitchUser.session_key])
+  end
+
+  def login
+    user = User.find(params[:id])
+    session[SwitchUser.session_key] = user.id
+
+    redirect_to("/tests/protected")
+  end
+
+  def logout
+    session[SwitchUser.session_key] = nil
   end
 end
 
-class DummysController < ApplicationController
+class DummyController < ApplicationController
   before_filter :require_user, :only => :protected
+
+  def authenticated
+    render :text => current_user.inspect
+  end
 
   def open
     render :text => view_context.switch_user_select
@@ -36,8 +51,11 @@ module MyApp
 end
 Rails.application.initialize!
 Rails.application.routes.draw do
-  get 'dummys/protected', :to => "dummys#protected"
-  get 'dummys/open', :to => "dummys#open"
+  get 'dummy/protected', :to => "dummy#protected"
+  get 'dummy/open', :to => "dummy#open"
+  post 'login', :to => "dummy#login"
+  get 'logout', :to => "dummy#logout"
+  get 'authenticated', :to => "dummy#authenticated"
   get :switch_user, :to => 'switch_user#set_current_user'
   get 'switch_user/remember_user', :to => 'switch_user#remember_user'
 end
@@ -45,6 +63,7 @@ end
 connection = ActiveRecord::Base.connection
 connection.create_table :users do |t|
   t.column :email, :string
+  t.column :admin, :boolean
 end
 
 class User < ActiveRecord::Base
