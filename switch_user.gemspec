@@ -22,6 +22,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "tzinfo"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "activerecord"
+  s.add_development_dependency "awesome_print"
+  s.add_development_dependency "pry"
 
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact
