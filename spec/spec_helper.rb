@@ -9,6 +9,7 @@ require 'awesome_print'
 RSpec.configure do |config|
   config.filter_run :focus => true
   config.run_all_when_everything_filtered = true
+  config.use_transactional_fixtures = true
 end
 
 class TestController
