@@ -9,7 +9,7 @@ describe "Using SwitchUser", :type => :request do
     SwitchUser.controller_guard = lambda { |current_user, request| Rails.env.test? }
     SwitchUser.redirect_path = lambda {|_,_| "/dummys/open"}
   end
-  it "signs a user in using switch_user", :focus => true do
+  it "signs a user in using switch_user" do
     # can't access protected url
     get "/dummy/protected"
     response.should be_redirect
