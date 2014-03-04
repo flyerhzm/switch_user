@@ -2,14 +2,16 @@ module SwitchUserHelper
   SelectOption = Struct.new(:label, :scope_id)
   def switch_user_select
     return unless available?
-    options = []
-    selected_user = nil
 
-    users = SwitchUser::UserSet.users
-    users << SelectOption.new("Guest", "") if SwitchUser.helper_with_guest
+    if provider.current_user
+      selected_user = "user_#{current_user.id}"
+    else
+      selected_user = nil
+    end
+
     render :partial => "switch_user/widget",
            :locals => {
-             :options => users,
+             :options => SwitchUser.all_users,
              :current_scope => selected_user
            }
   end
