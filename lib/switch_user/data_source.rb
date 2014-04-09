@@ -32,6 +32,10 @@ module SwitchUser
     def users
       sources.flat_map {|source| source.users }
     end
+
+    def find_scope_id(scope_id)
+      users.flat_map.detect {|u| u.scope_id == scope_id }
+    end
   end
 
   Record = Struct.new(:user, :source) do

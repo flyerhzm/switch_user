@@ -30,7 +30,7 @@ class SwitchUserController < ApplicationController
     if params[:scope_identifier].blank?
       provider.logout_all
     else
-      record = SwitchUser.all_users.detect {|u| u.equivalent?(params[:scope_identifier]) }
+      record = SwitchUser.data_sources.find_scope_id(params[:scope_identifier])
       unless record
         provider.logout_all
         return

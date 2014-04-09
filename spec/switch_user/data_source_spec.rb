@@ -18,6 +18,17 @@ module SwitchUser
 
       source.users.should == [user, user]
     end
+
+    describe "#find_source_id" do
+      it "can find a corresponding record across data sources" do
+        user = double(:user, :scope_id => "user_10")
+        s1 = double(:s1, :users => [])
+        s2 = double(:s1, :users => [user])
+        source = DataSources.new([s1,s2])
+
+        source.find_scope_id("user_10").should == user
+      end
+    end
   end
 
   describe Record do
