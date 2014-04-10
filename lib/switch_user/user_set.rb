@@ -48,10 +48,10 @@ module SwitchUser
         if scoped.respond_to?(:scoped)
           scoped
         else
-          user_class.scoped
+          user_class.respond_to?(:scoped) ? user_class.scoped : user_class.all
         end
       else
-        user_class.scoped
+        user_class.respond_to?(:scoped) ? user_class.scoped : user_class.all
       end
     end
     class Record < Struct.new(:id, :label, :scope)
