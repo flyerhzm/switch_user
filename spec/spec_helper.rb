@@ -16,4 +16,8 @@ class TestController
   def session
     @session_hash ||= {}
   end
+
+  def reset_session
+    @session_hash = {}
+  end
 end
