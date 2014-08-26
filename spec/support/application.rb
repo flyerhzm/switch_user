@@ -43,7 +43,6 @@ end
 module MyApp
   class Application < Rails::Application
     config.active_support.deprecation = :log
-    config.threadsafe!
     config.secret_key_base = "abc123"
     config.eager_load = true
     config.secret_token = '153572e559247c7aedd1bca5a246874d'

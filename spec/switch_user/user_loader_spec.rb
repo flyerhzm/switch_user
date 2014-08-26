@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'switch_user/user_loader'
 
 describe SwitchUser::UserLoader do
-  let(:user) { stub(:user) }
+  let(:user) { double(:user) }
   let(:user_result) { [user] }
 
   it "raises an exception if we are passed an invalid scope" do
@@ -12,7 +12,7 @@ describe SwitchUser::UserLoader do
   describe ".user" do
     before do
       SwitchUser.available_users_identifiers = {:user => :id}
-      User.stub(:where).with(:id => "1").and_return(user_result)
+      allow(User).to receive(:where).with(:id => "1").and_return(user_result)
     end
     it "can be loaded from a scope and identifier" do
       loaded_user = SwitchUser::UserLoader.prepare("user","1").user
@@ -32,7 +32,7 @@ describe SwitchUser::UserLoader do
   end
 
   it "returns a user" do
-    User.stub(:where).with(:id => 1).and_return(user_result)
+    allow(User).to receive(:where).with(:id => 1).and_return(user_result)
 
     loader = SwitchUser::UserLoader.new("user", 1)
 
@@ -47,7 +47,7 @@ describe SwitchUser::UserLoader do
   end
 
   it "loads a user with an alternate identifier column" do
-    User.stub(:where).with(:email => 2).and_return(user_result)
+    allow(User).to receive(:where).with(:email => 2).and_return(user_result)
     SwitchUser.available_users_identifiers = {:user => :email}
 
     loader = SwitchUser::UserLoader.new("user", 2)

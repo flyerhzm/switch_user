@@ -4,7 +4,7 @@ require 'switch_user/user_set'
 module SwitchUser
   describe UserSet do
     let!(:user) { User.create(:email => "test@example.com") }
-    let(:set) { UserSet.new(:user, :id, :email, lambda { User.scoped}) }
+    let(:set) { UserSet.new(:user, :id, :email, lambda { User.all }) }
     after { User.delete_all }
     it "returns an object that knows it's scope, id and label" do
       found_user = set[user.id]
@@ -23,8 +23,8 @@ module SwitchUser
   end
   describe UserSet::Record do
     it "correctly configures the record using the set" do
-      user = stub(:user, :id => 100, :email => "test@example.com")
-      set = stub(:set, :identifier  => :id, :label => :email, :scope => :user)
+      user = double(:user, :id => 100, :email => "test@example.com")
+      set = double(:set, :identifier  => :id, :label => :email, :scope => :user)
       record = UserSet::Record.build(user, set)
       record.id.should == 100
       record.label.should == "test@example.com"
