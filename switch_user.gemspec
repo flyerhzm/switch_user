@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "bundler", ">= 1.0.0"
   s.add_development_dependency "actionpack"
   s.add_development_dependency "railties"
-  s.add_development_dependency "rspec-rails", "~> 2.11.0"
+  s.add_development_dependency "rspec-rails", "~> 2.14.0"
   s.add_development_dependency "tzinfo"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "activerecord"

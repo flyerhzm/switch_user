@@ -35,12 +35,12 @@ end
 describe SwitchUser::Provider::Devise do
   let(:controller) { DeviseController.new }
   let(:provider) { SwitchUser::Provider::Devise.new(controller) }
-  let(:user) { stub(:user) }
+  let(:user) { double(:user) }
 
   it_behaves_like "a provider"
 
   it "can use alternate scopes" do
-    user = stub(:user)
+    user = double(:user)
     provider.login(user, :admin)
 
     provider.current_user(:admin).should == user
@@ -48,7 +48,7 @@ describe SwitchUser::Provider::Devise do
 
   describe "#login_exclusive" do
     before do
-      SwitchUser.stub(:available_users => {:user => nil, :admin => nil})
+      allow(SwitchUser).to receive(:available_users).and_return({:user => nil, :admin => nil})
       provider.login(user, :admin)
       provider.login_exclusive(user, :scope => "user")
     end
@@ -64,7 +64,7 @@ describe SwitchUser::Provider::Devise do
 
   describe "#logout_all" do
     it "logs out users under all scopes" do
-      SwitchUser.stub(:available_users => {:user => nil, :admin => nil})
+      allow(SwitchUser).to receive(:available_users).and_return({:user => nil, :admin => nil})
       provider.login(user, :admin)
       provider.login(user, :user)
 
@@ -77,7 +77,7 @@ describe SwitchUser::Provider::Devise do
 
   describe "#all_current_users" do
     it "pulls users from an alternate scope" do
-      SwitchUser.stub(:available_users => {:user => nil, :admin => nil})
+      allow(SwitchUser).to receive(:available_users).and_return({:user => nil, :admin => nil})
       provider.login(user, :admin)
 
       provider.current_users_without_scope.should == [user]
