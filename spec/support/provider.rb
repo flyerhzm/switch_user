@@ -33,7 +33,7 @@ shared_examples_for "a provider" do
   it "can lock the original user, allowing us to change current_user" do
     provider.login(user)
     provider.remember_current_user(true)
-    provider.login(other_user)
+    provider.login_exclusive(other_user, scope: "user")
 
     provider.original_user.should == user
     provider.current_user.should == other_user

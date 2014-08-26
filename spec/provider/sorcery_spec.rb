@@ -4,6 +4,7 @@ require 'switch_user/provider/sorcery'
 class SorceryController < TestController
   def logout
     @user = nil
+    reset_session
   end
 
   def auto_login(user)
