@@ -12,6 +12,7 @@ module SwitchUser
 
   class InvalidScope < Exception; end
 
+  mattr_accessor :generate_routes
   mattr_accessor :provider
   mattr_accessor :available_users
   mattr_accessor :available_users_identifiers
@@ -52,6 +53,7 @@ module SwitchUser
   end
 
   def self.reset_config
+    self.generate_routes = true
     self.provider = :devise
     self.available_users = { :user => lambda { User.all } }
     self.available_users_identifiers = { :user => :id }
