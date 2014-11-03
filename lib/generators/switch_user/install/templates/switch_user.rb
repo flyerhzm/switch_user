@@ -1,4 +1,7 @@
 SwitchUser.setup do |config|
+  # have switch user add routes to its controllers automatically
+  # config.generate_routes = true
+
   # provider may be :devise, :authlogic, :clearance, :restful_authentication, :sorcery, or :session
   config.provider = :devise
 
