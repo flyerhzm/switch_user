@@ -45,9 +45,9 @@ If there are too many users (on production), the switch_user_select is not a goo
 If you have a wildcard route in your project, add a route before the wildcard route.
 ```ruby
 # config/routes.rb
-match 'switch_user' => 'switch_user#set_current_user'
-# wildcard route that will match anything
-match ':id' => 'pages#show'
+get 'switch_user' => 'switch_user#set_current_user'
+# wildcard route that will get
+get ':id' => 'pages#show'
 ```
 ## Configuration
 
