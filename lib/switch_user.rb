@@ -1,44 +1,72 @@
+if defined?(Rails)
+  require 'switch_user/rails'
+end
+
 module SwitchUser
-  if defined? Rails::Engine
-    class Engine < Rails::Engine
-      config.to_prepare do
-        ActionView::Base.send :include, SwitchUserHelper
-      end
-    end
-  else
-    %w(controllers helpers).each do |dir|
-      path = File.join(File.dirname(__FILE__), '..', 'app', dir)
-      $LOAD_PATH << path
-      ActiveSupport::Dependencies.load_paths << path
-      ActiveSupport::Dependencies.load_once_paths.delete(path)
-      ActionView::Base.send :include, SwitchUserHelper
-    end
-  end
+  require 'switch_user/data_source'
+  autoload :UserSet, "switch_user/user_set"
+  autoload :UserLoader, "switch_user/user_loader"
+  autoload :Provider, "switch_user/provider"
+  autoload :BaseGuard, "switch_user/base_guard"
+  autoload :LambdaGuard, 'switch_user/lambda_guard'
 
+  class InvalidScope < Exception; end
+
+  mattr_accessor :generate_routes
   mattr_accessor :provider
-  self.provider = :devise
-
   mattr_accessor :available_users
-  self.available_users = { :user => lambda { User.all } }
-
   mattr_accessor :available_users_identifiers
-  self.available_users_identifiers = { :user => :id }
-
   mattr_accessor :available_users_names
-  self.available_users_names = { :user => :email }
-
-  mattr_accessor :controller_guard
-  self.controller_guard = lambda { |current_user, request| Rails.env.development? }
-  mattr_accessor :view_guard
-  self.view_guard = lambda { |current_user, request| Rails.env.development? }
-
   mattr_accessor :redirect_path
-  self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }
-  
-  mattr_accessor :allow_guest
-  self.allow_guest = true
-  
+  mattr_accessor :session_key
+  mattr_accessor :helper_with_guest
+  mattr_accessor :switch_back
+  mattr_accessor :login_exclusive
+  mattr_accessor :controller_guard
+  mattr_accessor :view_guard
+  mattr_reader   :guard_class
+
   def self.setup
     yield self
   end
+
+  def self.available_scopes
+    available_users.keys
+  end
+
+  def self.guard_class=(klass)
+    @@guard_class = klass.constantize
+  end
+
+  def self.all_users
+    data_sources.users
+  end
+
+  def self.data_sources
+    sources = available_users.map do |scope, loader|
+      identifier = available_users_identifiers.fetch(scope)
+      name = available_users_names.fetch(scope)
+      DataSource.new(loader, scope, identifier, name)
+    end
+    sources.unshift(GuestDataSource.new("Guest")) if helper_with_guest
+    DataSources.new(sources)
+  end
+
+  def self.reset_config
+    self.generate_routes = true
+    self.provider = :devise
+    self.available_users = { :user => lambda { User.all } }
+    self.available_users_identifiers = { :user => :id }
+    self.available_users_names = { :user => :email }
+    self.guard_class = "SwitchUser::LambdaGuard"
+    self.controller_guard = lambda { |current_user, request| Rails.env.development? }
+    self.view_guard = lambda { |current_user, request| Rails.env.development? }
+    self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }
+    self.session_key = :user_id
+    self.helper_with_guest = true
+    self.switch_back = false
+    self.login_exclusive = true
+  end
+
+  reset_config
 end

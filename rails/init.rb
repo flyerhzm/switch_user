@@ -1,1 +1,0 @@
-require 'switch_user'

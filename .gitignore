@@ -2,3 +2,6 @@ pkg/*
 *.gem
 .bundle
 .rvmrc
+Gemfile.lock
+log/*.log
+.DS_Store
