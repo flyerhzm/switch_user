@@ -19,7 +19,7 @@ class SwitchUserController < ApplicationController
   private
 
   def developer_modes_only
-    render :text => "Permission Denied", :status => 403 unless available?
+    raise ActionController::RoutingError.new('Do not try to hack us.') unless available?
   end
 
   def available?
