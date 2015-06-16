@@ -29,7 +29,7 @@ class AuthlogicController < TestController
   end
 end
 
-describe SwitchUser::Provider::Authlogic do
+RSpec.describe SwitchUser::Provider::Authlogic do
   let(:controller) { AuthlogicController.new }
   let(:provider) { SwitchUser::Provider::Authlogic.new(controller) }
 

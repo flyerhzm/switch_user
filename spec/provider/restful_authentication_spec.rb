@@ -9,7 +9,7 @@ class RestfulAuthenticationController < TestController
   end
 end
 
-describe SwitchUser::Provider::RestfulAuthentication do
+RSpec.describe SwitchUser::Provider::RestfulAuthentication do
   let(:controller) { RestfulAuthenticationController.new }
   let(:provider) { SwitchUser::Provider::RestfulAuthentication.new(controller) }
 

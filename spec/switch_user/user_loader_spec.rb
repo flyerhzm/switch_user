@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'switch_user/user_loader'
 
-describe SwitchUser::UserLoader do
+RSpec.describe SwitchUser::UserLoader do
   let(:user) { double(:user) }
   let(:user_result) { [user] }
 
@@ -17,12 +17,12 @@ describe SwitchUser::UserLoader do
     it "can be loaded from a scope and identifier" do
       loaded_user = SwitchUser::UserLoader.prepare("user","1").user
 
-      loaded_user.should == user
+      expect(loaded_user).to eq user
     end
     it "can be loaded by a passing an unprocessed scope identifier" do
       loaded_user = SwitchUser::UserLoader.prepare(:scope_identifier => "user_1").user
 
-      loaded_user.should == user
+      expect(loaded_user).to eq user
     end
     it "raises an error for an invalid scope" do
       expect {
@@ -36,14 +36,14 @@ describe SwitchUser::UserLoader do
 
     loader = SwitchUser::UserLoader.new("user", 1)
 
-    loader.user.should == user
+    expect(loader.user).to eq user
   end
 
   it "returns nil if no user is found" do
     loader = SwitchUser::UserLoader.new("user", 3)
 
-    User.find_by_id(3).should be_nil
-    loader.user.should == nil
+    expect(User.find_by_id(3)).to be_nil
+    expect(loader.user).to eq nil
   end
 
   it "loads a user with an alternate identifier column" do
@@ -51,6 +51,6 @@ describe SwitchUser::UserLoader do
     SwitchUser.available_users_identifiers = {:user => :email}
 
     loader = SwitchUser::UserLoader.new("user", 2)
-    loader.user.should == user
+    expect(loader.user).to eq user
   end
 end

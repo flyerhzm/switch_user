@@ -7,7 +7,7 @@ class SessionController < TestController
   end
 end
 
-describe SwitchUser::Provider::Session do
+RSpec.describe SwitchUser::Provider::Session do
   before do
     SwitchUser.session_key = :uid
   end

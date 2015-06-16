@@ -2,33 +2,33 @@ require 'spec_helper'
 require 'switch_user/user_set'
 
 module SwitchUser
-  describe UserSet do
+  RSpec.describe UserSet do
     let!(:user) { User.create(:email => "test@example.com") }
     let(:set) { UserSet.new(:user, :id, :email, lambda { User.all }) }
     after { User.delete_all }
     it "returns an object that knows it's scope, id and label" do
       found_user = set[user.id]
 
-      found_user.id.should == user.id
-      found_user.scope.should == :user
-      found_user.label.should == "test@example.com"
+      expect(found_user.id).to eq user.id
+      expect(found_user.scope).to eq :user
+      expect(found_user.label).to eq "test@example.com"
     end
     it "returns all available users for a scope" do
-      set.users.should == [user]
+      expect(set.users).to eq [user]
     end
     it "chains the where on to the provided scope" do
       set = UserSet.new(:user, :id, :email, lambda { User.all })
-      set.find_user(user.id).label.should == user.email
+      expect(set.find_user(user.id).label).to eq user.email
     end
   end
-  describe UserSet::Record do
+  RSpec.describe UserSet::Record do
     it "correctly configures the record using the set" do
       user = double(:user, :id => 100, :email => "test@example.com")
       set = double(:set, :identifier  => :id, :label => :email, :scope => :user)
       record = UserSet::Record.build(user, set)
-      record.id.should == 100
-      record.label.should == "test@example.com"
-      record.scope.should == :user
+      expect(record.id).to eq 100
+      expect(record.label).to eq "test@example.com"
+      expect(record.scope).to eq :user
     end
   end
 end

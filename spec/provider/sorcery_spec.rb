@@ -16,7 +16,7 @@ class SorceryController < TestController
   end
 end
 
-describe SwitchUser::Provider::Sorcery do
+RSpec.describe SwitchUser::Provider::Sorcery do
   let(:controller) { SorceryController.new }
   let(:provider) { SwitchUser::Provider::Sorcery.new(controller) }
 

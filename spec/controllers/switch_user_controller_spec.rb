@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'switch_user'
 require 'switch_user_controller'
 
-describe SwitchUserController, :type => :controller do
+RSpec.describe SwitchUserController, :type => :controller do
   before do
     SwitchUser.provider = :dummy
   end
@@ -18,14 +18,14 @@ describe SwitchUserController, :type => :controller do
       allow(controller).to receive(:available?).and_return(true)
       get :set_current_user, :scope_identifier => "user_1"
 
-      response.should redirect_to("/path")
+      expect(response).to redirect_to("/path")
     end
 
     it "denies access according to the guard block" do
       SwitchUser.controller_guard = lambda {|_,_,_| false }
-      get :set_current_user
-
-      response.should be_forbidden
+      expect {
+        get :set_current_user
+      }.to raise_error(ActionController::RoutingError)
     end
 
     describe "requests with a privileged original_user" do
@@ -37,11 +37,11 @@ describe SwitchUserController, :type => :controller do
       it "allows access using the original_user param" do
         allow(controller).to receive(:provider).and_return(provider)
 
-        provider.should_receive(:logout_all)
+        expect(provider).to receive(:logout_all)
 
         get :set_current_user
 
-        response.should be_redirect
+        expect(response).to be_redirect
       end
     end
   end
@@ -52,18 +52,18 @@ describe SwitchUserController, :type => :controller do
       SwitchUser.switch_back = true
     end
     it "can remember the current user" do
-      provider.should_receive(:remember_current_user).with(true)
+      expect(provider).to receive(:remember_current_user).with(true)
 
       get :remember_user, :remember => "true"
     end
     it "can forget the current user" do
-      provider.should_receive(:remember_current_user).with(false)
+      expect(provider).to receive(:remember_current_user).with(false)
 
       get :remember_user, :remember => "false"
     end
     it "does nothing if switch_back is not enabled" do
       SwitchUser.switch_back = false
-      provider.should_not_receive(:remember_current_user)
+      expect(provider).not_to receive(:remember_current_user)
 
       get :remember_user, :remember => "true"
     end

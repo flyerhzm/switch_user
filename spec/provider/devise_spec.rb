@@ -32,7 +32,7 @@ class DeviseController < TestController
   end
 end
 
-describe SwitchUser::Provider::Devise do
+RSpec.describe SwitchUser::Provider::Devise do
   let(:controller) { DeviseController.new }
   let(:provider) { SwitchUser::Provider::Devise.new(controller) }
   let(:user) { double(:user) }
@@ -43,7 +43,7 @@ describe SwitchUser::Provider::Devise do
     user = double(:user)
     provider.login(user, :admin)
 
-    provider.current_user(:admin).should == user
+    expect(provider.current_user(:admin)).to eq user
   end
 
   describe "#login_exclusive" do
@@ -54,11 +54,11 @@ describe SwitchUser::Provider::Devise do
     end
 
     it "logs the user in" do
-      provider.current_user.should == user
+      expect(provider.current_user).to eq user
     end
 
     it "logs out other scopes" do
-      provider.current_user(:admin).should be_nil
+      expect(provider.current_user(:admin)).to be_nil
     end
   end
 
@@ -70,8 +70,8 @@ describe SwitchUser::Provider::Devise do
 
       provider.logout_all
 
-      provider.current_user(:admin).should be_nil
-      provider.current_user(:user).should be_nil
+      expect(provider.current_user(:admin)).to be_nil
+      expect(provider.current_user(:user)).to be_nil
     end
   end
 
@@ -80,7 +80,7 @@ describe SwitchUser::Provider::Devise do
       allow(SwitchUser).to receive(:available_users).and_return({:user => nil, :admin => nil})
       provider.login(user, :admin)
 
-      provider.current_users_without_scope.should == [user]
+      expect(provider.current_users_without_scope).to eq [user]
     end
   end
 end

@@ -1,22 +1,22 @@
 require 'switch_user/data_source'
 
 module SwitchUser
-  describe DataSource do
+  RSpec.describe DataSource do
     it "can load users" do
       loader = lambda { [ double, double] }
       source = DataSource.new(loader, :user, :id, :email)
 
-      source.users.should have(2).records
+      expect(source.users.size).to eq 2
     end
   end
 
-  describe DataSources do
+  RSpec.describe DataSources do
     it "aggregates multiple data_sources" do
       user = double(:user)
       s1 = double(:s1, :users => [user])
       source = DataSources.new([s1,s1])
 
-      source.users.should == [user, user]
+      expect(source.users).to eq [user, user]
     end
 
     describe "#find_source_id" do
@@ -26,12 +26,12 @@ module SwitchUser
         s2 = double(:s1, :users => [user])
         source = DataSources.new([s1,s2])
 
-        source.find_scope_id("user_10").should == user
+        expect(source.find_scope_id("user_10")).to eq user
       end
     end
   end
 
-  describe Record do
+  RSpec.describe Record do
     it "can be compared to a identifier string" do
       id1 = "user_100"
       id2 = "user_101"
@@ -41,9 +41,9 @@ module SwitchUser
 
       record = Record.new(user, source)
 
-      record.should be_equivalent(id1)
-      record.should_not be_equivalent(id2)
-      record.should_not be_equivalent(id3)
+      expect(record).to be_equivalent(id1)
+      expect(record).not_to be_equivalent(id2)
+      expect(record).not_to be_equivalent(id3)
     end
   end
 end

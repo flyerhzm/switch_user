@@ -10,6 +10,7 @@ RSpec.configure do |config|
   config.filter_run :focus => true
   config.run_all_when_everything_filtered = true
   config.use_transactional_fixtures = true
+  config.expose_dsl_globally = false
 end
 
 class TestController

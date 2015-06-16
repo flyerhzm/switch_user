@@ -15,7 +15,7 @@ class ClearanceController < TestController
   end
 end
 
-describe SwitchUser::Provider::Clearance do
+RSpec.describe SwitchUser::Provider::Clearance do
   let(:controller) { ClearanceController.new }
   let(:provider) { SwitchUser::Provider::Clearance.new(controller) }
 

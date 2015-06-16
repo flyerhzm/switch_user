@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Using SwitchUser", :type => :request do
+RSpec.describe "Using SwitchUser", :type => :request do
   let(:user) { User.create!(:email => "foo@bar.com", :admin => true) }
   let(:other_user) { User.create!(:email => "other@bar.com", :admin => false) }
   before do
@@ -12,14 +12,14 @@ describe "Using SwitchUser", :type => :request do
   it "signs a user in using switch_user" do
     # can't access protected url
     get "/dummy/protected"
-    response.should be_redirect
+    expect(response).to be_redirect
 
     get "/switch_user?scope_identifier=user_#{other_user.id}"
-    response.should be_redirect
+    expect(response).to be_redirect
 
     # now that we are logged in via switch_user we can access
     get "/dummy/protected"
-    response.should be_success
+    expect(response).to be_success
   end
   context "using switch_back" do
     before do
@@ -35,23 +35,23 @@ describe "Using SwitchUser", :type => :request do
 
       # have SwitchUser remember us
       get "/switch_user/remember_user", :remember => true
-      session["original_user_scope_identifier"].should be_present
+      expect(session["original_user_scope_identifier"]).to be_present
 
       # check that we can switch to another user
       get "/switch_user?scope_identifier=user_#{other_user.id}"
-      session["user_id"].should == other_user.id
+      expect(session["user_id"]).to eq other_user.id
 
       # logout
       get "/logout"
-      session["user_id"].should be_nil
+      expect(session["user_id"]).to be_nil
 
       # check that we can still switch to another user
       get "/switch_user?scope_identifier=user_#{user.id}"
-      session["user_id"].should == user.id
+      expect(session["user_id"]).to eq user.id
 
       # check that we can be un-remembered
       get "/switch_user/remember_user", :remember => false
-      session["original_user"].should be_nil
+      expect(session["original_user"]).to be_nil
     end
   end
 end
