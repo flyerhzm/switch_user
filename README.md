@@ -1,5 +1,7 @@
 # switch_user
 
+[![Build Status](https://secure.travis-ci.org/flyerhzm/switch_user.png)](http://travis-ci.org/flyerhzm/switch_user)
+
 Inspired from [hobo][0], switch_user provides a convenient way to switch current user without needing to log out and log in manually.
 
 ## Use Case
@@ -138,7 +140,7 @@ This example would allow an admin user to user switch_user, but would only let y
 ### How it works
 
 Click the checkbox next to switch_user_select menu to remember that user for this session. Once this
-has been checked, that user is passed in as the 3rd option to the view and controller guards. 
+has been checked, that user is passed in as the 3rd option to the view and controller guards.
 This allows you to check against current_user as well as that original_user to see if the
 switch_user action should be allowed.
 
@@ -148,6 +150,6 @@ This feature should be used with extreme caution because of the security implica
 
 ## Credit
 
-Copyright © 2010 - 2012 Richard Huang (flyerhzm@gmail.com), released under the MIT license
+Copyright © 2010 - 2015 Richard Huang (flyerhzm@gmail.com), released under the MIT license
 
 [0]: https://github.com/tablatom/hobo

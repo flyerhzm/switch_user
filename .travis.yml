@@ -1,0 +1,6 @@
+language: ruby
+rvm:
+  - 2.2
+env:
+  - DB=sqlite
+script: bundle exec rspec spec
