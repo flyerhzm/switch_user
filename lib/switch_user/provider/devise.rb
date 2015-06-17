@@ -7,7 +7,7 @@ module SwitchUser
       end
 
       def login(user, scope = :user)
-        @warden.set_user(user, :scope => scope)
+        @warden.session_serializer.store(user, scope)
       end
 
       def logout(scope = :user)

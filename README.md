@@ -148,6 +148,12 @@ switch_user action should be allowed.
 
 This feature should be used with extreme caution because of the security implications. This is especially true in a production environment.
 
+## Contributing
+
+#### Run tests
+
+`bundle exec rspec spec`
+
 ## Credit
 
 Copyright © 2010 - 2015 Richard Huang (flyerhzm@gmail.com), released under the MIT license

@@ -1,6 +1,17 @@
 require 'spec_helper'
 require 'switch_user/provider/devise'
 
+class FakeWardenSessionSerializer
+  attr_accessor :user_hash
+
+
+  def store(user, scope)
+    return unless user
+    user_hash[scope] = user
+  end
+
+end
+
 class FakeWarden
   attr_reader :user_hash
 
@@ -11,6 +22,12 @@ class FakeWarden
   def set_user(user, args)
     scope = args.fetch(:scope, :user)
     @user_hash[scope] = user
+  end
+
+  def session_serializer
+    serializer = FakeWardenSessionSerializer.new
+    serializer.user_hash = @user_hash
+    serializer
   end
 
   def user(scope)
