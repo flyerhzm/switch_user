@@ -1,50 +1,55 @@
 module SwitchUser
-  DataSource = Struct.new(:loader, :scope, :identifier, :name) do
-    def users
-      loader.call.map {|u| Record.new(u, self) }
+  class DataSources
+    attr_reader :sources
+
+    def initialize(sources)
+      @sources = sources
+    end
+
+    def all
+      sources.flat_map { |source| source.all }
+    end
+
+    def find_scope_id(scope_id)
+      sources.map {|source| source.find_scope_id(scope_id) }.compact.first
     end
   end
 
-  GuestRecord = Struct.new(:scope) do
-    def equivalent?(other_scope_id)
-      scope_id == other_scope_id
+  class DataSource
+    attr_reader :loader, :scope, :identifier, :name
+
+    def initialize(loader, scope, identifier, name)
+      @loader = loader
+      @scope = scope
+      @identifier = identifier
+      @name = name
     end
 
-    def label
-      "Guest"
+    def all
+      loader.call.select(identifier, name).map { |user| Record.new(user, self) }
     end
 
-    def scope_id
+    def find_scope_id(scope_id)
+      user = loader.call.find_by identifier => scope_id.delete("#{scope}_")
+      Record.new(user, self)
     end
   end
 
   class GuestDataSource
-    def initialize(name)
-      @name = name
-    end
-
     def users
-      [ GuestRecord.new(self) ]
-    end
-  end
-
-  DataSources = Struct.new(:sources) do
-    def users
-      sources.flat_map {|source| source.users }
+      [ GuestRecord.new ]
     end
 
     def find_scope_id(scope_id)
-      users.flat_map.detect {|u| u.scope_id == scope_id }
     end
   end
 
-  Record = Struct.new(:user, :source) do
-    def equivalent?(other_scope_id)
-      scope_id == other_scope_id
-    end
+  class Record
+    attr_reader :user, :source
 
-    def scope_id
-      "#{source.scope}_#{user.send(source.identifier)}"
+    def initialize(user, source)
+      @user = user
+      @source = source
     end
 
     def label
@@ -53,6 +58,19 @@ module SwitchUser
 
     def scope
       source.scope
+    end
+
+    def scope_id
+      "#{source.scope}_#{user.send(source.identifier)}"
+    end
+  end
+
+  class GuestRecord
+    def label
+      "Guest"
+    end
+
+    def scope_id
     end
   end
 end

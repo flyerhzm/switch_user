@@ -1,49 +1,87 @@
 require 'switch_user/data_source'
 
 module SwitchUser
-  RSpec.describe DataSource do
-    it "can load users" do
-      loader = lambda { [ double, double] }
-      source = DataSource.new(loader, :user, :id, :email)
-
-      expect(source.users.size).to eq 2
-    end
-  end
-
   RSpec.describe DataSources do
-    it "aggregates multiple data_sources" do
-      user = double(:user)
-      s1 = double(:s1, :users => [user])
-      source = DataSources.new([s1,s1])
+    describe '#all' do
+      it 'aggregates multiple data_sources' do
+        user = double(:user)
+        s1 = double(:s1, :all => [user])
+        source = DataSources.new([s1, s1])
 
-      expect(source.users).to eq [user, user]
+        expect(source.all).to eq [user, user]
+      end
     end
 
-    describe "#find_source_id" do
-      it "can find a corresponding record across data sources" do
-        user = double(:user, :scope_id => "user_10")
-        s1 = double(:s1, :users => [])
-        s2 = double(:s1, :users => [user])
-        source = DataSources.new([s1,s2])
+    describe '#find_scope_id' do
+      it 'can find a corresponding record across data sources' do
+        user = double(:user)
+        s1 = double(:s1, :find_scope_id => nil)
+        s2 = double(:s2, :find_scope_id => user)
+        source = DataSources.new([s1, s2])
 
         expect(source.find_scope_id("user_10")).to eq user
       end
     end
   end
 
+  RSpec.describe DataSource do
+    pending # it's tested in integration test, need to find a good way to test it here.
+  end
+
+  RSpec.describe GuestDataSource do
+    let(:source) { GuestDataSource.new }
+
+    describe '#users' do
+      it 'gets a GuestRecord' do
+        expect(source.users.size).to eq 1
+        expect(source.users.first).to be_instance_of GuestRecord
+      end
+    end
+
+    describe '#find_scope_id' do
+      it 'gets nil' do
+        expect(source.find_scope_id('')).to be_nil
+      end
+    end
+  end
+
   RSpec.describe Record do
-    it "can be compared to a identifier string" do
-      id1 = "user_100"
-      id2 = "user_101"
-      id3 = "staff_100"
-      user = double(:user, :id => 100, :email => "test@example.com")
-      source = DataSource.new(nil, :user, :id, :email)
+    let(:source) { DataSource.new({}, :user, :id, :email) }
+    let(:user) { double(:user, id: '1', email: 'flyerhzm@gmail.com') }
+    let(:record) { Record.new(user, source) }
 
-      record = Record.new(user, source)
+    describe '#label' do
+      it 'gets user email' do
+        expect(record.label).to eq 'flyerhzm@gmail.com'
+      end
+    end
 
-      expect(record).to be_equivalent(id1)
-      expect(record).not_to be_equivalent(id2)
-      expect(record).not_to be_equivalent(id3)
+    describe '#scope' do
+      it 'gets user' do
+        expect(record.scope).to eq :user
+      end
+    end
+
+    describe '#scope_id' do
+      it 'gets scope and id' do
+        expect(record.scope_id).to eq 'user_1'
+      end
+    end
+  end
+
+  RSpec.describe GuestRecord do
+    let(:record) { GuestRecord.new }
+
+    describe '#label' do
+      it 'gets Guest' do
+        expect(record.label).to eq 'Guest'
+      end
+    end
+
+    describe '#scope_id' do
+      it 'gets nil' do
+        expect(record.scope_id).to be_nil
+      end
     end
   end
 end

@@ -38,7 +38,7 @@ module SwitchUser
   end
 
   def self.all_users
-    data_sources.users
+    data_sources.all
   end
 
   def self.data_sources
@@ -47,7 +47,7 @@ module SwitchUser
       name = available_users_names.fetch(scope)
       DataSource.new(loader, scope, identifier, name)
     end
-    sources.unshift(GuestDataSource.new("Guest")) if helper_with_guest
+    sources.unshift(GuestDataSource.new) if helper_with_guest
     DataSources.new(sources)
   end
 

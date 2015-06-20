@@ -3,12 +3,14 @@ require 'spec_helper'
 RSpec.describe "Using SwitchUser", :type => :request do
   let(:user) { User.create!(:email => "foo@bar.com", :admin => true) }
   let(:other_user) { User.create!(:email => "other@bar.com", :admin => false) }
+
   before do
     SwitchUser.reset_config
     SwitchUser.provider = :session
     SwitchUser.controller_guard = lambda { |current_user, request| Rails.env.test? }
     SwitchUser.redirect_path = lambda {|_,_| "/dummys/open"}
   end
+
   it "signs a user in using switch_user" do
     # can't access protected url
     get "/dummy/protected"
@@ -21,6 +23,7 @@ RSpec.describe "Using SwitchUser", :type => :request do
     get "/dummy/protected"
     expect(response).to be_success
   end
+
   context "using switch_back" do
     before do
       SwitchUser.switch_back = true
@@ -28,6 +31,7 @@ RSpec.describe "Using SwitchUser", :type => :request do
         current_user && current_user.admin? || original_user && original_user.admin?
       }
     end
+
     it "can switch back to a different user" do
       # login
       post "/login", :id => user.id
