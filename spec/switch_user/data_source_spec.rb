@@ -31,10 +31,10 @@ module SwitchUser
   RSpec.describe GuestDataSource do
     let(:source) { GuestDataSource.new }
 
-    describe '#users' do
+    describe '#all' do
       it 'gets a GuestRecord' do
-        expect(source.users.size).to eq 1
-        expect(source.users.first).to be_instance_of GuestRecord
+        expect(source.all.size).to eq 1
+        expect(source.all.first).to be_instance_of GuestRecord
       end
     end
 

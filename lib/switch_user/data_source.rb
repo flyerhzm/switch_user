@@ -36,7 +36,7 @@ module SwitchUser
   end
 
   class GuestDataSource
-    def users
+    def all
       [ GuestRecord.new ]
     end
 
