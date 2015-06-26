@@ -26,7 +26,7 @@ module SwitchUser
     end
 
     def all
-      loader.call.select(identifier, name).map { |user| Record.new(user, self) }
+      loader.call.map { |user| Record.new(user, self) }
     end
 
     def find_scope_id(scope_id)
