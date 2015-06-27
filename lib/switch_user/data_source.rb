@@ -30,7 +30,10 @@ module SwitchUser
     end
 
     def find_scope_id(scope_id)
-      user = loader.call.find_by identifier => scope_id.delete("#{scope}_")
+      scope_regexp = /\A#{scope}_/
+      return unless scope_id =~ scope_regexp
+
+      user = loader.call.find_by identifier => scope_id.sub(scope_regexp, '')
       Record.new(user, self)
     end
   end
