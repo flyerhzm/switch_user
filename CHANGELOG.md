@@ -1,5 +1,9 @@
 # Next Release
 
+## 1.0.2
+
+* Don't attempt to query db if scope str isn't in scope_id str
+
 ## 1.0.1
 
 * Fix typo in `GuestDataSource`
