@@ -33,7 +33,7 @@ module SwitchUser
       scope_regexp = /\A#{scope}_/
       return unless scope_id =~ scope_regexp
 
-      user = loader.call.find_by identifier => scope_id.sub(scope_regexp, '')
+      user = loader.call.where(identifier => scope_id.sub(scope_regexp, '')).first
       Record.new(user, self)
     end
   end
