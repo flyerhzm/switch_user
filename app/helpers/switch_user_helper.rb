@@ -4,7 +4,7 @@ module SwitchUserHelper
     return unless available?
 
     if provider.current_user
-      selected_user = "user_#{current_user.id}"
+      selected_user = "user_#{provider.current_user.id}"
     else
       selected_user = nil
     end
