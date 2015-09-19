@@ -9,10 +9,19 @@ module SwitchUserHelper
       selected_user = nil
     end
 
+    grouped_options_container = {}.tap do |h|
+      SwitchUser.all_users.each do |record|
+        scope = record.is_a?(SwitchUser::GuestRecord) ? :Guest : record.scope.to_s.capitalize
+        h[scope] ||= []
+        h[scope] << [record.label, record.scope_id]
+      end
+    end
+
+    option_tags = grouped_options_for_select(grouped_options_container, selected_user)
+
     render :partial => "switch_user/widget",
            :locals => {
-             :options => SwitchUser.all_users,
-             :current_scope => selected_user
+             :option_tags => option_tags
            }
   end
 

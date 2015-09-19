@@ -2,6 +2,8 @@ pkg/*
 *.gem
 .bundle
 .rvmrc
+.ruby-version
+.versions.conf
 Gemfile.lock
 log/*.log
 .DS_Store
