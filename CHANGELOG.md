@@ -1,5 +1,9 @@
 # Next Release
 
+## 1.2.0 (12/01/2015)
+
+* Replace select option to `group_option`
+
 ## 1.1.0 (07/01/2015)
 
 * Rails 3.x compatibility
