@@ -1,5 +1,9 @@
 # Next Release
 
+## 1.2.1 (12/22/2015)
+
+* Fix `grouped_options_for_select` for rails 3.2
+
 ## 1.2.0 (12/01/2015)
 
 * Replace select option to `group_option`
