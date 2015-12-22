@@ -17,7 +17,7 @@ module SwitchUserHelper
       end
     end
 
-    option_tags = grouped_options_for_select(grouped_options_container, selected_user)
+    option_tags = grouped_options_for_select(grouped_options_container.to_a, selected_user)
 
     render :partial => "switch_user/widget",
            :locals => {
