@@ -1,6 +1,6 @@
 module SwitchUserHelper
   SelectOption = Struct.new(:label, :scope_id)
-  def switch_user_select
+  def switch_user_select(options = {})
     return unless available?
 
     if provider.current_user
@@ -21,7 +21,9 @@ module SwitchUserHelper
 
     render :partial => "switch_user/widget",
            :locals => {
-             :option_tags => option_tags
+             :option_tags => option_tags,
+             :classes => options[:class],
+             :styles => options[:style],
            }
   end
 
