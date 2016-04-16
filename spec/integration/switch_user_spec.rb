@@ -8,7 +8,7 @@ RSpec.describe "Using SwitchUser", :type => :request do
     SwitchUser.reset_config
     SwitchUser.provider = :session
     SwitchUser.controller_guard = lambda { |current_user, request| Rails.env.test? }
-    SwitchUser.redirect_path = lambda {|_,_| "/dummys/open"}
+    SwitchUser.redirect_path = lambda {|_,_| "/dummy/open"}
   end
 
   it "signs a user in using switch_user" do
