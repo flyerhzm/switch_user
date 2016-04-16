@@ -5,7 +5,7 @@ require 'switch_user/rails'
 
 class ApplicationController < ActionController::Base
   def require_user
-    current_user || redirect_to("/tests/open")
+    current_user || redirect_to("/dummy/open")
   end
 
   def current_user
@@ -16,11 +16,13 @@ class ApplicationController < ActionController::Base
     user = User.find(params[:id])
     session[SwitchUser.session_key] = user.id
 
-    redirect_to("/tests/protected")
+    redirect_to("/dummy/protected")
   end
 
   def logout
     session[SwitchUser.session_key] = nil
+
+    redirect_to("/dummy/open")
   end
 end
 
@@ -46,6 +48,9 @@ module MyApp
     config.secret_key_base = "abc123"
     config.eager_load = true
     config.secret_token = '153572e559247c7aedd1bca5a246874d'
+
+    # should set it
+    config.action_dispatch.show_exceptions = false
   end
 end
 Rails.application.initialize!
