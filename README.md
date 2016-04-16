@@ -137,6 +137,32 @@ config.controller_guard = lambda { |current_user, request, original_user|
 ```
 This example would allow an admin user to user switch_user, but would only let you switch back to another user if the original user was a super admin.
 
+## Using SwitchUser with RSpec and Capybara
+
+Add the following code to spec/support/switch_user.rb or spec/spec_helper.rb :
+
+```ruby
+require 'switch_user/rspec'
+```
+
+You can now write your specs like so :
+
+```ruby
+feature "Your feature" do
+  background do
+    @user = User.make(:email => 'user@example.com', :password => 'password')
+  end
+
+  scenario "Your scenario" do
+    switch_user @user
+    # or
+    # switch_user :user, @user.id
+
+    visit '/'
+  end
+end
+```
+
 ### How it works
 
 Click the checkbox next to switch_user_select menu to remember that user for this session. Once this
