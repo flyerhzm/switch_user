@@ -1,5 +1,5 @@
 class SwitchUserController < ApplicationController
-  before_filter :developer_modes_only
+  before_action :developer_modes_only
 
   def set_current_user
     handle_request(params)
