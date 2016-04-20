@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "activerecord"
   s.add_development_dependency "awesome_print"
   s.add_development_dependency "pry"
+  s.add_development_dependency "capybara"
 
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files`.split("\n").map{|f| f =~ /^bin\/(.*)/ ? $1 : nil}.compact

@@ -72,3 +72,10 @@ end
 
 class User < ActiveRecord::Base
 end
+
+connection.create_table :clients do |t|
+  t.column :email, :string
+end
+
+class Client < ActiveRecord::Base
+end
