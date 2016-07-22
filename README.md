@@ -36,6 +36,12 @@ or haml
 
     = switch_user_select
 
+If you want to add a class or styles
+    
+    <%= switch_user_select class: 'special-select', styles: 'width: 220px' %>
+    
+    = switch_user_select class: 'special-select', styles: 'width: 220px'
+    
 If there are too many users (on production), the switch_user_select is not a good choice, you should call the switch user request by yourself.
 
     <%= link_to user.login, "/switch_user?scope_identifier=user_#{user.id}" %>
@@ -47,7 +53,8 @@ If there are too many users (on production), the switch_user_select is not a goo
 If you have a wildcard route in your project, add a route before the wildcard route.
 ```ruby
 # config/routes.rb
-get 'switch_user' => 'switch_user#set_current_user'
+get 'switch_user', to: 'switch_user#set_current_user'
+get 'switch_user/remember_user', to: 'switch_user#remember_user'
 # wildcard route that will get
 get ':id' => 'pages#show'
 ```
