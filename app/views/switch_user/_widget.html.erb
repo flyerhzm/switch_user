@@ -1,4 +1,8 @@
 <% if SwitchUser.switch_back %>
   <%= check_box_tag "remember_user", "remember_user", provider.original_user.present?, :onchange => "location.href = '/switch_user/remember_user?remember=' + encodeURIComponent(this.checked)" %>
 <% end %>
+<<<<<<< 1a474df14a16dfcec697be5d50ac67512afd6cea
 <%= select_tag "switch_user_identifier", option_tags, :onchange => "location.href = '/switch_user?scope_identifier=' + encodeURIComponent(this.options[this.selectedIndex].value)", :class => classes, :style => styles %>
+=======
+<%= select_tag "switch_user_identifier", option_tags, :onchange => "location.href = '#{ActionController::Base.relative_url_root || '/'}switch_user?scope_identifier=' + encodeURIComponent(this.options[this.selectedIndex].value)", :class => classes, :style => styles %>
+>>>>>>> Respect the relative_url_root for applications deployed to sub-directories
