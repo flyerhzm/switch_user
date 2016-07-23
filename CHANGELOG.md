@@ -1,5 +1,10 @@
 # Next Release
 
+## 1.3.0 (07/23/2016)
+
+* Add capybara support
+* Add class and style options to `switch_user_select`
+
 ## 1.2.1 (12/22/2015)
 
 * Fix `grouped_options_for_select` for rails 3.2

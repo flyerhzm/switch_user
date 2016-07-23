@@ -37,11 +37,11 @@ or haml
     = switch_user_select
 
 If you want to add a class or styles
-    
+
     <%= switch_user_select class: 'special-select', styles: 'width: 220px' %>
-    
+
     = switch_user_select class: 'special-select', styles: 'width: 220px'
-    
+
 If there are too many users (on production), the switch_user_select is not a good choice, you should call the switch user request by yourself.
 
     <%= link_to user.login, "/switch_user?scope_identifier=user_#{user.id}" %>
@@ -155,7 +155,7 @@ require 'switch_user/rspec'
 You can now write your specs like so :
 
 ```ruby
-feature "Your feature" do
+feature "Your feature", type: :feature do
   background do
     @user = User.make(:email => 'user@example.com', :password => 'password')
   end
