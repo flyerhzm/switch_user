@@ -55,6 +55,11 @@ module SwitchUser
       def clear_original_user
         @controller.session.delete(:original_user_scope_identifier)
       end
+
+      def current_user?(user, scope = :user)
+        current_user(scope) == user
+      end
+
     end
   end
 end

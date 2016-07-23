@@ -8,19 +8,22 @@ RSpec.describe SwitchUserHelper, :type => :helper do
   end
 
   let(:user) { double(:user, :id => 1) }
-  let(:provider) { 
-    _provider = SwitchUser::Provider::Dummy.new(controller) 
-    _provider.instance_variable_set(:@user, user)
+  let(:admin) { double(:admin, :id => 1) }
+  let(:provider) {
+    _provider = SwitchUser::Provider::Dummy.new(controller)
     _provider
   }
 
   describe "#switch_user_select" do
     let(:guest_record) { SwitchUser::GuestRecord.new }
-    let(:user_record) { double(:user_record, :scope => :user, :label => 'user1', :scope_id => 'user_1') }
-    
+    let(:user_record) { double(:user_record, :user => user, :scope => :user, :label => 'user1', :scope_id => 'user_1') }
+    let(:admin_record) { double(:admin_record, :user => admin, :scope => :admin, :label => 'admin1', :scope_id => 'admin_1') }
+
     let(:guest_option_tags) { %Q^<optgroup label="Guest"><option value="">Guest</option></optgroup>^ }
     let(:user_option_tags) { %Q^<optgroup label="User"><option value="user_1">user1</option></optgroup>^ }
     let(:user_selected_option_tags) { %Q^<optgroup label="User"><option selected="selected" value="user_1">user1</option></optgroup>^ }
+    let(:admin_option_tags) { %Q^<optgroup label="Admin"><option value="admin_1">admin1</option></optgroup>^ }
+    let(:admin_selected_option_tags) { %Q^<optgroup label="Admin"><option selected="selected" value="admin_1">admin1</option></optgroup>^ }
 
 
     before do
@@ -28,7 +31,9 @@ RSpec.describe SwitchUserHelper, :type => :helper do
 
       allow(helper).to receive(:available?).and_return(true)
 
+      provider.instance_variable_set(:@user, user)
       allow(helper).to receive(:provider).and_return(provider)
+
       allow(provider).to receive(:current_user).and_return(user)
 
       allow(SwitchUser).to receive(:all_users).and_return([guest_record, user_record])
@@ -82,6 +87,40 @@ RSpec.describe SwitchUserHelper, :type => :helper do
       expect(helper.switch_user_select).to match(%r{#{user_selected_option_tags}})
     end
 
+    it "when current_user is user and all_users is [guest_record, user_record, admin_record]" do
+      allow(provider).to receive(:current_user).and_return(user)
+      allow(SwitchUser).to receive(:all_users).and_return([guest_record, user_record, admin_record])
+
+      expect(helper.switch_user_select).to match(%r{#{guest_option_tags}})
+      expect(helper.switch_user_select).to match(%r{#{user_selected_option_tags}})
+      expect(helper.switch_user_select).to match(%r{#{admin_option_tags}})
+    end
+
+    it "when current_user is admin and all_users is [guest_record, user_record, admin_record]" do
+      provider.instance_variable_set(:@user, admin)
+      allow(helper).to receive(:provider).and_return(provider)
+
+      allow(provider).to receive(:current_user).and_return(admin)
+
+      allow(SwitchUser).to receive(:all_users).and_return([guest_record, user_record, admin_record])
+
+      expect(helper.switch_user_select).to match(%r{#{guest_option_tags}})
+      expect(helper.switch_user_select).to match(%r{#{user_option_tags}})
+      expect(helper.switch_user_select).to match(%r{#{admin_selected_option_tags}})
+    end
+
+    it "when current_user is admin and all_users is [guest_record, user_record]" do
+      provider.instance_variable_set(:@user, admin)
+      allow(helper).to receive(:provider).and_return(provider)
+
+      allow(provider).to receive(:current_user).and_return(admin)
+
+      allow(SwitchUser).to receive(:all_users).and_return([guest_record, user_record])
+
+      expect(helper.switch_user_select).to match(%r{#{guest_option_tags}})
+      expect(helper.switch_user_select).to match(%r{#{user_option_tags}})
+      expect(helper.switch_user_select).to_not match(%r{#{admin_option_tags}})
+    end
   end
 
   describe "#user_tag_value" do

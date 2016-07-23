@@ -100,4 +100,14 @@ RSpec.describe SwitchUser::Provider::Devise do
       expect(provider.current_users_without_scope).to eq [user]
     end
   end
+
+  describe "#current_user?" do
+    it "logs the user in" do
+      user = double(:user)
+      provider.login(user, :user)
+
+      expect(provider.current_user?(user, :user)).to eq true
+      expect(provider.current_user?(user, :admin)).to eq false
+    end
+  end
 end
