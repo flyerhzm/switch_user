@@ -1,5 +1,10 @@
 # Next Release
 
+## 1.3.1
+
+* Respect `relative_url_root`
+* Fix `selected_user_of_helper` bug
+
 ## 1.3.0 (07/23/2016)
 
 * Add capybara support
