@@ -7,7 +7,11 @@ module SwitchUser
       end
 
       def login(user, scope = :user)
-        @warden.session_serializer.store(user, scope)
+        if SwitchUser.provider.is_a?(Hash) && SwitchUser.provider[:store_sign_in]
+          @warden.set_user(user, scope: scope)
+        else
+          @warden.session_serializer.store(user, scope)
+        end
       end
 
       def logout(scope = :user)
