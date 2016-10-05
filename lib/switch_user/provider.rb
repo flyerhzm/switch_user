@@ -10,8 +10,15 @@ module SwitchUser
     autoload :Session, "switch_user/provider/session"
 
     def self.init(controller)
-      klass_part = SwitchUser.provider.to_s.classify
-      klass    = "SwitchUser::Provider::#{klass_part}".constantize
+      if SwitchUser.provider.is_a?(Hash)
+        klass_part = SwitchUser.provider[:name]
+      else
+        klass_part = SwitchUser.provider
+      end
+
+      klass_part = klass_part.to_s.classify
+
+      klass = "SwitchUser::Provider::#{klass_part}".constantize
 
       klass.new(controller)
     end

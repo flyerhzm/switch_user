@@ -63,7 +63,7 @@ get ':id' => 'pages#show'
 By default, you can switch between Guest and all users in users table, you don't need to do anything. The following is some of the more commonly used configuration options.
 ```ruby
 SwitchUser.setup do |config|
-  # provider may be :devise, :authlogic, :clearance, :restful_authentication or :sorcery
+  # provider may be :devise, :authlogic, :clearance, :restful_authentication, :sorcery, or {name: :devise, store_sign_in: true}
   config.provider = :devise
 
   # available_users is a hash,
