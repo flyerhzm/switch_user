@@ -1,7 +1,8 @@
 # Next Release
 
-## 1.3.1
+## 1.4.0 (10/21/2016)
 
+* Add ability to `store_sign_in` info with devise provider
 * Respect `relative_url_root`
 * Fix `selected_user_of_helper` bug
 
@@ -9,9 +10,6 @@
 
 * Add capybara support
 * Add class and style options to `switch_user_select`
-
-## 1.2.1 (12/22/2015)
-
 * Fix `grouped_options_for_select` for rails 3.2
 
 ## 1.2.0 (12/01/2015)
