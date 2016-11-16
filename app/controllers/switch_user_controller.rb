@@ -15,7 +15,8 @@ class SwitchUserController < ApplicationController
 
   def switch_back
     if SwitchUser.switch_back
-      provider.remember_current_user(params[:remember] == "true")
+      provider.remember_current_user(true) if params[:remember] == "true"
+      provider.remember_current_user(false) if params[:remember] == "false"
     end
   end
 

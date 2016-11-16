@@ -71,7 +71,7 @@ RSpec.describe SwitchUser::Provider::Devise do
     end
 
     it "logs the user in" do
-      expect(provider.current_user).to eq user
+      expect(provider.current_user(:user)).to eq user
     end
 
     it "logs out other scopes" do

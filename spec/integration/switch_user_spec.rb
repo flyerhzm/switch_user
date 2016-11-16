@@ -32,7 +32,7 @@ RSpec.describe "Using SwitchUser", :type => :request do
       }
     end
 
-    it "can switch back to a different user" do
+    it "can switch back to a different user through remember_user endpoint" do
       # login
       post "/login", :id => user.id
       follow_redirect!
@@ -44,6 +44,29 @@ RSpec.describe "Using SwitchUser", :type => :request do
       # check that we can switch to another user
       get "/switch_user?scope_identifier=user_#{other_user.id}"
       expect(session["user_id"]).to eq other_user.id
+
+      # logout
+      get "/logout"
+      expect(session["user_id"]).to be_nil
+
+      # check that we can still switch to another user
+      get "/switch_user?scope_identifier=user_#{user.id}"
+      expect(session["user_id"]).to eq user.id
+
+      # check that we can be un-remembered
+      get "/switch_user/remember_user", :remember => false
+      expect(session["original_user"]).to be_nil
+    end
+
+    it "can switch back to a different user without hitting remember_user endpoint" do
+      # login
+      post "/login", :id => user.id
+      follow_redirect!
+
+      # check that we can switch to another user
+      get "/switch_user?scope_identifier=user_#{other_user.id}", :remember => true
+      expect(session["user_id"]).to eq other_user.id
+      expect(session["original_user_scope_identifier"]).to_not be_nil
 
       # logout
       get "/logout"
