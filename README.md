@@ -117,11 +117,11 @@ config.available_users_names = { :user => :login }
 ```
 If you only allow switching from admin to user in production environment
 ```ruby
-config.controller_guard = lambda { |current_user, request| Rails.env == "production" and current_user.admin? }
+config.controller_guard = lambda { |current_user, request| Rails.env.production? and current_user.admin? }
 ```
 If you only want to display switch user select box for admins in production environment
 ```ruby
-config.view_guard = lambda { |current_user, request| Rails.env == "production" and current_user and current_user.admin? }
+config.view_guard = lambda { |current_user, request| Rails.env.production? and current_user and current_user.admin? }
 ```
 If you want to redirect user to "/dashboard" page
 ```ruby
