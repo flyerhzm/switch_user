@@ -53,7 +53,11 @@ module SwitchUser
 
   def self.reset_config
     self.provider = :devise
-    self.available_users = { :user => lambda { User.all } }
+    if Rails.version.to_i >= 4
+      self.available_users = { :user => lambda { User.all } }
+    else
+      self.available_users = { :user => lambda { User.scoped } }
+    end
     self.available_users_identifiers = { :user => :id }
     self.available_users_names = { :user => :email }
     self.guard_class = "SwitchUser::LambdaGuard"
