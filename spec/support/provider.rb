@@ -25,7 +25,7 @@ RSpec.shared_examples_for "a provider" do
   end
 
   it "knows if there are any users logged in" do
-    provider.login(user)
+    provider.login(user, :user)
 
     expect(provider.current_users_without_scope).to eq [user]
   end
@@ -36,7 +36,7 @@ RSpec.shared_examples_for "a provider" do
     provider.login_exclusive(other_user, scope: "user")
 
     expect(provider.original_user).to eq user
-    expect(provider.current_user).to eq other_user
+    expect(provider.current_user(:user)).to eq other_user
   end
 
   it "can forget the original_user" do

@@ -1,5 +1,5 @@
 class SwitchUserController < ApplicationController
-  before_action :developer_modes_only
+  before_action :developer_modes_only, :switch_back
 
   def set_current_user
     handle_request(params)
@@ -8,15 +8,17 @@ class SwitchUserController < ApplicationController
   end
 
   def remember_user
-    # NOOP unless the user has explicity enabled this feature
-    if SwitchUser.switch_back
-      provider.remember_current_user(params[:remember] == "true")
-    end
-
     redirect_to(SwitchUser.redirect_path.call(request, params))
   end
 
   private
+
+  def switch_back
+    if SwitchUser.switch_back
+      provider.remember_current_user(true) if params[:remember] == "true"
+      provider.remember_current_user(false) if params[:remember] == "false"
+    end
+  end
 
   def developer_modes_only
     raise ActionController::RoutingError.new('Do not try to hack us.') unless available?
