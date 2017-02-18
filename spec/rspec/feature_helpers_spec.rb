@@ -6,32 +6,32 @@ Capybara.app = MyApp::Application
 
 require 'switch_user/rspec'
 
-RSpec.feature "SwitchUser::RSpecFeatureHelpers", :type => :feature do
+RSpec.feature "SwitchUser::RSpecFeatureHelpers", type: :feature do
   background do
-    @user = User.create!(:email => "foo@bar.com", :admin => true)
-    @client = Client.create!(:email => "foo@bar.com")
+    @user = User.create!(email: "foo@bar.com", admin: true)
+    @client = Client.create!(email: "foo@bar.com")
   end
 
-  before(:each) do
-    allow(SwitchUser).to receive(:controller_guard).and_return(lambda{|current_user, request| true})
+  before(:example) do
+    allow(SwitchUser).to receive(:controller_guard).and_return(->(current_user, request) { true })
 
-    allow(SwitchUser).to receive(:available_users).and_return({:user => lambda { User.all }})
+    allow(SwitchUser).to receive(:available_users).and_return({user: -> { User.all }})
 
-    allow(SwitchUser).to receive(:available_users_identifiers).and_return({:user => :id})
+    allow(SwitchUser).to receive(:available_users_identifiers).and_return({user: :id})
 
-    allow(SwitchUser).to receive(:available_users_names).and_return({:user => :email})
+    allow(SwitchUser).to receive(:available_users_names).and_return({user: :email})
   end
 
   scenario "when controller_guard return false" do
-    allow(SwitchUser).to receive(:controller_guard).and_return(lambda{|current_user, request| false})
+    allow(SwitchUser).to receive(:controller_guard).and_return(->(current_user, request) { false })
 
     expect do
       switch_user @user
-    end.to_not raise_error ActionController::RoutingError, /Do not try to hack us/
+    end.not_to raise_error
   end
 
   scenario "when controller_guard return false and controller call original available?" do
-    allow(SwitchUser).to receive(:controller_guard).and_return(lambda{|current_user, request| false})
+    allow(SwitchUser).to receive(:controller_guard).and_return(->(current_user, request) { false })
 
     allow_any_instance_of(SwitchUserController).to receive(:available?).and_call_original
 
@@ -43,7 +43,7 @@ RSpec.feature "SwitchUser::RSpecFeatureHelpers", :type => :feature do
   scenario "arg is @user, available_users is default, and available_users_identifiers is default" do
     expect do
       switch_user @user
-    end.to_not raise_error
+    end.not_to raise_error
   end
 
   scenario "arg is @user, available_users is default, and available_users_identifiers is {user: id}" do
@@ -51,12 +51,12 @@ RSpec.feature "SwitchUser::RSpecFeatureHelpers", :type => :feature do
 
     expect do
       switch_user @user
-    end.to_not raise_error
+    end.not_to raise_error
   end
 
   scenario "arg is @user, available_users is default, and available_users_identifiers is {:client => :id}" do
-    allow(SwitchUser).to receive(:available_users_identifiers).and_return({:client => :id})
-    allow(SwitchUser).to receive(:available_users_names).and_return({:client => :email})
+    allow(SwitchUser).to receive(:available_users_identifiers).and_return({client: :id})
+    allow(SwitchUser).to receive(:available_users_names).and_return({client: :email})
 
     expect do
       switch_user @user
@@ -70,7 +70,7 @@ RSpec.feature "SwitchUser::RSpecFeatureHelpers", :type => :feature do
   end
 
   scenario "arg is @client, available_users is {:user => lambda { User.all }, :client => lambda {Client.all}}, and available_users_identifiers is default" do
-    allow(SwitchUser).to receive(:available_users).and_return({:user => lambda { User.all }, :client => lambda {Client.all}})
+    allow(SwitchUser).to receive(:available_users).and_return({user: -> { User.all }, client: -> { Client.all }})
 
     expect do
       switch_user @client
@@ -78,20 +78,20 @@ RSpec.feature "SwitchUser::RSpecFeatureHelpers", :type => :feature do
   end
 
   scenario "arg is @client, available_users is {:user => lambda { User.all }, :client => lambda {Client.all}}, and available_users_identifiers is {:user => id, :client => id}" do
-    allow(SwitchUser).to receive(:available_users).and_return({:user => lambda { User.all }, :client => lambda {Client.all}})
+    allow(SwitchUser).to receive(:available_users).and_return({user: -> { User.all }, client: -> { Client.all }})
 
-    allow(SwitchUser).to receive(:available_users_identifiers).and_return({:user => :id, :client => :id})
-    allow(SwitchUser).to receive(:available_users_names).and_return({:user => :email, :client => :email})
+    allow(SwitchUser).to receive(:available_users_identifiers).and_return({user: :id, client: :id})
+    allow(SwitchUser).to receive(:available_users_names).and_return({user: :email, client: :email})
 
     expect do
       switch_user @client
-    end.to_not raise_error
+    end.not_to raise_error
   end
 
   scenario "args is :user and @user.id, available_users is default, and available_users_identifiers is default" do
     expect do
       switch_user :user, @user.id
-    end.to_not raise_error
+    end.not_to raise_error
   end
 
   scenario "arg is :client and @client.id, available_users is default, and available_users_identifiers is default" do
@@ -121,7 +121,7 @@ RSpec.feature "SwitchUser::RSpecFeatureHelpers", :type => :feature do
   scenario "args is :user and 0, available_users is default, and available_users_identifiers is default" do
     expect do
       switch_user :user, 0
-    end.to_not raise_error
+    end.not_to raise_error
   end
 
 end

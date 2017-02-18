@@ -38,9 +38,9 @@ class SwitchUserController < ApplicationController
         return
       end
       if SwitchUser.login_exclusive
-        provider.login_exclusive(record.user, :scope => record.scope)
+        provider.login_exclusive(record.user, scope: record.scope)
       else
-        provider.login_inclusive(record.user, :scope => record.scope)
+        provider.login_inclusive(record.user, scope: record.scope)
       end
     end
   end

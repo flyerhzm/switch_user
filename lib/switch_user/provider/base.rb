@@ -33,7 +33,7 @@ module SwitchUser
         user_identifier = @controller.session[:original_user_scope_identifier]
 
         if user_identifier
-          UserLoader.prepare(:scope_identifier => user_identifier).user
+          UserLoader.prepare(scope_identifier: user_identifier).user
         end
       end
 

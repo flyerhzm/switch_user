@@ -8,10 +8,10 @@ module SwitchUser
         provider = double.as_null_object
         guard = SwitchUser::LambdaGuard.new(controller, provider)
 
-        SwitchUser.controller_guard = lambda {|a| a }
+        SwitchUser.controller_guard = ->(a) { a }
         expect(guard).to be_controller_available
 
-        SwitchUser.controller_guard = lambda {|a| !a }
+        SwitchUser.controller_guard = ->(a) { !a }
         expect(guard).not_to be_controller_available
       end
     end

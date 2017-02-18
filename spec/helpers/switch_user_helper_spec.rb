@@ -2,13 +2,13 @@ require 'spec_helper'
 require 'switch_user'
 require 'switch_user_helper'
 
-RSpec.describe SwitchUserHelper, :type => :helper do
+RSpec.describe SwitchUserHelper, type: :helper do
   before do
     SwitchUser.provider = :dummy
   end
 
-  let(:user) { double(:user, :id => 1) }
-  let(:admin) { double(:admin, :id => 1) }
+  let(:user) { double(:user, id: 1) }
+  let(:admin) { double(:admin, id: 1) }
   let(:provider) {
     _provider = SwitchUser::Provider::Dummy.new(controller)
     _provider
@@ -16,8 +16,8 @@ RSpec.describe SwitchUserHelper, :type => :helper do
 
   describe "#switch_user_select" do
     let(:guest_record) { SwitchUser::GuestRecord.new }
-    let(:user_record) { double(:user_record, :user => user, :scope => :user, :label => 'user1', :scope_id => 'user_1') }
-    let(:admin_record) { double(:admin_record, :user => admin, :scope => :admin, :label => 'admin1', :scope_id => 'admin_1') }
+    let(:user_record) { double(:user_record, user: user, scope: :user, label: 'user1', scope_id: 'user_1') }
+    let(:admin_record) { double(:admin_record, user: admin, scope: :admin, label: 'admin1', scope_id: 'admin_1') }
 
     let(:guest_option_tags) { %Q^<optgroup label="Guest"><option value="">Guest</option></optgroup>^ }
     let(:user_option_tags) { %Q^<optgroup label="User"><option value="user_1">user1</option></optgroup>^ }
@@ -125,7 +125,7 @@ RSpec.describe SwitchUserHelper, :type => :helper do
 
   describe "#user_tag_value" do
     it "for user" do
-      user = double(:user, :id => 1)
+      user = double(:user, id: 1)
 
       expect(helper.send(:user_tag_value, user, :id, :user)).to eq('user_1')
     end
@@ -134,13 +134,13 @@ RSpec.describe SwitchUserHelper, :type => :helper do
   describe "#user_tag_label" do
     it "when name has call method" do
       user = double(:user)
-      name = ->(user){ 'user1' }
+      name = ->(user) { 'user1' }
 
       expect(helper.send(:user_tag_label, user, name)).to eq('user1')
     end
 
     it "when name not has call method" do
-      user = double(:name, :name => 'user1')
+      user = double(:name, name: 'user1')
       name = :name
 
       expect(helper.send(:user_tag_label, user, name)).to eq('user1')

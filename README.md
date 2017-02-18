@@ -14,7 +14,7 @@ switch_user is very useful in such use cases
 
 ## Example
 
-Visit here: <http://switch-user-example.heroku.com>, switch the current user in the select box.
+Visit here: <http://switch-user-example.heroku.com/admin>, switch the current user in the select box.
 
 And source code here: <https://github.com/flyerhzm/switch_user_example>
 
@@ -69,7 +69,7 @@ SwitchUser.setup do |config|
   # available_users is a hash,
   # key is the model name of user (:user, :admin, or any name you use),
   # value is a block that return the users that can be switched.
-  config.available_users = { :user => lambda { User.all } } # use User.scoped instead for rails 3.2
+  config.available_users = { user: -> { User.all } } # use User.scoped instead for rails 3.2
 
   # available_users_identifiers is a hash,
   # keys in this hash should match a key in the available_users hash
@@ -77,55 +77,55 @@ SwitchUser.setup do |config|
   # defaults to id
   # this hash is to allow you to specify a different column to
   # expose for instance a username on a User model instead of id
-  config.available_users_identifiers = { :user => :id }
+  config.available_users_identifiers = { user: :id }
 
   # available_users_names is a hash,
   # keys in this hash should match a key in the available_users hash
   # value is the column name which will be displayed in select box
-  config.available_users_names = { :user => :email }
+  config.available_users_names = { user: :email }
 
   # controller_guard is a block,
   # if it returns true, the request will continue,
   # else the request will be refused and returns "Permission Denied"
   # if you switch from "admin" to user, the current_user param is "admin"
-  config.controller_guard = lambda { |current_user, request| Rails.env.development? }
+  config.controller_guard = ->(current_user, request) { Rails.env.development? }
 
   # view_guard is a block,
   # if it returns true, the switch user select box will be shown,
   # else the select box will not be shown
   # if you switch from admin to "user", the current_user param is "user"
-  config.view_guard = lambda { |current_user, request| Rails.env.development? }
+  config.view_guard = ->(current_user, request)  { Rails.env.development? }
 
   # redirect_path is a block, it returns which page will be redirected
   # after switching a user.
-  config.redirect_path = lambda { |request, params| '/' }
+  config.redirect_path = ->(request, params) { '/' }
 end
 ```
 If you need to override the default configuration, run <code>rails g switch_user:install</code> and a copy of the configuration file will be copied to <code>config/initializers/switch_user.rb</code> in your project.
 
 If you want to switch both available users and available admins
 ```ruby
-config.available_users = { :user => lambda { User.available }, :admin => lambda { Admin.available } }
+config.available_users = { user => -> { User.available }, :admin => -> { Admin.available } }
 ```
 If you want to use name column as the user identifier
 ```ruby
-config.available_users_identifiers => { :user => :name }
+config.available_users_identifiers => { user: :name }
 ```
 If you want to display the login field in switch user select box
 ```ruby
-config.available_users_names = { :user => :login }
+config.available_users_names = { user: :login }
 ```
 If you only allow switching from admin to user in production environment
 ```ruby
-config.controller_guard = lambda { |current_user, request| Rails.env.production? and current_user.admin? }
+config.controller_guard = ->(current_user, request) { Rails.env.production? && current_user.admin? }
 ```
 If you only want to display switch user select box for admins in production environment
 ```ruby
-config.view_guard = lambda { |current_user, request| Rails.env.production? and current_user and current_user.admin? }
+config.view_guard = ->(current_user, request) { Rails.env.production? && current_user && current_user.admin? }
 ```
 If you want to redirect user to "/dashboard" page
 ```ruby
-config.redirect_path = lambda { |request, params| "/dashboard" }
+config.redirect_path = ->(request, params) { "/dashboard" }
 ```
 If you want to hide a 'Guest' item in the helper dropdown list
 ```ruby
@@ -137,16 +137,14 @@ Sometimes you'll want to be able to switch to an unprivileged user and then back
 You will need to make the following modifications to your configuration:
 ```ruby
 config.switch_back = true
-config.controller_guard = lambda { |current_user, request, original_user|
-  current_user && current_user.admin? || original_user && original_user.super_admin?
-}
+config.controller_guard = ->(current_user, request, original_user) { current_user && current_user.admin? || original_user && original_user.super_admin? }
 # Do something similar for the view_guard as well.
 ```
 This example would allow an admin user to user switch_user, but would only let you switch back to another user if the original user was a super admin.
 
 ## Using SwitchUser with RSpec and Capybara
 
-Add the following code to spec/support/switch_user.rb or spec/spec_helper.rb :
+Add the following code to spec/support/switch_user.rb or spec/spec_helper.rb:
 
 ```ruby
 require 'switch_user/rspec'
@@ -157,7 +155,7 @@ You can now write your specs like so :
 ```ruby
 feature "Your feature", type: :feature do
   background do
-    @user = User.make(:email => 'user@example.com', :password => 'password')
+    @user = User.make(email: 'user@example.com', password: 'password')
   end
 
   scenario "Your scenario" do
@@ -189,6 +187,6 @@ This feature should be used with extreme caution because of the security implica
 
 ## Credit
 
-Copyright © 2010 - 2015 Richard Huang (flyerhzm@gmail.com), released under the MIT license
+Copyright © 2010 - 2017 Richard Huang (flyerhzm@gmail.com), released under the MIT license
 
 [0]: https://github.com/tablatom/hobo

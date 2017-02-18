@@ -11,8 +11,8 @@ RSpec.describe SwitchUser::UserLoader do
 
   describe ".user" do
     before do
-      SwitchUser.available_users_identifiers = {:user => :id}
-      allow(User).to receive(:where).with(:id => "1").and_return(user_result)
+      SwitchUser.available_users_identifiers = {user: :id}
+      allow(User).to receive(:where).with(id: "1").and_return(user_result)
     end
     it "can be loaded from a scope and identifier" do
       loaded_user = SwitchUser::UserLoader.prepare("user","1").user
@@ -20,7 +20,7 @@ RSpec.describe SwitchUser::UserLoader do
       expect(loaded_user).to eq user
     end
     it "can be loaded by a passing an unprocessed scope identifier" do
-      loaded_user = SwitchUser::UserLoader.prepare(:scope_identifier => "user_1").user
+      loaded_user = SwitchUser::UserLoader.prepare(scope_identifier: "user_1").user
 
       expect(loaded_user).to eq user
     end
@@ -32,7 +32,7 @@ RSpec.describe SwitchUser::UserLoader do
   end
 
   it "returns a user" do
-    allow(User).to receive(:where).with(:id => 1).and_return(user_result)
+    allow(User).to receive(:where).with(id: 1).and_return(user_result)
 
     loader = SwitchUser::UserLoader.new("user", 1)
 
@@ -47,8 +47,8 @@ RSpec.describe SwitchUser::UserLoader do
   end
 
   it "loads a user with an alternate identifier column" do
-    allow(User).to receive(:where).with(:email => 2).and_return(user_result)
-    SwitchUser.available_users_identifiers = {:user => :email}
+    allow(User).to receive(:where).with(email: 2).and_return(user_result)
+    SwitchUser.available_users_identifiers = {user: :email}
 
     loader = SwitchUser::UserLoader.new("user", 2)
     expect(loader.user).to eq user

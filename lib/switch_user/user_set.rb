@@ -24,7 +24,7 @@ module SwitchUser
     end
 
     def find_user(id)
-      Record.build(users.where(:id => id).first, self)
+      Record.build(users.where(id: id).first, self)
     end
     alias :[] :find_user
 

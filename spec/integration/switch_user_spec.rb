@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-RSpec.describe "Using SwitchUser", :type => :request do
-  let(:user) { User.create!(:email => "foo@bar.com", :admin => true) }
-  let(:other_user) { User.create!(:email => "other@bar.com", :admin => false) }
+RSpec.describe "Using SwitchUser", type: :request do
+  let(:user) { User.create!(email: "foo@bar.com", admin: true) }
+  let(:other_user) { User.create!(email: "other@bar.com", admin: false) }
 
   before do
     SwitchUser.reset_config
     SwitchUser.provider = :session
-    SwitchUser.controller_guard = lambda { |current_user, request| Rails.env.test? }
-    SwitchUser.redirect_path = lambda {|_,_| "/dummy/open"}
+    SwitchUser.controller_guard = ->(current_user, request) { Rails.env.test? }
+    SwitchUser.redirect_path = ->(_,_) { "/dummy/open" }
   end
 
   it "signs a user in using switch_user" do
@@ -27,18 +27,16 @@ RSpec.describe "Using SwitchUser", :type => :request do
   context "using switch_back" do
     before do
       SwitchUser.switch_back = true
-      SwitchUser.controller_guard = lambda { |current_user, request, original_user|
-        current_user && current_user.admin? || original_user && original_user.admin?
-      }
+      SwitchUser.controller_guard = ->(current_user, request, original_user) { current_user && current_user.admin? || original_user && original_user.admin? }
     end
 
     it "can switch back to a different user through remember_user endpoint" do
       # login
-      post "/login", :id => user.id
+      post "/login", id: user.id
       follow_redirect!
 
       # have SwitchUser remember us
-      get "/switch_user/remember_user", :remember => true
+      get "/switch_user/remember_user", remember: true
       expect(session["original_user_scope_identifier"]).to be_present
 
       # check that we can switch to another user
@@ -54,7 +52,7 @@ RSpec.describe "Using SwitchUser", :type => :request do
       expect(session["user_id"]).to eq user.id
 
       # check that we can be un-remembered
-      get "/switch_user/remember_user", :remember => false
+      get "/switch_user/remember_user", remember: false
       expect(session["original_user"]).to be_nil
     end
 

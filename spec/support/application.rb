@@ -27,18 +27,18 @@ class ApplicationController < ActionController::Base
 end
 
 class DummyController < ApplicationController
-  before_filter :require_user, :only => :protected
+  before_action :require_user, only: :protected
 
   def authenticated
-    render :text => current_user.inspect
+    render text: current_user.inspect
   end
 
   def open
-    render :text => view_context.switch_user_select
+    render text: view_context.switch_user_select
   end
 
   def protected
-    render :text => view_context.switch_user_select
+    render text: view_context.switch_user_select
   end
 end
 
@@ -55,13 +55,13 @@ module MyApp
 end
 Rails.application.initialize!
 Rails.application.routes.draw do
-  get 'dummy/protected', :to => "dummy#protected"
-  get 'dummy/open', :to => "dummy#open"
-  post 'login', :to => "dummy#login"
-  get 'logout', :to => "dummy#logout"
-  get 'authenticated', :to => "dummy#authenticated"
-  get :switch_user, :to => 'switch_user#set_current_user'
-  get 'switch_user/remember_user', :to => 'switch_user#remember_user'
+  get 'dummy/protected', to: "dummy#protected"
+  get 'dummy/open', to: "dummy#open"
+  post 'login', to: "dummy#login"
+  get 'logout', to: "dummy#logout"
+  get 'authenticated', to: "dummy#authenticated"
+  get :switch_user, to: 'switch_user#set_current_user'
+  get 'switch_user/remember_user', to: 'switch_user#remember_user'
 end
 
 connection = ActiveRecord::Base.connection

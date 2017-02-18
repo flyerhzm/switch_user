@@ -5,7 +5,7 @@ module SwitchUser
     describe '#all' do
       it 'aggregates multiple data_sources' do
         user = double(:user)
-        s1 = double(:s1, :all => [user])
+        s1 = double(:s1, all: [user])
         source = DataSources.new([s1, s1])
 
         expect(source.all).to eq [user, user]
@@ -15,8 +15,8 @@ module SwitchUser
     describe '#find_scope_id' do
       it 'can find a corresponding record across data sources' do
         user = double(:user)
-        s1 = double(:s1, :find_scope_id => nil)
-        s2 = double(:s2, :find_scope_id => user)
+        s1 = double(:s1, find_scope_id: nil)
+        s2 = double(:s2, find_scope_id: user)
         source = DataSources.new([s1, s2])
 
         expect(source.find_scope_id("user_10")).to eq user
@@ -25,7 +25,7 @@ module SwitchUser
   end
 
   RSpec.describe DataSource do
-    pending # it's tested in integration test, need to find a good way to test it here.
+    skip # it's tested in integration test, need to find a good way to test it here.
   end
 
   RSpec.describe GuestDataSource do

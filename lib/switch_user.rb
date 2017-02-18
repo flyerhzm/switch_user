@@ -53,13 +53,13 @@ module SwitchUser
 
   def self.reset_config
     self.provider = :devise
-    self.available_users = { :user => lambda { User.all } }
-    self.available_users_identifiers = { :user => :id }
-    self.available_users_names = { :user => :email }
+    self.available_users = { user: -> { User.all } }
+    self.available_users_identifiers = { user: :id }
+    self.available_users_names = { user: :email }
     self.guard_class = "SwitchUser::LambdaGuard"
-    self.controller_guard = lambda { |current_user, request| Rails.env.development? }
-    self.view_guard = lambda { |current_user, request| Rails.env.development? }
-    self.redirect_path = lambda { |request, params| request.env["HTTP_REFERER"] ? :back : root_path }
+    self.controller_guard = ->(current_user, request) { Rails.env.development? }
+    self.view_guard = ->(current_user, request) { Rails.env.development? }
+    self.redirect_path = ->(request, params) { request.env["HTTP_REFERER"] ? :back : root_path }
     self.session_key = :user_id
     self.helper_with_guest = true
     self.switch_back = false
