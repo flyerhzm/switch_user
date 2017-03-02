@@ -105,7 +105,7 @@ If you need to override the default configuration, run <code>rails g switch_user
 
 If you want to switch both available users and available admins
 ```ruby
-config.available_users = { user => -> { User.available }, :admin => -> { Admin.available } }
+config.available_users = { :user => -> { User.available }, :admin => -> { Admin.available } }
 ```
 If you want to use name column as the user identifier
 ```ruby
