@@ -24,6 +24,14 @@ Add in Gemfile.
 ```ruby
 gem "switch_user"
 ```
+### Rails < 4
+
+If you get the following error:
+
+    undefined method `before_action' for SwitchUserController:Class
+
+then you are probably using an older version of Rails (<4). You can use this gem: https://github.com/pschambacher/rails3-before_action
+
 ## Usage
 
 Add following code into your layout page.
