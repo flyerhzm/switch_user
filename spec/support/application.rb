@@ -30,15 +30,27 @@ class DummyController < ApplicationController
   before_action :require_user, only: :protected
 
   def authenticated
-    render text: current_user.inspect
+    if Rails.version.to_i >= 5
+      render plain: current_user.inspect
+    else
+      render text: current_user.inspect
+    end
   end
 
   def open
-    render text: view_context.switch_user_select
+    if Rails.version.to_i >= 5
+      render plain: view_context.switch_user_select
+    else
+      render text: view_context.switch_user_select
+    end
   end
 
   def protected
-    render text: view_context.switch_user_select
+    if Rails.version.to_i >= 5
+      render plain: view_context.switch_user_select
+    else
+      render text: view_context.switch_user_select
+    end
   end
 end
 
