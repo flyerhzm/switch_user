@@ -123,5 +123,4 @@ RSpec.feature "SwitchUser::RSpecFeatureHelpers", type: :feature do
       switch_user :user, 0
     end.not_to raise_error
   end
-
 end

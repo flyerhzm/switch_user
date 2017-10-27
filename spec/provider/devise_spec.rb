@@ -4,12 +4,10 @@ require 'switch_user/provider/devise'
 class FakeWardenSessionSerializer
   attr_accessor :user_hash
 
-
   def store(user, scope)
     return unless user
     user_hash[scope] = user
   end
-
 end
 
 class FakeWarden

@@ -59,7 +59,6 @@ module SwitchUser
       def current_user?(user, scope = :user)
         current_user(scope) == user
       end
-
     end
   end
 end

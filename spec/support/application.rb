@@ -2,7 +2,6 @@ require "rails"
 require "rails/all"
 require 'switch_user/rails'
 
-
 class ApplicationController < ActionController::Base
   def require_user
     current_user || redirect_to("/dummy/open")

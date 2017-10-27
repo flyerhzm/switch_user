@@ -1,6 +1,5 @@
 module SwitchUser
   module RSpecFeatureHelpers
-
     class InvalidArgument < StandardError; end
 
     def switch_user(user_record_or_scope, user_id = nil)
@@ -38,7 +37,5 @@ module SwitchUser
 
       visit "/switch_user?scope_identifier=#{scope_identifier}"
     end
-
   end
-
 end

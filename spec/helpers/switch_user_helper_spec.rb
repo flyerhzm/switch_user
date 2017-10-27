@@ -25,7 +25,6 @@ RSpec.describe SwitchUserHelper, type: :helper do
     let(:admin_option_tags) { %Q^<optgroup label="Admin"><option value="admin_1">admin1</option></optgroup>^ }
     let(:admin_selected_option_tags) { %Q^<optgroup label="Admin"><option selected="selected" value="admin_1">admin1</option></optgroup>^ }
 
-
     before do
       allow(SwitchUser).to receive(:switch_back).and_return(false)
 
@@ -168,6 +167,4 @@ RSpec.describe SwitchUserHelper, type: :helper do
       expect(helper.send(:provider)).to eq(provider)
     end
   end
-
-
 end
