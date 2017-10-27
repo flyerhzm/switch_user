@@ -1,5 +1,10 @@
 # Next Release
 
+## 1.5.0 (10/27/2017)
+
+* Allow `SwitchUser.switch_back` to be considered even when not calling `#remember_user`.
+* Use `redirect_back` for rails 5
+
 ## 1.4.0 (10/21/2016)
 
 * Add ability to `store_sign_in` info with devise provider
