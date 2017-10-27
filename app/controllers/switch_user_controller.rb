@@ -4,11 +4,21 @@ class SwitchUserController < ApplicationController
   def set_current_user
     handle_request(params)
 
-    redirect_to(SwitchUser.redirect_path.call(request, params))
+    redirect_path = SwitchUser.redirect_path.call(request, params)
+    if Rails.version.to_i >= 5 && redirect_path == :back
+      redirect_back(fallback_location: root_path)
+    else
+      redirect_to(redirect_path)
+    end
   end
 
   def remember_user
-    redirect_to(SwitchUser.redirect_path.call(request, params))
+    redirect_path = SwitchUser.redirect_path.call(request, params)
+    if Rails.version.to_i >= 5 && redirect_path == :back
+      redirect_back(fallback_location: root_path)
+    else
+      redirect_to(redirect_path)
+    end
   end
 
   private
