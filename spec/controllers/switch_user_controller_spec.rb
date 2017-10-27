@@ -14,15 +14,15 @@ RSpec.describe SwitchUserController, type: :controller do
   }
   describe "#set_current_user" do
     it "redirects the user to the specified location" do
-      SwitchUser.redirect_path = ->(_,_) { "/path" }
+      SwitchUser.redirect_path = ->(_, _) { "/path" }
       allow(controller).to receive(:available?).and_return(true)
-      get :set_current_user, params: {scope_identifier: "user_1"}
+      get :set_current_user, params: { scope_identifier: "user_1" }
 
       expect(response).to redirect_to("/path")
     end
 
     it "denies access according to the guard block" do
-      SwitchUser.controller_guard = ->(_,_,_) { false }
+      SwitchUser.controller_guard = ->(_, _, _) { false }
       expect {
         get :set_current_user
       }.to raise_error(ActionController::RoutingError)
@@ -52,18 +52,18 @@ RSpec.describe SwitchUserController, type: :controller do
     it "can remember the current user" do
       expect(provider).to receive(:remember_current_user).with(true)
 
-      get :remember_user, params: {remember: "true"}
+      get :remember_user, params: { remember: "true" }
     end
     it "can forget the current user" do
       expect(provider).to receive(:remember_current_user).with(false)
 
-      get :remember_user, params: {remember: "false"}
+      get :remember_user, params: { remember: "false" }
     end
     it "does nothing if switch_back is not enabled" do
       SwitchUser.switch_back = false
       expect(provider).not_to receive(:remember_current_user)
 
-      get :remember_user, params: {remember: "true"}
+      get :remember_user, params: { remember: "true" }
     end
   end
 end

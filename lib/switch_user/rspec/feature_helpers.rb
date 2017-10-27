@@ -3,7 +3,7 @@ module SwitchUser
 
     class InvalidArgument < StandardError; end
 
-    def switch_user(user_record_or_scope, user_id=nil)
+    def switch_user(user_record_or_scope, user_id = nil)
       _user_scope =
         case user_record_or_scope
         when ActiveRecord::Base

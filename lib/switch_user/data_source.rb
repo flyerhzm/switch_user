@@ -11,7 +11,7 @@ module SwitchUser
     end
 
     def find_scope_id(scope_id)
-      sources.map {|source| source.find_scope_id(scope_id) }.compact.first
+      sources.map { |source| source.find_scope_id(scope_id) }.compact.first
     end
   end
 
@@ -40,7 +40,7 @@ module SwitchUser
 
   class GuestDataSource
     def all
-      [ GuestRecord.new ]
+      [GuestRecord.new]
     end
 
     def find_scope_id(scope_id)
