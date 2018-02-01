@@ -31,7 +31,7 @@ class SwitchUserController < ApplicationController
   end
 
   def developer_modes_only
-    raise ActionController::RoutingError.new('Do not try to hack us.') unless available?
+    raise ActionController::RoutingError, 'Do not try to hack us.' unless available?
   end
 
   def available?

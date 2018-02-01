@@ -10,7 +10,7 @@ module SwitchUser
     end
 
     def controller_available?
-      raise NotImplementedError.new("you must implement controller_available?")
+      raise NotImplementedError, "you must implement controller_available?"
     end
 
     def view_available?
