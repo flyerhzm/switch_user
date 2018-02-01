@@ -7,7 +7,7 @@ module SwitchUser
     end
 
     def all
-      sources.flat_map { |source| source.all }
+      sources.flat_map(&:all)
     end
 
     def find_scope_id(scope_id)
