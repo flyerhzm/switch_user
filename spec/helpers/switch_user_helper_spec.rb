@@ -55,15 +55,15 @@ RSpec.describe SwitchUserHelper, type: :helper do
       allow(provider).to receive(:current_user).and_return(nil)
       allow(SwitchUser).to receive(:all_users).and_return([guest_record])
 
-      expect(helper.switch_user_select).to match(%r{#{guest_option_tags}})
+      expect(helper.switch_user_select).to match(/#{guest_option_tags}/)
     end
 
     it 'when current_user is nil and all_users is [guest_record, user_record]' do
       allow(provider).to receive(:current_user).and_return(nil)
       allow(SwitchUser).to receive(:all_users).and_return([guest_record, user_record])
 
-      expect(helper.switch_user_select).to match(%r{#{guest_option_tags}})
-      expect(helper.switch_user_select).to match(%r{#{user_option_tags}})
+      expect(helper.switch_user_select).to match(/#{guest_option_tags}/)
+      expect(helper.switch_user_select).to match(/#{user_option_tags}/)
     end
 
     it 'when current_user is user and all_users is []' do
@@ -77,22 +77,22 @@ RSpec.describe SwitchUserHelper, type: :helper do
       allow(provider).to receive(:current_user).and_return(user)
       allow(SwitchUser).to receive(:all_users).and_return([guest_record, user_record])
 
-      expect(helper.switch_user_select).to match(%r{#{guest_option_tags}})
-      expect(helper.switch_user_select).to match(%r{#{user_selected_option_tags}})
+      expect(helper.switch_user_select).to match(/#{guest_option_tags}/)
+      expect(helper.switch_user_select).to match(/#{user_selected_option_tags}/)
     end
 
     it 'when current_user is default allow and all_users is default allow' do
-      expect(helper.switch_user_select).to match(%r{#{guest_option_tags}})
-      expect(helper.switch_user_select).to match(%r{#{user_selected_option_tags}})
+      expect(helper.switch_user_select).to match(/#{guest_option_tags}/)
+      expect(helper.switch_user_select).to match(/#{user_selected_option_tags}/)
     end
 
     it 'when current_user is user and all_users is [guest_record, user_record, admin_record]' do
       allow(provider).to receive(:current_user).and_return(user)
       allow(SwitchUser).to receive(:all_users).and_return([guest_record, user_record, admin_record])
 
-      expect(helper.switch_user_select).to match(%r{#{guest_option_tags}})
-      expect(helper.switch_user_select).to match(%r{#{user_selected_option_tags}})
-      expect(helper.switch_user_select).to match(%r{#{admin_option_tags}})
+      expect(helper.switch_user_select).to match(/#{guest_option_tags}/)
+      expect(helper.switch_user_select).to match(/#{user_selected_option_tags}/)
+      expect(helper.switch_user_select).to match(/#{admin_option_tags}/)
     end
 
     it 'when current_user is admin and all_users is [guest_record, user_record, admin_record]' do
@@ -103,9 +103,9 @@ RSpec.describe SwitchUserHelper, type: :helper do
 
       allow(SwitchUser).to receive(:all_users).and_return([guest_record, user_record, admin_record])
 
-      expect(helper.switch_user_select).to match(%r{#{guest_option_tags}})
-      expect(helper.switch_user_select).to match(%r{#{user_option_tags}})
-      expect(helper.switch_user_select).to match(%r{#{admin_selected_option_tags}})
+      expect(helper.switch_user_select).to match(/#{guest_option_tags}/)
+      expect(helper.switch_user_select).to match(/#{user_option_tags}/)
+      expect(helper.switch_user_select).to match(/#{admin_selected_option_tags}/)
     end
 
     it 'when current_user is admin and all_users is [guest_record, user_record]' do
@@ -116,9 +116,9 @@ RSpec.describe SwitchUserHelper, type: :helper do
 
       allow(SwitchUser).to receive(:all_users).and_return([guest_record, user_record])
 
-      expect(helper.switch_user_select).to match(%r{#{guest_option_tags}})
-      expect(helper.switch_user_select).to match(%r{#{user_option_tags}})
-      expect(helper.switch_user_select).to_not match(%r{#{admin_option_tags}})
+      expect(helper.switch_user_select).to match(/#{guest_option_tags}/)
+      expect(helper.switch_user_select).to match(/#{user_option_tags}/)
+      expect(helper.switch_user_select).to_not match(/#{admin_option_tags}/)
     end
   end
 
