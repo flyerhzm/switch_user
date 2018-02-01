@@ -10,7 +10,7 @@ module SwitchUser
   autoload :BaseGuard, "switch_user/base_guard"
   autoload :LambdaGuard, 'switch_user/lambda_guard'
 
-  class InvalidScope < Exception; end
+  class InvalidScope < RuntimeError; end
 
   mattr_accessor :provider
   mattr_accessor :available_users
