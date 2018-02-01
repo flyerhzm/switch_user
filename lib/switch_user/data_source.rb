@@ -43,8 +43,7 @@ module SwitchUser
       [GuestRecord.new]
     end
 
-    def find_scope_id(scope_id)
-    end
+    def find_scope_id(scope_id); end
   end
 
   class Record
@@ -73,7 +72,6 @@ module SwitchUser
       "Guest"
     end
 
-    def scope_id
-    end
+    def scope_id; end
   end
 end
