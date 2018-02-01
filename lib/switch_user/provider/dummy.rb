@@ -20,9 +20,7 @@ module SwitchUser
       attr_reader :original_user
 
       def remember_current_user(remember)
-        @original_user = if remember
-                           current_user
-                         end
+        @original_user = (current_user if remember)
       end
     end
   end
