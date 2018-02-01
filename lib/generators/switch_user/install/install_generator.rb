@@ -10,4 +10,3 @@ module SwitchUser
     end
   end
 end
-
