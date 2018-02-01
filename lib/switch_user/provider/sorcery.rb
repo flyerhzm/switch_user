@@ -10,9 +10,7 @@ module SwitchUser
       end
 
       def logout(scope = nil)
-        if SwitchUser.switch_back
-          save_original_user_identifier
-        end
+        save_original_user_identifier if SwitchUser.switch_back
 
         @controller.logout
 

@@ -1,6 +1,4 @@
-if defined?(Rails)
-  require 'switch_user/rails'
-end
+require 'switch_user/rails' if defined?(Rails)
 
 module SwitchUser
   require 'switch_user/data_source'

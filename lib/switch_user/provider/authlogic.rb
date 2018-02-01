@@ -15,9 +15,7 @@ module SwitchUser
 
       def current_user(scope = nil)
         result = UserSession.find
-        if result
-          result.record
-        end
+        result.record if result
       end
     end
   end
