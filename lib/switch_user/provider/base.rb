@@ -5,7 +5,7 @@ module SwitchUser
         SwitchUser.available_scopes.each_with_object([]) do |scope, users|
           user = current_user(scope)
           users << user if user
-          
+
         end
       end
 
