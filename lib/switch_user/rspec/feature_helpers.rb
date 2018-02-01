@@ -13,7 +13,7 @@ module SwitchUser
 
       _user_scope = _user_scope.to_s
 
-      unless (SwitchUser.available_scopes.include?(_user_scope) or SwitchUser.available_scopes.include?(_user_scope.to_sym))
+      unless SwitchUser.available_scopes.include?(_user_scope) or SwitchUser.available_scopes.include?(_user_scope.to_sym)
         raise SwitchUser::InvalidScope.new("don't allow this user sign in, please check config.available_users")
       end
 
