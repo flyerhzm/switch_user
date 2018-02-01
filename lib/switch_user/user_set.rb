@@ -26,7 +26,7 @@ module SwitchUser
     def find_user(id)
       Record.build(users.where(id: id).first, self)
     end
-    alias :[] :find_user
+    alias [] find_user
 
     def users
       base_scope
