@@ -8,8 +8,8 @@ module SwitchUser
 
       if options[:scope_identifier]
         options[:scope_identifier] =~ /^(.*)_([^_]+)$/
-        scope = $1
-        id = $2
+        scope = Regexp.last_match(1)
+        id = Regexp.last_match(2)
       else
         scope, id = args
       end
