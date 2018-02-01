@@ -27,7 +27,7 @@ module SwitchUserHelper
            locals: {
              option_tags: option_tags,
              classes: options[:class],
-             styles: options[:style],
+             styles: options[:style]
            }
   end
 
