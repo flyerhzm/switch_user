@@ -13,7 +13,7 @@ RSpec.feature 'SwitchUser::RSpecFeatureHelpers', type: :feature do
   end
 
   before(:example) do
-    allow(SwitchUser).to receive(:controller_guard).and_return(->(current_user, request) { true })
+    allow(SwitchUser).to receive(:controller_guard).and_return(->(_current_user, _request) { true })
 
     allow(SwitchUser).to receive(:available_users).and_return(user: -> { User.all })
 
@@ -23,7 +23,7 @@ RSpec.feature 'SwitchUser::RSpecFeatureHelpers', type: :feature do
   end
 
   scenario 'when controller_guard return false' do
-    allow(SwitchUser).to receive(:controller_guard).and_return(->(current_user, request) { false })
+    allow(SwitchUser).to receive(:controller_guard).and_return(->(_current_user, _request) { false })
 
     expect do
       switch_user @user
@@ -31,7 +31,7 @@ RSpec.feature 'SwitchUser::RSpecFeatureHelpers', type: :feature do
   end
 
   scenario 'when controller_guard return false and controller call original available?' do
-    allow(SwitchUser).to receive(:controller_guard).and_return(->(current_user, request) { false })
+    allow(SwitchUser).to receive(:controller_guard).and_return(->(_current_user, _request) { false })
 
     allow_any_instance_of(SwitchUserController).to receive(:available?).and_call_original
 

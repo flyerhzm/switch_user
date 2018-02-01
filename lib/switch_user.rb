@@ -55,9 +55,9 @@ module SwitchUser
     self.available_users_identifiers = { user: :id }
     self.available_users_names = { user: :email }
     self.guard_class = 'SwitchUser::LambdaGuard'
-    self.controller_guard = ->(current_user, request) { Rails.env.development? }
-    self.view_guard = ->(current_user, request) { Rails.env.development? }
-    self.redirect_path = ->(request, params) { request.env['HTTP_REFERER'] ? :back : root_path }
+    self.controller_guard = ->(_current_user, _request) { Rails.env.development? }
+    self.view_guard = ->(_current_user, _request) { Rails.env.development? }
+    self.redirect_path = ->(request, _params) { request.env['HTTP_REFERER'] ? :back : root_path }
     self.session_key = :user_id
     self.helper_with_guest = true
     self.switch_back = false

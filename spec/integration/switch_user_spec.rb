@@ -7,7 +7,7 @@ RSpec.describe 'Using SwitchUser', type: :request do
   before do
     SwitchUser.reset_config
     SwitchUser.provider = :session
-    SwitchUser.controller_guard = ->(current_user, request) { Rails.env.test? }
+    SwitchUser.controller_guard = ->(_current_user, _request) { Rails.env.test? }
     SwitchUser.redirect_path = ->(_, _) { '/dummy/open' }
   end
 
@@ -27,7 +27,7 @@ RSpec.describe 'Using SwitchUser', type: :request do
   context 'using switch_back' do
     before do
       SwitchUser.switch_back = true
-      SwitchUser.controller_guard = ->(current_user, request, original_user) { current_user && current_user.admin? || original_user && original_user.admin? }
+      SwitchUser.controller_guard = ->(current_user, _request, original_user) { current_user && current_user.admin? || original_user && original_user.admin? }
     end
 
     it 'can switch back to a different user through remember_user endpoint' do

@@ -133,7 +133,7 @@ RSpec.describe SwitchUserHelper, type: :helper do
   describe '#user_tag_label' do
     it 'when name has call method' do
       user = double(:user)
-      name = ->(user) { 'user1' }
+      name = ->(_user) { 'user1' }
 
       expect(helper.send(:user_tag_label, user, name)).to eq('user1')
     end
