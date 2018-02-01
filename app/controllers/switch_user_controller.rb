@@ -55,7 +55,7 @@ class SwitchUserController < ApplicationController
     end
   end
 
-  # TODO make helper methods, so this can be eliminated from the
+  # TODO: make helper methods, so this can be eliminated from the
   # SwitchUserHelper
   def provider
     SwitchUser::Provider.init(self)
