@@ -8,9 +8,10 @@ RSpec.describe SwitchUserController, type: :controller do
   end
 
   let(:admin) { double(:admin, admin?: true) }
-  let(:provider) { double(:provider,
-                        original_user: admin,
-                        current_user: nil)
+  let(:provider) { 
+    double(:provider,
+           original_user: admin,
+           current_user: nil)
   }
   describe '#set_current_user' do
     it 'redirects the user to the specified location' do
