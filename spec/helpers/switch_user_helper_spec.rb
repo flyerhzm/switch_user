@@ -19,11 +19,11 @@ RSpec.describe SwitchUserHelper, type: :helper do
     let(:user_record) { double(:user_record, user: user, scope: :user, label: 'user1', scope_id: 'user_1') }
     let(:admin_record) { double(:admin_record, user: admin, scope: :admin, label: 'admin1', scope_id: 'admin_1') }
 
-    let(:guest_option_tags) { %Q^<optgroup label="Guest"><option value="">Guest</option></optgroup>^ }
-    let(:user_option_tags) { %Q^<optgroup label="User"><option value="user_1">user1</option></optgroup>^ }
-    let(:user_selected_option_tags) { %Q^<optgroup label="User"><option selected="selected" value="user_1">user1</option></optgroup>^ }
-    let(:admin_option_tags) { %Q^<optgroup label="Admin"><option value="admin_1">admin1</option></optgroup>^ }
-    let(:admin_selected_option_tags) { %Q^<optgroup label="Admin"><option selected="selected" value="admin_1">admin1</option></optgroup>^ }
+    let(:guest_option_tags) { '<optgroup label="Guest"><option value="">Guest</option></optgroup>' }
+    let(:user_option_tags) { '<optgroup label="User"><option value="user_1">user1</option></optgroup>' }
+    let(:user_selected_option_tags) { '<optgroup label="User"><option selected="selected" value="user_1">user1</option></optgroup>' }
+    let(:admin_option_tags) { '<optgroup label="Admin"><option value="admin_1">admin1</option></optgroup>' }
+    let(:admin_selected_option_tags) { '<optgroup label="Admin"><option selected="selected" value="admin_1">admin1</option></optgroup>' }
 
     before do
       allow(SwitchUser).to receive(:switch_back).and_return(false)
