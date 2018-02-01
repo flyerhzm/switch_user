@@ -10,11 +10,11 @@ module SwitchUser
     autoload :Session, 'switch_user/provider/session'
 
     def self.init(controller)
-      if SwitchUser.provider.is_a?(Hash)
-        klass_part = SwitchUser.provider[:name]
+      klass_part = if SwitchUser.provider.is_a?(Hash)
+        SwitchUser.provider[:name]
       else
-        klass_part = SwitchUser.provider
-      end
+        SwitchUser.provider
+                   end
 
       klass_part = klass_part.to_s.classify
 
