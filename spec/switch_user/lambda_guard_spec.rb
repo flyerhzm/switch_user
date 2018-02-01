@@ -2,8 +2,8 @@ require 'spec_helper'
 
 module SwitchUser
   RSpec.describe LambdaGuard do
-    describe "#controller_available?" do
-      it "calls the controller_guard proc" do
+    describe '#controller_available?' do
+      it 'calls the controller_guard proc' do
         controller = double.as_null_object
         provider = double.as_null_object
         guard = SwitchUser::LambdaGuard.new(controller, provider)

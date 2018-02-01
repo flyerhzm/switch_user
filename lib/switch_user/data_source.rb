@@ -69,7 +69,7 @@ module SwitchUser
 
   class GuestRecord
     def label
-      "Guest"
+      'Guest'
     end
 
     def scope_id; end

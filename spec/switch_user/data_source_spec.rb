@@ -19,7 +19,7 @@ module SwitchUser
         s2 = double(:s2, find_scope_id: user)
         source = DataSources.new([s1, s2])
 
-        expect(source.find_scope_id("user_10")).to eq user
+        expect(source.find_scope_id('user_10')).to eq user
       end
     end
   end

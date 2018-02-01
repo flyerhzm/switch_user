@@ -33,5 +33,5 @@ RSpec.describe SwitchUser::Provider::Authlogic do
   let(:controller) { AuthlogicController.new }
   let(:provider) { SwitchUser::Provider::Authlogic.new(controller) }
 
-  it_behaves_like "a provider"
+  it_behaves_like 'a provider'
 end

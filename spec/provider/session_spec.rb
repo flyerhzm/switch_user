@@ -14,5 +14,5 @@ RSpec.describe SwitchUser::Provider::Session do
   let(:controller) { SessionController.new }
   let(:provider) { SwitchUser::Provider::Session.new(controller) }
 
-  it_behaves_like "a provider"
+  it_behaves_like 'a provider'
 end

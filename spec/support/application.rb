@@ -1,10 +1,10 @@
-require "rails"
-require "rails/all"
+require 'rails'
+require 'rails/all'
 require 'switch_user/rails'
 
 class ApplicationController < ActionController::Base
   def require_user
-    current_user || redirect_to("/dummy/open")
+    current_user || redirect_to('/dummy/open')
   end
 
   def current_user
@@ -15,13 +15,13 @@ class ApplicationController < ActionController::Base
     user = User.find(params[:id])
     session[SwitchUser.session_key] = user.id
 
-    redirect_to("/dummy/protected")
+    redirect_to('/dummy/protected')
   end
 
   def logout
     session[SwitchUser.session_key] = nil
 
-    redirect_to("/dummy/open")
+    redirect_to('/dummy/open')
   end
 end
 
@@ -56,7 +56,7 @@ end
 module MyApp
   class Application < Rails::Application
     config.active_support.deprecation = :log
-    config.secret_key_base = "abc123"
+    config.secret_key_base = 'abc123'
     config.eager_load = true
     config.secret_token = '153572e559247c7aedd1bca5a246874d'
 
@@ -66,11 +66,11 @@ module MyApp
 end
 Rails.application.initialize!
 Rails.application.routes.draw do
-  get 'dummy/protected', to: "dummy#protected"
-  get 'dummy/open', to: "dummy#open"
-  post 'login', to: "dummy#login"
-  get 'logout', to: "dummy#logout"
-  get 'authenticated', to: "dummy#authenticated"
+  get 'dummy/protected', to: 'dummy#protected'
+  get 'dummy/open', to: 'dummy#open'
+  post 'login', to: 'dummy#login'
+  get 'logout', to: 'dummy#logout'
+  get 'authenticated', to: 'dummy#authenticated'
   get :switch_user, to: 'switch_user#set_current_user'
   get 'switch_user/remember_user', to: 'switch_user#remember_user'
 end

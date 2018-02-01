@@ -1,3 +1,3 @@
 module SwitchUser
-  VERSION = "1.5.0".freeze
+  VERSION = '1.5.0'.freeze
 end

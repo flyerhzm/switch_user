@@ -4,10 +4,10 @@ end
 
 module SwitchUser
   require 'switch_user/data_source'
-  autoload :UserSet, "switch_user/user_set"
-  autoload :UserLoader, "switch_user/user_loader"
-  autoload :Provider, "switch_user/provider"
-  autoload :BaseGuard, "switch_user/base_guard"
+  autoload :UserSet, 'switch_user/user_set'
+  autoload :UserLoader, 'switch_user/user_loader'
+  autoload :Provider, 'switch_user/provider'
+  autoload :BaseGuard, 'switch_user/base_guard'
   autoload :LambdaGuard, 'switch_user/lambda_guard'
 
   class InvalidScope < RuntimeError; end
@@ -56,10 +56,10 @@ module SwitchUser
     self.available_users = { user: -> { User.all } }
     self.available_users_identifiers = { user: :id }
     self.available_users_names = { user: :email }
-    self.guard_class = "SwitchUser::LambdaGuard"
+    self.guard_class = 'SwitchUser::LambdaGuard'
     self.controller_guard = ->(current_user, request) { Rails.env.development? }
     self.view_guard = ->(current_user, request) { Rails.env.development? }
-    self.redirect_path = ->(request, params) { request.env["HTTP_REFERER"] ? :back : root_path }
+    self.redirect_path = ->(request, params) { request.env['HTTP_REFERER'] ? :back : root_path }
     self.session_key = :user_id
     self.helper_with_guest = true
     self.switch_back = false

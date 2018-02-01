@@ -19,5 +19,5 @@ RSpec.describe SwitchUser::Provider::Clearance do
   let(:controller) { ClearanceController.new }
   let(:provider) { SwitchUser::Provider::Clearance.new(controller) }
 
-  it_behaves_like "a provider"
+  it_behaves_like 'a provider'
 end

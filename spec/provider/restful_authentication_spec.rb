@@ -13,5 +13,5 @@ RSpec.describe SwitchUser::Provider::RestfulAuthentication do
   let(:controller) { RestfulAuthenticationController.new }
   let(:provider) { SwitchUser::Provider::RestfulAuthentication.new(controller) }
 
-  it_behaves_like "a provider"
+  it_behaves_like 'a provider'
 end

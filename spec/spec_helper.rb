@@ -1,4 +1,4 @@
-ENV["RAILS_ENV"] = "test"
+ENV['RAILS_ENV'] = 'test'
 require 'support/provider'
 require 'support/application'
 require 'rspec/rails'

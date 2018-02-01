@@ -20,5 +20,5 @@ RSpec.describe SwitchUser::Provider::Sorcery do
   let(:controller) { SorceryController.new }
   let(:provider) { SwitchUser::Provider::Sorcery.new(controller) }
 
-  it_behaves_like "a provider"
+  it_behaves_like 'a provider'
 end

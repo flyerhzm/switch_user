@@ -52,33 +52,33 @@ RSpec.describe SwitchUser::Provider::Devise do
   let(:provider) { SwitchUser::Provider::Devise.new(controller) }
   let(:user) { double(:user) }
 
-  it_behaves_like "a provider"
+  it_behaves_like 'a provider'
 
-  it "can use alternate scopes" do
+  it 'can use alternate scopes' do
     user = double(:user)
     provider.login(user, :admin)
 
     expect(provider.current_user(:admin)).to eq user
   end
 
-  describe "#login_exclusive" do
+  describe '#login_exclusive' do
     before do
       allow(SwitchUser).to receive(:available_users).and_return(user: nil, admin: nil)
       provider.login(user, :admin)
-      provider.login_exclusive(user, scope: "user")
+      provider.login_exclusive(user, scope: 'user')
     end
 
-    it "logs the user in" do
+    it 'logs the user in' do
       expect(provider.current_user(:user)).to eq user
     end
 
-    it "logs out other scopes" do
+    it 'logs out other scopes' do
       expect(provider.current_user(:admin)).to be_nil
     end
   end
 
-  describe "#logout_all" do
-    it "logs out users under all scopes" do
+  describe '#logout_all' do
+    it 'logs out users under all scopes' do
       allow(SwitchUser).to receive(:available_users).and_return(user: nil, admin: nil)
       provider.login(user, :admin)
       provider.login(user, :user)
@@ -90,8 +90,8 @@ RSpec.describe SwitchUser::Provider::Devise do
     end
   end
 
-  describe "#all_current_users" do
-    it "pulls users from an alternate scope" do
+  describe '#all_current_users' do
+    it 'pulls users from an alternate scope' do
       allow(SwitchUser).to receive(:available_users).and_return(user: nil, admin: nil)
       provider.login(user, :admin)
 
@@ -99,8 +99,8 @@ RSpec.describe SwitchUser::Provider::Devise do
     end
   end
 
-  describe "#current_user?" do
-    it "logs the user in" do
+  describe '#current_user?' do
+    it 'logs the user in' do
       user = double(:user)
       provider.login(user, :user)
 
