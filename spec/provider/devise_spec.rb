@@ -63,7 +63,7 @@ RSpec.describe SwitchUser::Provider::Devise do
 
   describe "#login_exclusive" do
     before do
-      allow(SwitchUser).to receive(:available_users).and_return({ user: nil, admin: nil })
+      allow(SwitchUser).to receive(:available_users).and_return(user: nil, admin: nil)
       provider.login(user, :admin)
       provider.login_exclusive(user, scope: "user")
     end
@@ -79,7 +79,7 @@ RSpec.describe SwitchUser::Provider::Devise do
 
   describe "#logout_all" do
     it "logs out users under all scopes" do
-      allow(SwitchUser).to receive(:available_users).and_return({ user: nil, admin: nil })
+      allow(SwitchUser).to receive(:available_users).and_return(user: nil, admin: nil)
       provider.login(user, :admin)
       provider.login(user, :user)
 
@@ -92,7 +92,7 @@ RSpec.describe SwitchUser::Provider::Devise do
 
   describe "#all_current_users" do
     it "pulls users from an alternate scope" do
-      allow(SwitchUser).to receive(:available_users).and_return({ user: nil, admin: nil })
+      allow(SwitchUser).to receive(:available_users).and_return(user: nil, admin: nil)
       provider.login(user, :admin)
 
       expect(provider.current_users_without_scope).to eq [user]
