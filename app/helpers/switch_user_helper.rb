@@ -11,12 +11,10 @@ module SwitchUserHelper
         h[scope] ||= []
         h[scope] << [record.label, record.scope_id]
 
-        if selected_user.nil?
-          unless record.is_a?(SwitchUser::GuestRecord)
-            if provider.current_user?(record.user, record.scope)
-              selected_user = record.scope_id
-            end
-          end
+        next unless selected_user.nil?
+        next if record.is_a?(SwitchUser::GuestRecord)
+        if provider.current_user?(record.user, record.scope)
+          selected_user = record.scope_id
         end
       end
     end
