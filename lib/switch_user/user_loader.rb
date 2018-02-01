@@ -8,7 +8,8 @@ module SwitchUser
 
       if options[:scope_identifier]
         options[:scope_identifier] =~ /^(.*)_([^_]+)$/
-        scope, id = $1, $2
+        scope = $1
+        id = $2
       else
         scope, id = args
       end
