@@ -17,9 +17,7 @@ module SwitchUser
         @user
       end
 
-      def original_user
-        @original_user
-      end
+      attr_reader :original_user
 
       def remember_current_user(remember)
         if remember
