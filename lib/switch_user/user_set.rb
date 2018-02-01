@@ -9,9 +9,9 @@ module SwitchUser
     end
 
     def self.users
-      init_from_config.flat_map { |user_set|
+      init_from_config.flat_map do |user_set|
         user_set.users.map { |user| Record.build(user, user_set) }
-      }
+      end
     end
 
     attr_reader :scope, :user_class, :identifier, :label, :base_scope
