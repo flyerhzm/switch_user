@@ -5,15 +5,15 @@ module SwitchUser
         @controller = controller
       end
 
-      def login(user, scope = nil)
+      def login(user, _scope = nil)
         @controller.session[session_key] = user.id
       end
 
-      def logout(scope = nil)
+      def logout(_scope = nil)
         @controller.session.delete(session_key)
       end
 
-      def current_user(scope = nil)
+      def current_user(_scope = nil)
         @controller.current_user
       end
 

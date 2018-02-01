@@ -5,11 +5,11 @@ module SwitchUser
         @controller = controller
       end
 
-      def login(user, scope = nil)
+      def login(user, _scope = nil)
         @controller.auto_login(user)
       end
 
-      def logout(scope = nil)
+      def logout(_scope = nil)
         save_original_user_identifier if SwitchUser.switch_back
 
         @controller.logout
@@ -27,7 +27,7 @@ module SwitchUser
         end
       end
 
-      def current_user(scope = nil)
+      def current_user(_scope = nil)
         @controller.current_user
       end
     end
