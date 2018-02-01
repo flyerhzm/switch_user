@@ -8,7 +8,7 @@ RSpec.describe SwitchUserController, type: :controller do
   end
 
   let(:admin) { double(:admin, admin?: true) }
-  let(:provider) { 
+  let(:provider) {
     double(:provider,
            original_user: admin,
            current_user: nil)
