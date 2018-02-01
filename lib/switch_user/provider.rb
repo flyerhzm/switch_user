@@ -11,9 +11,9 @@ module SwitchUser
 
     def self.init(controller)
       klass_part = if SwitchUser.provider.is_a?(Hash)
-        SwitchUser.provider[:name]
-      else
-        SwitchUser.provider
+                     SwitchUser.provider[:name]
+                   else
+                     SwitchUser.provider
                    end
 
       klass_part = klass_part.to_s.classify
