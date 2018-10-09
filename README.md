@@ -1,7 +1,7 @@
 # switch_user
 
 [![Build Status](https://secure.travis-ci.org/flyerhzm/switch_user.png)](http://travis-ci.org/flyerhzm/switch_user)
-[![AwesomeCode Status for flyerhzm/switch_user](https://awesomecode.io/projects/5f029f36-047b-4332-8405-9c7913b195bc/status)](https://awesomecode.io/projects/28)
+[![AwesomeCode Status for flyerhzm/switch_user](https://awesomecode.io/projects/5f029f36-047b-4332-8405-9c7913b195bc/status)](https://awesomecode.io/repos/flyerhzm/switch_user)
 
 Inspired from [hobo][0], switch_user provides a convenient way to switch current user without needing to log out and log in manually.
 
