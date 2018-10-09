@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'switch_user/rails' if defined?(Rails)
 
 module SwitchUser

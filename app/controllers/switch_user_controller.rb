@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SwitchUserController < ApplicationController
   before_action :developer_modes_only, :switch_back
 

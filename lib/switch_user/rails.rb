@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SwitchUser
   class Engine < Rails::Engine
     initializer 'switch_user.view' do

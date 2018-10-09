@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SwitchUser
   class BaseGuard
     # TODO: is this the best arguments for the initializer ?

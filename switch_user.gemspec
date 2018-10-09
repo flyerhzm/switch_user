@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require File.expand_path('../lib/switch_user/version', __FILE__)
 
 Gem::Specification.new do |s|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SwitchUser
   class LambdaGuard < BaseGuard
     def controller_available?

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'switch_user/rspec/feature_helpers'
 
 require 'rspec/core'

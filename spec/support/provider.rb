@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples_for 'a provider' do
   let(:user) { User.create! }
   let(:other_user) { User.create! }
