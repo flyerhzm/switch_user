@@ -4,10 +4,9 @@ module SwitchUser
   module Provider
     class Base
       def current_users_without_scope
-        SwitchUser.available_scopes.inject([]) do |users, scope|
+        SwitchUser.available_scopes.each_with_object([]) do |scope, users|
           user = current_user(scope)
           users << user if user
-          users
         end
       end
 
