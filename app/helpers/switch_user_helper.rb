@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SwitchUserHelper
   SelectOption = Struct.new(:label, :scope_id)
   def switch_user_select(options = {})

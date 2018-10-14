@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SwitchUser
   module Provider
     autoload :Base, 'switch_user/provider/base'

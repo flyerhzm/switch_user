@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SwitchUser
   class UserSet
     def self.init_from_config

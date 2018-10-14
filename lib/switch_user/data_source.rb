@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SwitchUser
   class DataSources
     attr_reader :sources

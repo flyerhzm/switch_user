@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 SwitchUser.setup do |config|
   # provider may be :devise, :authlogic, :clearance, :restful_authentication, :sorcery, or :session
   config.provider = :devise

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'switch_user/data_source'
 
 module SwitchUser

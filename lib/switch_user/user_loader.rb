@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SwitchUser
   class UserLoader
     attr_reader :scope
