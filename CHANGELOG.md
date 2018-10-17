@@ -1,5 +1,10 @@
 # Next Release
 
+## 1.5.1 (10/28/2018)
+
+* Respect identifier when storing `original_user`
+* Refactor code by awesomecode.io
+
 ## 1.5.0 (10/27/2017)
 
 * Allow `SwitchUser.switch_back` to be considered even when not calling `#remember_user`.
