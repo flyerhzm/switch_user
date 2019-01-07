@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Richard Huang', 'Luke Cowell']
   s.email       = ['flyerhzm@gmail.com']
+  s.license     = 'MIT'
   s.homepage    = 'http://rubygems.org/gems/switch_user'
   s.summary     = 'Easily switch current user to speed up development'
   s.description = 'Easily switch current user to speed up development'
