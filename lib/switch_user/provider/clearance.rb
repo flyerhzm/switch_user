@@ -8,15 +8,15 @@ module SwitchUser
       end
 
       def login(user, _scope = nil)
-        @controller.sign_in(user)
+        @controller.send(:sign_in, user)
       end
 
       def logout(_scope = nil)
-        @controller.sign_out
+        @controller.send(:sign_out)
       end
 
       def current_user(_scope = nil)
-        @controller.current_user
+        @controller.send(:current_user)
       end
     end
   end
