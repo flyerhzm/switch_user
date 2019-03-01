@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'railties'
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rspec-rails'
-  s.add_development_dependency 'sqlite3'
+  s.add_development_dependency 'sqlite3', '~> 1.3.6'
   s.add_development_dependency 'tzinfo'
 
   s.files        = `git ls-files`.split("\n")
