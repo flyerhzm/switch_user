@@ -1,5 +1,9 @@
 # Next Release
 
+## 1.5.2 (03/01/2019)
+
+* Clearance has moved their controller methods to be private
+
 ## 1.5.1 (10/28/2018)
 
 * Respect identifier when storing `original_user`
