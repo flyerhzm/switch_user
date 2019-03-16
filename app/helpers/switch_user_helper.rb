@@ -16,6 +16,7 @@ module SwitchUserHelper
 
         next unless selected_user.nil?
         next if record.is_a?(SwitchUser::GuestRecord)
+
         if provider.current_user?(record.user, record.scope)
           selected_user = record.scope_id
         end

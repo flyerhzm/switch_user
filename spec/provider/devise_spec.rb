@@ -8,6 +8,7 @@ class FakeWardenSessionSerializer
 
   def store(user, scope)
     return unless user
+
     user_hash[scope] = user
   end
 end
