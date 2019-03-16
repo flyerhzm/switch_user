@@ -66,6 +66,7 @@ module MyApp
     config.action_dispatch.show_exceptions = false
   end
 end
+
 Rails.application.initialize!
 Rails.application.routes.draw do
   get 'dummy/protected', to: 'dummy#protected'

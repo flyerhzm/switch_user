@@ -23,7 +23,7 @@ module SwitchUser
   mattr_accessor :login_exclusive
   mattr_accessor :controller_guard
   mattr_accessor :view_guard
-  mattr_reader   :guard_class
+  mattr_reader :guard_class
 
   def self.setup
     yield self

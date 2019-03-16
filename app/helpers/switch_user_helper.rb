@@ -2,6 +2,7 @@
 
 module SwitchUserHelper
   SelectOption = Struct.new(:label, :scope_id)
+
   def switch_user_select(options = {})
     return unless available?
 
@@ -27,7 +28,7 @@ module SwitchUserHelper
            locals: {
              option_tags: option_tags,
              classes: options[:class],
-             styles: options[:style]
+             styles: options[:style],
            }
   end
 

@@ -5,7 +5,7 @@ module SwitchUser
     def self.init_from_config
       SwitchUser.available_users.map do |scope, base_scope|
         identifier = SwitchUser.available_users_identifiers[scope]
-        label      = SwitchUser.available_users_names[scope]
+        label = SwitchUser.available_users_names[scope]
         new(scope, identifier, label, base_scope)
       end
     end
@@ -17,17 +17,19 @@ module SwitchUser
     end
 
     attr_reader :scope, :user_class, :identifier, :label, :base_scope
+
     def initialize(scope, identifier, label, base_scope)
-      @scope      = scope
+      @scope = scope
       @user_class = normalize_class(scope)
       @identifier = identifier
-      @label      = label
+      @label = label
       @base_scope = normalize_scope(base_scope)
     end
 
     def find_user(id)
       Record.build(users.where(id: id).first, self)
     end
+
     alias [] find_user
 
     def users
@@ -56,9 +58,10 @@ module SwitchUser
         user_class.respond_to?(:scoped) ? user_class.scoped : user_class.all
       end
     end
+
     class Record < Struct.new(:id, :label, :scope)
       def self.build(user, set)
-        id    = user.send(set.identifier)
+        id = user.send(set.identifier)
         label = user.send(set.label)
         scope = set.scope
 

@@ -39,8 +39,8 @@ module SwitchUser
       end
 
       def original_user=(user)
-        user_type       = user.class.to_s.underscore
-        column_name     = SwitchUser.available_users_identifiers[user_type.to_sym]
+        user_type = user.class.to_s.underscore
+        column_name = SwitchUser.available_users_identifiers[user_type.to_sym]
         user_identifier = "#{user_type}_#{user.send(column_name)}"
 
         @controller.session[:original_user_scope_identifier] = user_identifier
