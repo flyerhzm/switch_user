@@ -3,7 +3,7 @@
 module SwitchUser
   module Generators
     class InstallGenerator < Rails::Generators::Base
-      TEMPLATES_PATH = File.expand_path('../templates', __FILE__)
+      TEMPLATES_PATH = File.expand_path('templates', __dir__)
       source_root File.expand_path(Engine.root, __FILE__)
 
       def install_initializer
