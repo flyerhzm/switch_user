@@ -26,6 +26,7 @@ module SwitchUser
           if identifier.nil?
             raise SwitchUser::InvalidScope, "don't allow switch this user, please check config.available_users_identifiers"
           end
+
           user_record_or_scope.send identifier
         else
           user_id
