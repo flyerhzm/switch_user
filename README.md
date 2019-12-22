@@ -15,7 +15,7 @@ switch_user is very useful in such use cases
 
 ## Example
 
-Visit here: <http://switch-user-example.heroku.com/admin>, switch the current user in the select box.
+Visit here: <http://switch-user-example.herokuapp.com/admin>, switch the current user in the select box.
 
 And source code here: <https://github.com/flyerhzm/switch_user_example>
 
