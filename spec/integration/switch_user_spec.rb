@@ -29,7 +29,9 @@ RSpec.describe 'Using SwitchUser', type: :request do
   context 'using switch_back' do
     before do
       SwitchUser.switch_back = true
-      SwitchUser.controller_guard = ->(current_user, _request, original_user) { current_user && current_user.admin? || original_user && original_user.admin? }
+      SwitchUser.controller_guard = lambda do |current_user, _request, original_user|
+        current_user && current_user.admin? || original_user && original_user.admin?
+      end
     end
 
     it 'can switch back to a different user through remember_user endpoint' do

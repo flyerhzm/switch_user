@@ -27,9 +27,7 @@ RSpec.describe SwitchUser::UserLoader do
       expect(loaded_user).to eq user
     end
     it 'raises an error for an invalid scope' do
-      expect {
-        loaded_user = SwitchUser::UserLoader.prepare(nil, '1')
-      }.to raise_error(SwitchUser::InvalidScope)
+      expect { loaded_user = SwitchUser::UserLoader.prepare(nil, '1') }.to raise_error(SwitchUser::InvalidScope)
     end
   end
 

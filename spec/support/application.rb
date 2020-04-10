@@ -84,12 +84,10 @@ connection.create_table :users do |t|
   t.column :admin, :boolean
 end
 
-class User < ActiveRecord::Base
-end
+class User < ActiveRecord::Base; end
 
 connection.create_table :clients do |t|
   t.column :email, :string
 end
 
-class Client < ActiveRecord::Base
-end
+class Client < ActiveRecord::Base; end

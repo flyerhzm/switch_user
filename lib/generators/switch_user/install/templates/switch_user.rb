@@ -2,7 +2,8 @@
 
 SwitchUser.setup do |config|
   # provider may be :devise, :authlogic, :clearance, :restful_authentication, :sorcery, or :session
-  config.provider = :devise
+  config.provider =
+    :devise
 
   # available_users is a hash,
   # key is the model name of user (:user, :admin, or any name you use),
