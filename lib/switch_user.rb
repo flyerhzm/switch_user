@@ -42,11 +42,12 @@ module SwitchUser
   end
 
   def self.data_sources
-    sources = available_users.map do |scope, loader|
-      identifier = available_users_identifiers.fetch(scope)
-      name = available_users_names.fetch(scope)
-      DataSource.new(loader, scope, identifier, name)
-    end
+    sources =
+      available_users.map do |scope, loader|
+        identifier = available_users_identifiers.fetch(scope)
+        name = available_users_names.fetch(scope)
+        DataSource.new(loader, scope, identifier, name)
+      end
     sources.unshift(GuestDataSource.new) if helper_with_guest
     DataSources.new(sources)
   end

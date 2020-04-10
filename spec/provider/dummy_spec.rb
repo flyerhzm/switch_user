@@ -3,8 +3,7 @@
 require 'spec_helper'
 require 'switch_user/provider/dummy'
 
-class SessionController < TestController
-end
+class SessionController < TestController; end
 
 RSpec.describe SwitchUser::Provider::Session do
   let(:controller) { SessionController.new }

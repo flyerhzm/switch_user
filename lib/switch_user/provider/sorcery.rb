@@ -24,7 +24,8 @@ module SwitchUser
       end
 
       def restore_original_user_identifier
-        @controller.session[:original_user_scope_identifier] = @original_user_scope_identifier if @original_user_scope_identifier
+        @controller.session[:original_user_scope_identifier] =
+          @original_user_scope_identifier if @original_user_scope_identifier
       end
 
       def current_user(_scope = nil)

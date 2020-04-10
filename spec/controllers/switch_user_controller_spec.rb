@@ -10,11 +10,7 @@ RSpec.describe SwitchUserController, type: :controller do
   end
 
   let(:admin) { double(:admin, admin?: true) }
-  let(:provider) {
-    double(:provider,
-           original_user: admin,
-           current_user: nil)
-  }
+  let(:provider) { double(:provider, original_user: admin, current_user: nil) }
   describe '#set_current_user' do
     it 'redirects the user to the specified location' do
       SwitchUser.redirect_path = ->(_, _) { '/path' }
@@ -26,14 +22,14 @@ RSpec.describe SwitchUserController, type: :controller do
 
     it 'denies access according to the guard block' do
       SwitchUser.controller_guard = ->(_, _, _) { false }
-      expect {
-        get :set_current_user
-      }.to raise_error(ActionController::RoutingError)
+      expect { get :set_current_user }.to raise_error(ActionController::RoutingError)
     end
 
     describe 'requests with a privileged original_user' do
       before do
-        SwitchUser.controller_guard = ->(current_user, _, original_user) { current_user.try(:admin?) || original_user.try(:admin?) }
+        SwitchUser.controller_guard = lambda do |current_user, _, original_user|
+          current_user.try(:admin?) || original_user.try(:admin?)
+        end
       end
       it 'allows access using the original_user param' do
         allow(controller).to receive(:provider).and_return(provider)

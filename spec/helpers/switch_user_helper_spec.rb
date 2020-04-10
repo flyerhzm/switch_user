@@ -11,10 +11,10 @@ RSpec.describe SwitchUserHelper, type: :helper do
 
   let(:user) { double(:user, id: 1) }
   let(:admin) { double(:admin, id: 1) }
-  let(:provider) {
+  let(:provider) do
     _provider = SwitchUser::Provider::Dummy.new(controller)
     _provider
-  }
+  end
 
   describe '#switch_user_select' do
     let(:guest_record) { SwitchUser::GuestRecord.new }
@@ -23,9 +23,13 @@ RSpec.describe SwitchUserHelper, type: :helper do
 
     let(:guest_option_tags) { '<optgroup label="Guest"><option value="">Guest</option></optgroup>' }
     let(:user_option_tags) { '<optgroup label="User"><option value="user_1">user1</option></optgroup>' }
-    let(:user_selected_option_tags) { '<optgroup label="User"><option selected="selected" value="user_1">user1</option></optgroup>' }
+    let(:user_selected_option_tags) do
+      '<optgroup label="User"><option selected="selected" value="user_1">user1</option></optgroup>'
+    end
     let(:admin_option_tags) { '<optgroup label="Admin"><option value="admin_1">admin1</option></optgroup>' }
-    let(:admin_selected_option_tags) { '<optgroup label="Admin"><option selected="selected" value="admin_1">admin1</option></optgroup>' }
+    let(:admin_selected_option_tags) do
+      '<optgroup label="Admin"><option selected="selected" value="admin_1">admin1</option></optgroup>'
+    end
 
     before do
       allow(SwitchUser).to receive(:switch_back).and_return(false)

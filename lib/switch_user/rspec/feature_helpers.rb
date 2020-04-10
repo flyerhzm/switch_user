@@ -15,13 +15,18 @@ module SwitchUser
 
       _user_scope = _user_scope.to_s
 
-      raise SwitchUser::InvalidScope, "don't allow this user sign in, please check config.available_users" unless SwitchUser.available_scopes.include?(_user_scope) || SwitchUser.available_scopes.include?(_user_scope.to_sym)
+      raise SwitchUser::InvalidScope,
+            "don't allow this user sign in, please check config.available_users" unless SwitchUser.available_scopes
+        .include?(_user_scope) || SwitchUser.available_scopes.include?(_user_scope.to_sym)
 
       _user_id =
         case user_record_or_scope
         when ActiveRecord::Base
-          identifier = SwitchUser.available_users_identifiers[_user_scope] || SwitchUser.available_users_identifiers[_user_scope.to_sym]
-          raise SwitchUser::InvalidScope, "don't allow switch this user, please check config.available_users_identifiers" if identifier.nil?
+          identifier =
+            SwitchUser.available_users_identifiers[_user_scope] ||
+              SwitchUser.available_users_identifiers[_user_scope.to_sym]
+          raise SwitchUser::InvalidScope,
+                "don't allow switch this user, please check config.available_users_identifiers" if identifier.nil?
 
           user_record_or_scope.send identifier
         else
