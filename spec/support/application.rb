@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    User.find_by_id(session[SwitchUser.session_key])
+    User.find_by(id: session[SwitchUser.session_key])
   end
 
   def login

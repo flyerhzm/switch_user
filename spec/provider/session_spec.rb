@@ -5,7 +5,7 @@ require 'switch_user/provider/session'
 
 class SessionController < TestController
   def current_user
-    User.find_by_id(session[:uid]) if session[:uid]
+    User.find_by(id: session[:uid]) if session[:uid]
   end
 end
 

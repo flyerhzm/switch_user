@@ -44,7 +44,7 @@ RSpec.describe SwitchUser::UserLoader do
   it 'returns nil if no user is found' do
     loader = SwitchUser::UserLoader.new('user', 3)
 
-    expect(User.find_by_id(3)).to be_nil
+    expect(User.find_by(id: 3)).to be_nil
     expect(loader.user).to eq nil
   end
 
