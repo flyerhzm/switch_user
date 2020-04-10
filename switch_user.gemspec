@@ -14,7 +14,6 @@ Gem::Specification.new do |s|
   s.description = 'Easily switch current user to speed up development'
 
   s.required_rubygems_version = '>= 1.3.6'
-  s.rubyforge_project         = 'switch_user'
 
   s.add_development_dependency 'actionpack'
   s.add_development_dependency 'activerecord'
