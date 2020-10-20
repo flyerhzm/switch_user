@@ -1,5 +1,9 @@
 # Next Release
 
+## 1.5.3 (10/20/2020)
+
+* Fix zeitwerk autloading issue
+
 ## 1.5.2 (03/01/2019)
 
 * Clearance has moved their controller methods to be private
