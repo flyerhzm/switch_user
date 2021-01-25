@@ -1,5 +1,9 @@
 # Next Release
 
+## 1.5.3 (01/26/2021)
+
+* Fix `relative_url_root` behaviour
+
 ## 1.5.3 (10/20/2020)
 
 * Fix zeitwerk autloading issue
