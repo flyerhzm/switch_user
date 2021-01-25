@@ -68,15 +68,18 @@ module MyApp
 end
 
 Rails.application.initialize!
-Rails.application.routes.draw do
-  get 'dummy/protected', to: 'dummy#protected'
-  get 'dummy/open', to: 'dummy#open'
-  post 'login', to: 'dummy#login'
-  get 'logout', to: 'dummy#logout'
-  get 'authenticated', to: 'dummy#authenticated'
-  get :switch_user, to: 'switch_user#set_current_user'
-  get 'switch_user/remember_user', to: 'switch_user#remember_user'
-end
+Rails
+  .application
+  .routes
+  .draw do
+    get 'dummy/protected', to: 'dummy#protected'
+    get 'dummy/open', to: 'dummy#open'
+    post 'login', to: 'dummy#login'
+    get 'logout', to: 'dummy#logout'
+    get 'authenticated', to: 'dummy#authenticated'
+    get :switch_user, to: 'switch_user#set_current_user'
+    get 'switch_user/remember_user', to: 'switch_user#remember_user'
+  end
 
 connection = ActiveRecord::Base.connection
 connection.create_table :users do |t|

@@ -10,9 +10,7 @@ class SessionController < TestController
 end
 
 RSpec.describe SwitchUser::Provider::Session do
-  before do
-    SwitchUser.session_key = :uid
-  end
+  before { SwitchUser.session_key = :uid }
   let(:controller) { SessionController.new }
   let(:provider) { SwitchUser::Provider::Session.new(controller) }
 
