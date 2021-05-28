@@ -1,6 +1,6 @@
 # Next Release
 
-## 1.5.3 (01/26/2021)
+## 1.5.4 (01/26/2021)
 
 * Fix `relative_url_root` behaviour
 
