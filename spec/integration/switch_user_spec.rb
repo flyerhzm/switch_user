@@ -29,9 +29,10 @@ RSpec.describe 'Using SwitchUser', type: :request do
   context 'using switch_back' do
     before do
       SwitchUser.switch_back = true
-      SwitchUser.controller_guard = lambda do |current_user, _request, original_user|
-        current_user && current_user.admin? || original_user && original_user.admin?
-      end
+      SwitchUser.controller_guard =
+        lambda do |current_user, _request, original_user|
+          current_user && current_user.admin? || original_user && original_user.admin?
+        end
     end
 
     it 'can switch back to a different user through remember_user endpoint' do
@@ -84,13 +85,9 @@ RSpec.describe 'Using SwitchUser', type: :request do
     end
 
     context 'when non-default identifier' do
-      before do
-        SwitchUser.available_users_identifiers = { user: :email }
-      end
+      before { SwitchUser.available_users_identifiers = { user: :email } }
 
-      after do
-        SwitchUser.available_users_identifiers = { user: :id }
-      end
+      after { SwitchUser.available_users_identifiers = { user: :id } }
 
       it 'can switch back to a different user through remember_user endpoint' do
         # login

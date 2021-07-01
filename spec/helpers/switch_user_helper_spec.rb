@@ -5,9 +5,7 @@ require 'switch_user'
 require 'switch_user_helper'
 
 RSpec.describe SwitchUserHelper, type: :helper do
-  before do
-    SwitchUser.provider = :dummy
-  end
+  before { SwitchUser.provider = :dummy }
 
   let(:user) { double(:user, id: 1) }
   let(:admin) { double(:admin, id: 1) }

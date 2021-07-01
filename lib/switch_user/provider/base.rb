@@ -4,10 +4,12 @@ module SwitchUser
   module Provider
     class Base
       def current_users_without_scope
-        SwitchUser.available_scopes.each_with_object([]) do |scope, users|
-          user = current_user(scope)
-          users << user if user
-        end
+        SwitchUser
+          .available_scopes
+          .each_with_object([]) do |scope, users|
+            user = current_user(scope)
+            users << user if user
+          end
       end
 
       def login_exclusive(user, args)
@@ -25,9 +27,7 @@ module SwitchUser
       end
 
       def logout_all
-        SwitchUser.available_scopes.each do |scope|
-          logout(scope)
-        end
+        SwitchUser.available_scopes.each { |scope| logout(scope) }
       end
 
       def original_user

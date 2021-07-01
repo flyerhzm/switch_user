@@ -5,9 +5,7 @@ require 'switch_user'
 require 'switch_user_controller'
 
 RSpec.describe SwitchUserController, type: :controller do
-  before do
-    SwitchUser.provider = :dummy
-  end
+  before { SwitchUser.provider = :dummy }
 
   let(:admin) { double(:admin, admin?: true) }
   let(:provider) { double(:provider, original_user: admin, current_user: nil) }
@@ -27,9 +25,8 @@ RSpec.describe SwitchUserController, type: :controller do
 
     describe 'requests with a privileged original_user' do
       before do
-        SwitchUser.controller_guard = lambda do |current_user, _, original_user|
-          current_user.try(:admin?) || original_user.try(:admin?)
-        end
+        SwitchUser.controller_guard =
+          lambda { |current_user, _, original_user| current_user.try(:admin?) || original_user.try(:admin?) }
       end
       it 'allows access using the original_user param' do
         allow(controller).to receive(:provider).and_return(provider)
